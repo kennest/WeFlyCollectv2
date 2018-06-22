@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="@dimen/spacing_xs"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:minHeight="50dp"
+        app:cardCornerRadius="6dp"
+        app:cardPreventCornerOverlap="true">
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_m">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/pImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                />
+
+            <com.wefly.wecollect.utils.design.RobotoTextView
+                android:id="@+id/dateTView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/listTitleStyle"
+                android:text="@string/empty_string"
+                android:padding="@dimen/spacing_s"
+                android:textSize="@dimen/item_text_size_very_small"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:color="@color/gray_special"
+                app:typeface="robotoThin"
+                android:layout_toEndOf="@id/pImage"
+                android:layout_toRightOf="@id/pImage" />
+
+            <com.wefly.wecollect.utils.design.RobotoTextView
+                android:id="@+id/expeditorTView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/listTitleStyle"
+                android:text="@string/empty_string"
+                android:padding="@dimen/spacing_s"
+                android:textSize="@dimen/item_text_size"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:color="@color/black_two"
+                app:typeface="robotoBold"
+                android:layout_below="@+id/dateTView"
+                android:layout_toEndOf="@id/pImage"
+                android:layout_toRightOf="@id/pImage" />
+
+            <com.wefly.wecollect.utils.design.RobotoTextView
+                android:id="@+id/labelTView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/listTitleStyle"
+                android:text="@string/empty_string"
+                android:padding="@dimen/spacing_s"
+                android:textSize="@dimen/item_text_size_super"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:color="@color/gray_special"
+                app:typeface="robotoBoldCondensed"
+                android:layout_below="@+id/expeditorTView"
+                android:layout_toEndOf="@id/pImage"
+                android:layout_toRightOf="@id/pImage" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

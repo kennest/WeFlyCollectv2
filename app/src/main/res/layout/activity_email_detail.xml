@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/liMain"
+    android:orientation="vertical"
+    tools:context="com.wefly.wecollect.activity.EmailDetailActivity">
+
+    <include layout="@layout/loading_progress"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/elevation_custom"
+        android:background="@drawable/layout_rectangle"
+        android:paddingBottom="@dimen/activity_vertical_margin_custom"
+        android:paddingLeft="@dimen/activity_horizontal_margin_custom"
+        android:paddingStart="@dimen/activity_horizontal_margin_custom"
+        android:paddingRight="@dimen/activity_horizontal_margin_custom"
+        android:paddingEnd="@dimen/activity_horizontal_margin_custom"
+        android:paddingTop="@dimen/activity_vertical_margin_custom"
+        android:layout_marginTop="@dimen/activity_vertical_margin_top_cus"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin_custom"
+        android:layout_marginStart="@dimen/activity_horizontal_margin_custom"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_custom"
+        android:layout_marginRight="@dimen/activity_horizontal_margin_custom">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/loading_bar_horizontal"/>
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/btnClose"
+                android:src="@drawable/ic_close"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.wefly.wecollect.utils.design.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/title_email"
+                android:textSize="@dimen/title_text_small_size"
+                app:typeface="robotoBoldCondensed"
+                android:textStyle="bold"
+                android:textColor="@color/colorTitleGreen"
+                android:padding="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.wefly.wecollect.utils.design.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="@dimen/activity_detail_horizontal_margin"
+                    android:textColor="@color/gray_two"
+                    android:paddingRight="@dimen/activity_detail_horizontal_margin"
+                    android:paddingTop="20dp"
+                    app:typeface="robotoThin"
+                    android:text="@string/from"
+                    android:textSize="@dimen/item_caption_size" />
+
+                <com.wefly.wecollect.utils.design.RobotoTextView
+                    android:id="@+id/fromTView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/item_padding_bottom"
+                    android:maxLines="@integer/recipe_max_line"
+                    android:paddingLeft="@dimen/activity_detail_horizontal_margin"
+                    android:textColor="@color/gray_two"
+                    android:paddingRight="@dimen/activity_detail_horizontal_margin"
+                    app:typeface="robotoRegular"
+                    android:text="@string/from"
+                    style="@style/FromStyle"
+                    android:textSize="@dimen/item_title_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/separator_size"
+                    android:layout_gravity="bottom"
+                    android:background="@color/gray_two" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.wefly.wecollect.utils.design.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="@dimen/activity_detail_horizontal_margin"
+                    android:textColor="@color/gray_two"
+                    android:paddingRight="@dimen/activity_detail_horizontal_margin"
+                    android:paddingTop="20dp"
+                    app:typeface="robotoThin"
+                    android:text="@string/object"
+                    android:textSize="@dimen/item_caption_size" />
+
+                <com.wefly.wecollect.utils.design.RobotoTextView
+                    android:id="@+id/objectTView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/item_padding_bottom"
+                    android:paddingLeft="@dimen/activity_detail_horizontal_margin"
+                    android:textColor="@color/gray_two"
+                    android:paddingRight="@dimen/activity_detail_horizontal_margin"
+                    app:typeface="robotoRegular"
+                    style="@style/ObjectStyle"
+                    android:text="@string/object"
+                    android:textSize="@dimen/item_title_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/separator_size"
+                    android:layout_gravity="bottom"
+                    android:background="@color/gray_two" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.wefly.wecollect.utils.design.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="@dimen/activity_detail_horizontal_margin"
+                    android:textColor="@color/gray_two"
+                    android:paddingRight="@dimen/activity_detail_horizontal_margin"
+                    android:paddingTop="20dp"
+                    app:typeface="robotoThin"
+                    android:text="@string/content"
+                    android:textSize="@dimen/item_caption_size" />
+
+                <com.wefly.wecollect.utils.design.RobotoTextView
+                    android:id="@+id/contentTView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ContentStyle"
+                    android:paddingBottom="@dimen/item_padding_bottom"
+                    android:paddingLeft="@dimen/activity_detail_horizontal_margin"
+                    android:textColor="@color/gray_two"
+                    android:paddingRight="@dimen/activity_detail_horizontal_margin"
+                    app:typeface="robotoRegular"
+                    android:text="@string/content"
+                    android:textSize="@dimen/item_title_size" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/separator_size"
+                    android:layout_gravity="bottom"
+                    android:background="@color/gray_two" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:clipToPadding="false"
+                style="@style/BottomMenuStyle"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatImageButton
+                        android:id="@+id/btnCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_cancel"
+                        android:backgroundTint="@android:color/transparent"
+                        android:layout_gravity="left|center_horizontal"
+                        android:gravity="left|center_horizontal"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <android.support.v7.widget.AppCompatImageButton
+                        android:id="@+id/btnSend"
+                        android:src="@drawable/img_send"
+                        android:layout_marginEnd= "@dimen/image_padding"
+                        android:backgroundTint="@android:color/transparent"
+                        android:layout_gravity="right|center_horizontal"
+                        android:gravity="right|center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PixSample</string>
+    <string name="selection_limiter_pix">Vous ne pouvez pas sélectionner au delà de %d photos.</string>
+</resources>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.weflyagri.wecollect">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Take Picture -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.wefly.wecollect.utils.AppController"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/MainTheme">
+
+        <!-- this provider  for open file If your targetSdkVersion is 24 or higher -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <service
+            android:name="com.wefly.wecollect.service.LocationProviderService"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name="com.wefly.wecollect.activity.onboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wefly.wecollect.MainActivity"
+            android:theme="@style/ThemeWithoutActionBar" />
+        <activity
+            android:name="com.wefly.wecollect.activity.LoginActivity"
+            android:theme="@style/ThemeWithoutActionBar" />
+        <activity
+            android:name="com.wefly.wecollect.activity.CreateSMSActivity"
+            android:theme="@style/ThemeWithoutActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.wefly.wecollect.activity.CreateAlertActivity"
+            android:theme="@style/ThemeWithoutActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.wefly.wecollect.activity.CreateEmailActivity"
+            android:theme="@style/ThemeWithoutActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.wefly.wecollect.activity.SmsDetailActivity"
+            android:theme="@style/ThemeWithoutActionBar" />
+        <activity
+            android:name="com.wefly.wecollect.activity.EmailDetailActivity"
+            android:theme="@style/ThemeWithoutActionBar" />
+        <activity
+            android:name="com.wefly.wecollect.activity.AlertDetailActivity"
+            android:theme="@style/ThemeWithoutActionBar" />
+        <activity
+            android:name="com.wefly.wecollect.activity.LoadingActivity"
+            android:label="@string/title_activity_loading"
+            android:theme="@style/ThemeWithoutActionBar" />
+        <activity android:name="com.wefly.wecollect.activity.RecorderActivity" />
+        <activity android:name="com.wefly.wecollect.activity.SplashScreensActivity" />
+    </application>
+
+</manifest>

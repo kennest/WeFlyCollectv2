@@ -1,0 +1,4 @@
+include ':app'
+include ':boommenu'
+include ':contactsChipsInput'
+include ':pix'
