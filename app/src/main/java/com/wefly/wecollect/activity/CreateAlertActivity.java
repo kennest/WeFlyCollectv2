@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
     private EditText edObject, edContent;
     private RelativeLayout rlMain;
     protected Alert alert;
-    View vForm, vImages;
+    View vForm, vImages, vAudio;
     RecyclerView recyclerView;
     imageAdapter myAdapter;
 
@@ -59,13 +60,13 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         iniChipInput();
     }
 
-    private void iniViewAndColors(){
-        bCancel         =  vForm.findViewById(R.id.btnCancel);
-        bClose          =  vForm.findViewById(R.id.btnClose);
-        bSend           =  vForm.findViewById(R.id.btnSend);
+    private void iniViewAndColors() {
+        bCancel = vForm.findViewById(R.id.btnCancel);
+        bClose = vForm.findViewById(R.id.btnClose);
+        bSend = vForm.findViewById(R.id.btnSend);
 
-        rlMain          = findViewById(R.id.Rlayout);
-        liMain          = null; // free memory in super
+        rlMain = findViewById(R.id.Rlayout);
+        liMain = null; // free memory in super
 
         butList.clear();
         butList.add(bCancel);
@@ -75,7 +76,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // below lollipop
             ColorStateList csl = ColorStateList.valueOf(Color.TRANSPARENT);
-            for (AppCompatImageButton btn : butList){
+            for (AppCompatImageButton btn : butList) {
                 btn.setSupportBackgroundTintList(csl);
             }
         }
@@ -88,9 +89,12 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         // images fragment
         vImages = LayoutInflater.from(getBaseContext()).inflate(R.layout.fragment_attachment, null, false);
 
-        edObject          =          (EditText)   vForm.findViewById(R.id.objectEdText);
-        edContent         =          (EditText)   vForm.findViewById(R.id.contentEdText);
-        ciRecipients      =          (ChipsInput) vForm.findViewById(R.id.recipientsCi);
+        //Record fragment
+        vAudio = LayoutInflater.from(getBaseContext()).inflate(R.layout.fragment_attachment_record, null, false);
+
+        edObject = vForm.findViewById(R.id.objectEdText);
+        edContent = vForm.findViewById(R.id.contentEdText);
+        ciRecipients = vForm.findViewById(R.id.recipientsCi);
 
         // Setup custom tab
         ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
@@ -105,7 +109,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
 
             @Override
@@ -123,16 +127,18 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                 final View view;
 
                 try {
-                    if (position == 0){
+                    if (position == 0) {
                         // image fragment
                         view = vForm;
-                    }else {
+                    } else if (position == 1) {
                         // image fragment
                         view = vImages;
+                    } else {
+                        view = vAudio;
                     }
                     container.addView(view);
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     View mView = LayoutInflater.from(getBaseContext()).inflate(R.layout.fragment_create_alert_form, null, false);
                     container.addView(mView);
@@ -170,7 +176,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
     }
 
     private void iniListeners() {
-        for (AppCompatImageButton btn : butList){
+        for (AppCompatImageButton btn : butList) {
             btn.setOnClickListener(this);
         }
 
@@ -186,6 +192,19 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
             }
         });
 
+        vAudio.findViewById(R.id.liSelectImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AnimeView(view, new AnimeView.OnAnimationEndCallBack() {
+                    @Override
+                    public void onEnd(@NonNull View view) {
+                        Intent recorder = new Intent(CreateAlertActivity.this, RecorderActivity.class);
+                        startActivityForResult(recorder, 101);
+                    }
+                }).startAnimation();
+            }
+        });
+
 
     }
 
@@ -194,15 +213,15 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         sAlert.setObject(edObject.getText().toString().trim());
         sAlert.setContent(edContent.getText().toString().trim());
         saveInput();
-        animMe(view,null, null,sAlert, this, watcher);
+        animMe(view, null, null, sAlert, this, watcher);
     }
 
     private void saveInput() {
-        if (sAlert != null){
+        if (sAlert != null) {
             sAlert.setContent(edContent.getText().toString().trim());
             recipientsSelected.clear();
             List<Recipient> list = (List<Recipient>) ciRecipients.getSelectedChipList();
-            for (Recipient mDm: list){
+            for (Recipient mDm : list) {
                 recipientsSelected.add(mDm);
             }
             if (recipientsSelected.size() > 0)
@@ -221,35 +240,42 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                     if (recyclerView.getVisibility() != View.VISIBLE)
                         recyclerView.setVisibility(View.VISIBLE);
                 }
-                break;
             }
+            case (101): {
+                if (resultCode == 200) {
+                    Log.v("AUDIO PATH", data.getExtras().getString("filePath"));
+                } else {
+                    Log.v("AUDIO PATH", "ERROR");
+                }
+            }
+
         }
     }
 
     @Override
     public void onConnected() {
         super.onConnected();
-        if (selected == 1){
-            if (alert != null){
+        if (selected == 1) {
+            if (alert != null) {
                 // SMS
                 lockSendBtn();
-                onDisplayUi(alert, false,false, true);
+                onDisplayUi(alert, false, false, true);
                 super.sendAlert(alert);
             }
         }
         selected = 0;
     }
 
-    private void onDisplayUi(@NonNull Alert sms, boolean isRestoreState, boolean isSaving, boolean isSending){
+    private void onDisplayUi(@NonNull Alert sms, boolean isRestoreState, boolean isSaving, boolean isSending) {
 
-        if (isRestoreState){
-            if (edContent != null && ciRecipients != null){
+        if (isRestoreState) {
+            if (edContent != null && ciRecipients != null) {
                 edContent.setText(sms.getContent());
 
                 //Existing Sms
                 // old Selected recipients
-                if (sms.getRecipients().size() > 0){
-                    for (Recipient dm: sms.getRecipients()){
+                if (sms.getRecipients().size() > 0) {
+                    for (Recipient dm : sms.getRecipients()) {
                         ciRecipients.addChip(dm);
                     }
                 }
@@ -258,30 +284,30 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
 
         }
 
-        if (isSaving){
-            if (srvMain != null && liProgress != null){
-                TextView textView =liProgress.findViewById(R.id.loadingTitleTView);
+        if (isSaving) {
+            if (srvMain != null && liProgress != null) {
+                TextView textView = liProgress.findViewById(R.id.loadingTitleTView);
                 if (textView != null)
                     textView.setText(R.string.saving);
                 srvMain.setVisibility(View.INVISIBLE);
                 liProgress.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             showUI();
         }
 
-        if (isSending){
-            if (srvMain != null && liProgress != null){
+        if (isSending) {
+            if (srvMain != null && liProgress != null) {
                 srvMain.setVisibility(View.INVISIBLE);
                 liProgress.setVisibility(View.VISIBLE);
             }
-        }else{
+        } else {
             showUI();
         }
     }
 
     private void showUI() {
-        if (srvMain != null && liProgress != null){
+        if (srvMain != null && liProgress != null) {
             if (srvMain.getVisibility() != View.VISIBLE)
                 srvMain.setVisibility(View.VISIBLE);
             if (liProgress.getVisibility() != View.GONE)

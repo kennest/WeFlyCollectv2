@@ -50,6 +50,7 @@ public class AppController extends Application {
     private static ArrayList<AsyncTask<Void, Integer, Boolean>> tasksList = new ArrayList<>();
     private String token = "";
     private static List<Piece> pieceList;
+    private static String audioPath;
 
     public  List<Piece> getPieceList() {
         return pieceList;
@@ -57,6 +58,14 @@ public class AppController extends Application {
 
     public void setPieceList(List<Piece> pieceList) {
         AppController.pieceList = pieceList;
+    }
+
+    public static String getAudioPath() {
+        return audioPath;
+    }
+
+    public static void setAudioPath(String audioPath) {
+        AppController.audioPath = audioPath;
     }
 
     public static synchronized AppController getInstance() {
@@ -242,6 +251,11 @@ public class AppController extends Application {
                                 .color(ContextCompat.getColor(container.getContext(), R.color.white))
                                 .sizeDp(Constants.DRAWER_ICON_SIZE));
                         break;
+                    case 2:
+                        // AUDIO
+                        icon.setImageDrawable(new IconicsDrawable(container.getContext(), FontAwesome.Icon.faw_file_audio)
+                                .color(ContextCompat.getColor(container.getContext(), R.color.white))
+                                .sizeDp(Constants.DRAWER_ICON_SIZE));
                     default:
                         break;
                 }

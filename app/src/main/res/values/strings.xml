@@ -79,6 +79,7 @@
 
     <!--Fontello Icon-->
     <string name="icon_select_image">&#xe816;</string>
+    <string name="icon_select_audio">&#xf130;</string>
 
     <string name="ic_fonte_error_api">&#xe89e;</string>
     <string name="title_activity_loading">LoadingActivity</string>

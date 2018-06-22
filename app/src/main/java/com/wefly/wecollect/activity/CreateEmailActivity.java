@@ -83,17 +83,18 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
                 .from(getBaseContext())
                 .inflate(R.layout.fragment_attachment, null, false);
 
-        edObject = (EditText) vForm.findViewById(R.id.objectEdText);
-        edContent = (EditText) vForm.findViewById(R.id.contentEdText);
-        ciRecipients = (ChipsInput) vForm.findViewById(R.id.recipientsCi);
+        edObject = vForm.findViewById(R.id.objectEdText);
+        edContent = vForm.findViewById(R.id.contentEdText);
+        ciRecipients = vForm.findViewById(R.id.recipientsCi);
 
 
         // Setup custom tab
-        ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
+        ViewGroup tab = findViewById(R.id.tab);
         tab.addView(LayoutInflater.from(this).inflate(R.layout.fragment_main, tab, false));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        SmartTabLayout viewPagerTab = findViewById(R.id.viewpagertab);
+        
         if (appController != null)
             appController.setup_form(viewPagerTab);
 
@@ -186,11 +187,11 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
     }
 
     private void iniViewAndColors() {
-        bCancel = (AppCompatImageButton) vForm.findViewById(R.id.btnCancel);
-        bClose = (AppCompatImageButton) vForm.findViewById(R.id.btnClose);
-        bSend = (AppCompatImageButton) vForm.findViewById(R.id.btnSend);
+        bCancel = vForm.findViewById(R.id.btnCancel);
+        bClose = vForm.findViewById(R.id.btnClose);
+        bSend = vForm.findViewById(R.id.btnSend);
 
-        liMain = (LinearLayout) findViewById(R.id.Rlayout);
+        liMain = findViewById(R.id.Rlayout);
         //liMain = null; // free memory in super
 
         butList.clear();

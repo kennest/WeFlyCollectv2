@@ -154,19 +154,8 @@ public class MainActivity extends DBActivity {
             }
         });
 
-
         iniBoomButton();
         initTabSms();
-
-        recordbtn=findViewById(R.id.recordBtn);
-
-        recordbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent recorder=new Intent(MainActivity.this, RecorderActivity.class);
-                startActivityForResult(recorder,101);
-            }
-        });
         }
 
     @Override
