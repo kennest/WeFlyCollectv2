@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.fxn.pix.Pix;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.pchmn.materialchips.ChipsInput;
+import com.wefly.wecollect.adapter.audioAdapter;
 import com.wefly.wecollect.adapter.imageAdapter;
 import com.wefly.wecollect.model.Alert;
 import com.wefly.wecollect.model.Recipient;
@@ -36,6 +37,7 @@ import com.weflyagri.wecollect.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CreateAlertActivity extends FormActivity implements View.OnClickListener {
 
@@ -43,8 +45,10 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
     private RelativeLayout rlMain;
     protected Alert alert;
     View vForm, vImages, vAudio;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, audioRecyclerView;
     imageAdapter myAdapter;
+    ArrayList<String> audioListPath = new ArrayList<>();
+    private audioAdapter myAudioAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +177,12 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         myAdapter = new imageAdapter(this);
         recyclerView.setAdapter(myAdapter);
+
+        //List recorded audio
+        audioRecyclerView = vAudio.findViewById(R.id.AudiorecyclerView);
+        audioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        myAudioAdapter = new audioAdapter(this);
+        audioRecyclerView.setAdapter(myAudioAdapter);
     }
 
     private void iniListeners() {
@@ -192,20 +202,11 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
             }
         });
 
-        vAudio.findViewById(R.id.liSelectImage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AnimeView(view, new AnimeView.OnAnimationEndCallBack() {
-                    @Override
-                    public void onEnd(@NonNull View view) {
-                        Intent recorder = new Intent(CreateAlertActivity.this, RecorderActivity.class);
-                        startActivityForResult(recorder, 101);
-                    }
-                }).startAnimation();
-            }
-        });
-
-
+        vAudio.findViewById(R.id.liSelectImage).setOnClickListener(view -> new AnimeView(view, view1 -> {
+            Log.v("Audio recordbtn", "clicked");
+            Intent recorder = new Intent(CreateAlertActivity.this, RecorderActivity.class);
+            startActivityForResult(recorder, 101);
+        }).startAnimation());
     }
 
     @Override
@@ -243,7 +244,14 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
             }
             case (101): {
                 if (resultCode == 200) {
-                    Log.v("AUDIO PATH", data.getExtras().getString("filePath"));
+                    audioListPath.addAll(Objects.requireNonNull(data.getExtras()).getStringArrayList("audioListPath"));
+                    for (String audio : audioListPath) {
+                        myAudioAdapter.addAudio(audio);
+                    }
+
+                    if (audioRecyclerView.getVisibility() != View.VISIBLE)
+                        audioRecyclerView.setVisibility(View.VISIBLE);
+                    //Log.v("AUDIO List PATH", data.getExtras().getString("audioListPath"));
                 } else {
                     Log.v("AUDIO PATH", "ERROR");
                 }

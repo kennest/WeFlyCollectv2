@@ -15,12 +15,15 @@ import com.github.piasy.rxandroidaudio.AudioRecorder;
 import com.weflyagri.wecollect.R;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class RecorderActivity extends Activity {
     Button btnSave;
     AudioRecorder mAudioRecorder;
     File mAudioFile;
+    String audioPath;
+    ArrayList<String> audioPathList = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +50,11 @@ public class RecorderActivity extends Activity {
 
     private void initRecord(){
         mAudioRecorder = AudioRecorder.getInstance();
-        mAudioFile = new File(
-                Environment.getExternalStorageDirectory().getAbsolutePath() +
-                        File.separator + System.nanoTime() + ".file.m4a");
+        audioPath = Environment
+                .getExternalStorageDirectory()
+                .getAbsolutePath() +
+                File.separator + System.nanoTime() + ".file.m4a";
+        mAudioFile = new File(audioPath);
         mAudioRecorder.prepareRecord(MediaRecorder.AudioSource.MIC,
                 MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.AudioEncoder.AAC,
                 mAudioFile);
@@ -61,8 +66,9 @@ public class RecorderActivity extends Activity {
     public void finish() {
         // Create one data intent
         Intent data = new Intent();
-        Log.v("RECORD FILEPATH", mAudioFile.getAbsolutePath());
-        data.putExtra("filePath", mAudioFile.getPath());
+        audioPathList.add(audioPath);
+        Log.v("RECORD FILEPATH", audioPath);
+        data.putStringArrayListExtra("audioListPath", audioPathList);
         setResult(200, data);
         super.finish();
     }

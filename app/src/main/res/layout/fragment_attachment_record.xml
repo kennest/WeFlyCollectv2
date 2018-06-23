@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/AudiorecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"></android.support.v7.widget.RecyclerView>
@@ -19,7 +19,7 @@
         android:orientation="vertical">
 
         <com.wefly.wecollect.utils.design.IconsEditTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="0dp"
@@ -29,7 +29,6 @@
             android:text="@string/icon_select_audio"
             android:textColor="@color/colorPrimary"
             android:textSize="110dp" />
-
     </LinearLayout>
 
 </LinearLayout>

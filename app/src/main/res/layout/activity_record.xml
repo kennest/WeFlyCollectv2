@@ -8,7 +8,7 @@
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
-        style="@style/SpinKitView.Large.CubeGrid"
+        style="@style/SpinKitView.Large.Wave"
         android:layout_width="match_parent"
         android:layout_height="323dp"
         android:layout_alignParentStart="true"
@@ -18,7 +18,7 @@
         android:paddingEnd="50dp"
         android:paddingLeft="50dp"
         android:paddingTop="50dp"
-        app:SpinKit_Color="@color/colorAccent" />
+        app:SpinKit_Color="#30b619" />
 
     <Button
         android:id="@+id/btnSave"
@@ -27,7 +27,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="81dp"
-        android:backgroundTint="#35ae31"
+        android:backgroundTint="#30b619"
         android:text="Stopper et Sauvegarder"
         android:textColor="#FFFF" />
 

@@ -8,10 +8,10 @@
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
-        style="@style/SpinKitView.Large.ChasingDots"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/SpinKitView.Large.CubeGrid"
+        android:layout_width="321dp"
+        android:layout_height="437dp"
         android:layout_gravity="center"
-        app:SpinKit_Color="@color/colorAccent" />
+        app:SpinKit_Color="#30b619" />
 
 </android.support.design.widget.CoordinatorLayout>

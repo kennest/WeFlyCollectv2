@@ -1,5 +1,6 @@
 package com.wefly.wecollect.task;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -73,6 +74,13 @@ public class EmailPostItemTask extends TaskPresenter {
 //                return true;
 //            }
             response = util.getResponseFromHttpUrl(email.getJSON(), Constants.SEND_EMAIL_URL);
+
+            //Store the response in the sharedPref
+            SharedPreferences sp = appController.getSharedPreferences("email_sent_data", 0);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("email_sent_response", response);
+            editor.apply();
+
             Log.v(Constants.APP_NAME, TAG + " response " + response);
         } catch (Exception e) {
             e.printStackTrace();
