@@ -27,14 +27,18 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.wefly.wecollect.model.Piece;
 import com.wefly.wecollect.model.Recipient;
+import com.wefly.wecollect.task.CategoryGetTask;
 import com.weflyagri.wecollect.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -51,6 +55,9 @@ public class AppController extends Application {
     private String token = "";
     private static List<Piece> pieceList;
     private static String audioPath;
+    public List<String> categorie_value = new ArrayList<>();
+    Map<String, Integer> alert_categories = new HashMap();
+
 
     public  List<Piece> getPieceList() {
         return pieceList;
@@ -58,6 +65,19 @@ public class AppController extends Application {
 
     public void setPieceList(List<Piece> pieceList) {
         AppController.pieceList = pieceList;
+    }
+
+    //Retourne la liste des categories
+    public Map<String, Integer> getAlert_categories() {
+        Map<String, Integer> list = new HashMap<>();
+        try {
+            list = new CategoryGetTask(this).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static String getAudioPath() {
@@ -368,5 +388,8 @@ public class AppController extends Application {
         return jArr;
     }
 
+    public void setAlert_categories(Map<String, Integer> alert_categories) {
+        this.alert_categories = alert_categories;
+    }
 
 }

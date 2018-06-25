@@ -37,6 +37,10 @@ public class Constants {
 
     public static  final  String SEND_FILE_URL =BASE_URL+"communications/api/files/";
 
+    public static final String SEND_ALERT_URL = BASE_URL + "communications/api/alertes/";
+
+    public static final String ALERT_CATEGORY_URL = BASE_URL + "communications/api/categorie-alerte/";
+
     //Util
     public static final double DOUBLE_NULL = 0.0d;
 

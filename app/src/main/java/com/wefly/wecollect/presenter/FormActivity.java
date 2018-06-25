@@ -214,12 +214,12 @@ public class FormActivity extends DBActivity implements RecipientPresenter.OnRec
         super.onConnected();
         Log.v(Constants.APP_NAME, TAG + " onConnected selected" + selected +" RUN");
         switch (selected){
-
             case 1:
                 // ALERT
                 if (sAlert != null){
                     showMessage(R.string.sending);
                     super.sendAlert(sAlert);
+                    super.uploadPiece(null, sAlert);
                 }
                 break;
             case 2:
@@ -239,7 +239,7 @@ public class FormActivity extends DBActivity implements RecipientPresenter.OnRec
                 if (sEmail != null){
                     showMessage(R.string.sending);
                     super.sendEmail(sEmail);
-                    super.uploadPiece();
+                    super.uploadPiece(sEmail, null);
                 }
 
                 break;

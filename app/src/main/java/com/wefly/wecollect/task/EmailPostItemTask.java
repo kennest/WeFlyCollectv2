@@ -96,7 +96,7 @@ public class EmailPostItemTask extends TaskPresenter {
         //Envoi des Pieces jointes
         if(appController.getPieceList().size()>0) {
             Log.v("Email Post Execute","RUN");
-            new PieceUploadTask(appController.getPieceList()).execute();
+            new PieceUploadTask(appController.getPieceList(), email, null).execute();
         }
         notifyOnEmailSendListener(isOk, email);
     }

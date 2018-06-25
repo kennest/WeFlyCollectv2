@@ -1,12 +1,17 @@
 package com.wefly.wecollect.task;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.kosalgeek.android.imagebase64encoder.ImageBase64;
 import com.shashank.sony.fancytoastlib.FancyToast;
+import com.wefly.wecollect.model.Alert;
+import com.wefly.wecollect.model.Email;
 import com.wefly.wecollect.model.Piece;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.Constants;
@@ -31,11 +36,13 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     private List<Piece> pieces;
     private AppController appController;
     private String response;
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-    private static final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpeg");
+    final Email email;
+    final Alert alert;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public PieceUploadTask(@NonNull List<Piece> pieces) {
+    public PieceUploadTask(@NonNull List<Piece> pieces, @Nullable Email email, @Nullable Alert alert) {
+        this.email = email;
+        this.alert = alert;
         this.pieces = pieces;
         appController = AppController.getInstance();
     }
@@ -43,7 +50,9 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(),"Envoi des pieces jointes...",FancyToast.LENGTH_LONG,FancyToast.INFO,false).show();
+        SharedPreferences sp = appController.getSharedPreferences("email_sent_data", 0);
+        response = sp.getString("email_sent_response", null);
+        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi des pieces jointes...", FancyToast.LENGTH_LONG, FancyToast.INFO, false).show();
     }
 
     @Override
@@ -51,7 +60,10 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
         PieceUploadNetworkUtilities util = new PieceUploadNetworkUtilities();
         String result = "";
         try {
-            result = util.uploadImage(pieces, "test", Constants.SEND_FILE_URL);
+            result = util.uploadPiece(pieces, Environment
+                    .getExternalStorageDirectory()
+                    .getAbsolutePath() +
+                    File.separator + System.nanoTime(), Constants.SEND_FILE_URL);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,32 +73,43 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(),"Processus terminé!",FancyToast.LENGTH_LONG,FancyToast.INFO,false).show();
+        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Processus terminé!", FancyToast.LENGTH_LONG, FancyToast.INFO, false).show();
     }
 
     private final class PieceUploadNetworkUtilities {
-        private String uploadImage(@Nullable List<Piece> images, @Nullable String imageName, @Nullable String url) throws IOException {
+        private String uploadPiece(@Nullable List<Piece> images, @Nullable String pieceName, @Nullable String url) throws IOException {
             OkHttpClient client = new OkHttpClient();
+            Integer id = 0;
+            try {
+                JSONObject email_response = new JSONObject(response);
+                id = email_response.getInt("id");
 
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             JSONObject dataJson = new JSONObject();
-            String encodedImage = "";
+            String encodedPiece = "";
             String result = "";
 
             for (Piece p : images) {
                 try {
                     try {
-                        encodedImage = ImageBase64
+                        encodedPiece = ImageBase64
                                 .with(appController.getApplicationContext())
                                 .encodeFile(p.getContentUrl().getPath());
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                     //Init Json data
-                    dataJson.put("piece_name", "test.jpg");
-                    dataJson.put("piece_b64", encodedImage.trim());
-                    dataJson.put("email", 53);
+                    dataJson.put("piece_name", pieceName);
+                    dataJson.put("piece_b64", encodedPiece.trim());
+                    if (email != null) {
+                        dataJson.put("email", id);
+                    } else if (alert != null) {
+                        dataJson.put("alert", id);
+                    }
 
-                    Log.v("PieceUploadTask base64" + "\n", encodedImage.trim());
+                    Log.v("PieceUploadTask base64" + "\n", encodedPiece.trim());
 
                     //Build request body
                     RequestBody body = RequestBody.create(JSON, dataJson.toString());

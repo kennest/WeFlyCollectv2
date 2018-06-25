@@ -168,6 +168,7 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
         recyclerView.setAdapter(myAdapter);
     }
 
+    //initialization des listeners
     private void iniListeners() {
         for (AppCompatImageButton btn : butList) {
             btn.setOnClickListener(this);

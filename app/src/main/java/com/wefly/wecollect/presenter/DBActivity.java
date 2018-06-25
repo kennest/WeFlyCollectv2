@@ -88,9 +88,10 @@ public class DBActivity extends BaseActivity implements SmsPostItemTask.OnSmsSen
         task.execute();
     }
 
-    protected void uploadPiece(){
+    protected void uploadPiece(@Nullable Email email, @Nullable Alert alert) {
         Log.v("DBActivity upload piece","RUN");
-        new PieceUploadTask(appController.getPieceList()).execute();
+        PieceUploadTask task = new PieceUploadTask(appController.getPieceList(), email, alert);
+        task.execute();
     }
 
     //Envoi une alert

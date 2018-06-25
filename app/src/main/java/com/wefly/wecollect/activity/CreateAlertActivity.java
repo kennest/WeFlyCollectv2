@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,8 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fxn.pix.Pix;
@@ -27,34 +30,49 @@ import com.pchmn.materialchips.ChipsInput;
 import com.wefly.wecollect.adapter.audioAdapter;
 import com.wefly.wecollect.adapter.imageAdapter;
 import com.wefly.wecollect.model.Alert;
+import com.wefly.wecollect.model.Piece;
 import com.wefly.wecollect.model.Recipient;
 import com.wefly.wecollect.model.Sms;
 import com.wefly.wecollect.presenter.FormActivity;
 import com.wefly.wecollect.utils.Constants;
 import com.wefly.wecollect.utils.NetworkWatcher;
+import com.wefly.wecollect.utils.PathUtil;
 import com.wefly.wecollect.utils.design.AnimeView;
 import com.weflyagri.wecollect.R;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CreateAlertActivity extends FormActivity implements View.OnClickListener {
 
     private EditText edObject, edContent;
+    static Map<String, Integer> response_category = new HashMap<>();
     private RelativeLayout rlMain;
     protected Alert alert;
     View vForm, vImages, vAudio;
     RecyclerView recyclerView, audioRecyclerView;
     imageAdapter myAdapter;
     ArrayList<String> audioListPath = new ArrayList<>();
+    List<Piece> pieces = new CopyOnWriteArrayList<>();
+    Piece p = new Piece();
     private audioAdapter myAudioAdapter;
+    private Spinner category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alert);
+
+        response_category = appController.getAlert_categories();
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         iniViews();
         iniViewAndColors();
 
@@ -99,6 +117,16 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         edObject = vForm.findViewById(R.id.objectEdText);
         edContent = vForm.findViewById(R.id.contentEdText);
         ciRecipients = vForm.findViewById(R.id.recipientsCi);
+        category = vForm.findViewById(R.id.categorySpinner);
+
+        List<String> category_list = new ArrayList<>();
+
+        for (Map.Entry entry : response_category.entrySet()) {
+            category_list.add((String) entry.getKey());
+        }
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category_list);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(spinnerAdapter);
 
         // Setup custom tab
         ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
@@ -240,14 +268,37 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                     myAdapter.AddImage(returnValue);
                     if (recyclerView.getVisibility() != View.VISIBLE)
                         recyclerView.setVisibility(View.VISIBLE);
+
+                    //On recupere la liste des URL des images
+                    for (String r : returnValue) {
+                        try {
+                            p.setUrl(PathUtil.getPath(this, Uri.fromFile(new File(r))));
+                            p.setContentUrl(Uri.fromFile(new File(r)));
+                            Log.v("Image URI", p.getContentUrl().toString());
+                            pieces.add(p);
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //Stockons les pieces dans l'appcontroller
+                    appController.setPieceList(pieces);
                 }
             }
             case (101): {
                 if (resultCode == 200) {
                     audioListPath.addAll(Objects.requireNonNull(data.getExtras()).getStringArrayList("audioListPath"));
+
+                    //On ajoute
                     for (String audio : audioListPath) {
                         myAudioAdapter.addAudio(audio);
+                        p.setUrl(audio);
+                        p.setContentUrl(Uri.fromFile(new File(audio)));
+                        pieces.add(p);
                     }
+
+                    List<Piece> pieces_with_audio = appController.getPieceList();
+                    pieces_with_audio.addAll(pieces);
+                    appController.setPieceList(pieces_with_audio);
 
                     if (audioRecyclerView.getVisibility() != View.VISIBLE)
                         audioRecyclerView.setVisibility(View.VISIBLE);
