@@ -39,11 +39,12 @@
         </provider>
 
         <service
-            android:name="com.wefly.wecollect.service.LocationProviderService"
+            android:name="com.wefly.wecollect.services.LocationProviderService"
             android:launchMode="singleTask" />
+        <service android:name="com.wefly.wecollect.services.GPSTracker" />
 
         <activity
-            android:name="com.wefly.wecollect.activity.onboardActivity"
+            android:name="com.wefly.wecollect.activities.onboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -56,35 +57,37 @@
             android:name="com.wefly.wecollect.MainActivity"
             android:theme="@style/ThemeWithoutActionBar" />
         <activity
-            android:name="com.wefly.wecollect.activity.LoginActivity"
+            android:name="com.wefly.wecollect.activities.LoginActivity"
             android:theme="@style/ThemeWithoutActionBar" />
         <activity
-            android:name="com.wefly.wecollect.activity.CreateSMSActivity"
+            android:name="com.wefly.wecollect.activities.CreateSMSActivity"
             android:theme="@style/ThemeWithoutActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.wefly.wecollect.activity.CreateAlertActivity"
+            android:name="com.wefly.wecollect.activities.CreateAlertActivity"
             android:theme="@style/ThemeWithoutActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.wefly.wecollect.activity.CreateEmailActivity"
+            android:name="com.wefly.wecollect.activities.CreateEmailActivity"
             android:theme="@style/ThemeWithoutActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.wefly.wecollect.activity.SmsDetailActivity"
+            android:name="com.wefly.wecollect.activities.SmsDetailActivity"
             android:theme="@style/ThemeWithoutActionBar" />
         <activity
-            android:name="com.wefly.wecollect.activity.EmailDetailActivity"
+            android:name="com.wefly.wecollect.activities.EmailDetailActivity"
             android:theme="@style/ThemeWithoutActionBar" />
         <activity
-            android:name="com.wefly.wecollect.activity.AlertDetailActivity"
+            android:name="com.wefly.wecollect.activities.AlertDetailActivity"
             android:theme="@style/ThemeWithoutActionBar" />
         <activity
-            android:name="com.wefly.wecollect.activity.LoadingActivity"
+            android:name="com.wefly.wecollect.activities.LoadingActivity"
             android:label="@string/title_activity_loading"
             android:theme="@style/ThemeWithoutActionBar" />
-        <activity android:name="com.wefly.wecollect.activity.RecorderActivity" />
-        <activity android:name="com.wefly.wecollect.activity.SplashScreensActivity" />
+        <activity android:name="com.wefly.wecollect.activities.RecorderActivity" />
+        <activity android:name="com.wefly.wecollect.activities.SplashScreensActivity" />
+        <activity android:name="com.wefly.wecollect.presenters.DBActivity" />
+        <activity android:name="com.wefly.wecollect.presenters.FormActivity" />
     </application>
 
 </manifest>

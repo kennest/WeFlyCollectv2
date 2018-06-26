@@ -18,7 +18,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -27,7 +26,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wefly.wecollect.model.Recipient;
 import com.weflyagri.wecollect.R;
 
 import java.io.IOException;
@@ -40,7 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by paulodichone on 2/28/15.

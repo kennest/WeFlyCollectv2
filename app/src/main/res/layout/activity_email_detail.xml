@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/liMain"
     android:orientation="vertical"
-    tools:context="com.wefly.wecollect.activity.EmailDetailActivity">
+    tools:context="com.wefly.wecollect.activities.EmailDetailActivity">
 
     <include layout="@layout/loading_progress"/>
 

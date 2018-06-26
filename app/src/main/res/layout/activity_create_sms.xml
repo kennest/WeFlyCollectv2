@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/liMain"
     android:orientation="vertical"
-    tools:context="com.wefly.wecollect.activity.CreateSMSActivity">
+    tools:context="com.wefly.wecollect.activities.CreateSMSActivity">
 
     <include layout="@layout/loading_progress"/>
 

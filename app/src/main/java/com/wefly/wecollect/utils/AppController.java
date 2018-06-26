@@ -3,7 +3,6 @@ package com.wefly.wecollect.utils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -25,9 +24,8 @@ import com.auth0.android.jwt.JWT;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.wefly.wecollect.model.Piece;
-import com.wefly.wecollect.model.Recipient;
-import com.wefly.wecollect.task.CategoryGetTask;
+import com.wefly.wecollect.models.Piece;
+import com.wefly.wecollect.models.Recipient;
 import com.weflyagri.wecollect.R;
 
 import org.json.JSONArray;
@@ -35,10 +33,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -53,31 +49,17 @@ public class AppController extends Application {
     private static ArrayList<Activity> activitiesList = new ArrayList<>();
     private static ArrayList<AsyncTask<Void, Integer, Boolean>> tasksList = new ArrayList<>();
     private String token = "";
-    private static List<Piece> pieceList;
+    private static CopyOnWriteArrayList<Piece> pieceList = new CopyOnWriteArrayList<>();
     private static String audioPath;
-    public List<String> categorie_value = new ArrayList<>();
-    Map<String, Integer> alert_categories = new HashMap();
+    public Map<String, Integer> alert_categories = new HashMap();
 
 
-    public  List<Piece> getPieceList() {
+    public CopyOnWriteArrayList<Piece> getPieceList() {
         return pieceList;
     }
 
-    public void setPieceList(List<Piece> pieceList) {
+    public void setPieceList(CopyOnWriteArrayList<Piece> pieceList) {
         AppController.pieceList = pieceList;
-    }
-
-    //Retourne la liste des categories
-    public Map<String, Integer> getAlert_categories() {
-        Map<String, Integer> list = new HashMap<>();
-        try {
-            list = new CategoryGetTask(this).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return list;
     }
 
     public static String getAudioPath() {
@@ -323,6 +305,7 @@ public class AppController extends Application {
     public @NonNull
     CopyOnWriteArrayList<Recipient> recipiencesJSONArrToList(@NonNull JSONArray array) {
         CopyOnWriteArrayList<Recipient> list = new CopyOnWriteArrayList<>();
+        Log.v("appController:", array.toString());
         try {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
@@ -332,12 +315,11 @@ public class AppController extends Application {
                 reci.setRef(obj.getString("reference"));
                 reci.setDateCreate(obj.getString("create_at"));
                 reci.setDeleted(obj.getBoolean("delete"));
-                reci.setFonction(obj.getInt("fonction"));
+                //reci.setFonction(obj.getInt("fonction"));
                 reci.setAdresse(obj.getInt("adresse"));
                 reci.setRole(obj.getInt("role"));
                 reci.setEntreprise(obj.getInt("entreprise"));
                 reci.setSuperieur(obj.getInt("superieur"));
-
                 reci.setFirstName(obj.getJSONObject("user")
                         .getString("first_name"));
                 reci.setLastName(obj.getJSONObject("user")
@@ -346,7 +328,6 @@ public class AppController extends Application {
                         .getString("email"));
                 reci.setUserName(obj.getJSONObject("user")
                         .getString("username"));
-
                 list.add(reci);
             }
         } catch (Exception e) {

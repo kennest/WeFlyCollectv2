@@ -1,4 +1,4 @@
-package com.wefly.wecollect.service;
+package com.wefly.wecollect.services;
 
 import android.Manifest;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import com.mapzen.android.lost.api.LocationListener;
 import com.mapzen.android.lost.api.LocationRequest;
 import com.mapzen.android.lost.api.LocationServices;
 import com.mapzen.android.lost.api.LostApiClient;
-import com.wefly.wecollect.presenter.BaseActivity;
-import com.wefly.wecollect.presenter.BaseService;
+import com.wefly.wecollect.presenters.BaseActivity;
+import com.wefly.wecollect.presenters.BaseService;
 
 /**
  * Created by Obrina.KIMI on 1/10/2018.

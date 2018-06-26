@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:alpha="73"
-    tools:context="com.wefly.wecollect.activity.LoginActivity">
+    tools:context="com.wefly.wecollect.activities.LoginActivity">
 
     <LinearLayout
         android:id="@+id/liMain"
