@@ -49,6 +49,7 @@ public class audioAdapter extends RecyclerView.Adapter<audioAdapter.Holder> {
         Holder(View itemView) {
             super(itemView);
             audioView = itemView.findViewById(R.id.jcplayer);
+            audioView.initAnonPlaylist(jcAudios);
         }
 
         void display(ArrayList<JcAudio> jcAudios) {

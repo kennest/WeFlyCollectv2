@@ -15,6 +15,7 @@ import com.mapzen.android.lost.api.LocationServices;
 import com.mapzen.android.lost.api.LostApiClient;
 import com.wefly.wecollect.presenters.BaseActivity;
 import com.wefly.wecollect.presenters.BaseService;
+import com.wefly.wecollect.utils.AppController;
 
 /**
  * Created by Obrina.KIMI on 1/10/2018.
@@ -23,6 +24,7 @@ import com.wefly.wecollect.presenters.BaseService;
 public class LocationProviderService extends BaseService implements LostApiClient.ConnectionCallbacks, LocationListener {
     private LostApiClient lostApiClient;
     private LocationRequest mLocationRequest;
+    AppController appController=AppController.getInstance();
     private final String TAG = getClass().getSimpleName();
 
     Intent intent;
@@ -79,7 +81,11 @@ public class LocationProviderService extends BaseService implements LostApiClien
     private void fn_update(Location location){
         intent.putExtra("latitude",location.getLatitude()+"");
         intent.putExtra("longitude",location.getLongitude()+"");
+
         // update All activity
+        appController.latitude=location.getLatitude();
+        appController.longitude=location.getLongitude();
+
         BaseActivity.setuLatitude(location.getLatitude());
         BaseActivity.setuLongitude(location.getLongitude());
         sendBroadcast(intent);

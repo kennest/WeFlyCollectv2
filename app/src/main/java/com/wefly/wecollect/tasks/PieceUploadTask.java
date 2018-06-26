@@ -34,7 +34,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     final Alert alert;
     private List<Piece> pieces;
     private AppController appController;
-    private String response;
+    private String prefresponse;
 
     public PieceUploadTask(@NonNull List<Piece> pieces, @Nullable Email email, @Nullable Alert alert) {
         this.email = email;
@@ -46,8 +46,8 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        SharedPreferences sp = appController.getSharedPreferences("email_sent_data", 0);
-        response = sp.getString("email_sent_response", null);
+        SharedPreferences sp = appController.getSharedPreferences("sent_data", 0);
+        prefresponse = sp.getString("sent_response", null);
         FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi des pieces jointes...", FancyToast.LENGTH_LONG, FancyToast.INFO, false).show();
     }
 
@@ -70,36 +70,41 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     }
 
     private final class PieceUploadNetworkUtilities {
-        private String uploadPiece(@Nullable List<Piece> pieces, @Nullable String pieceName, @Nullable String url) throws IOException {
-            OkHttpClient client = new OkHttpClient();
+        private String uploadPiece(@Nullable List<Piece> piecesList, @Nullable String pieceName, @Nullable String url) throws IOException {
+            Response response;
             Integer id = 0;
             try {
-                JSONObject email_response = new JSONObject(response);
-                id = email_response.getInt("id");
+                JSONObject sent_response = new JSONObject(prefresponse);
+                id = sent_response.getInt("id");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            JSONObject dataJson = new JSONObject();
-            String encodedPiece = "";
+
             String result = "";
 
-            for (Piece p : pieces) {
+            for (Piece p : piecesList) {
+                String encodedPiece = "";
                 try {
                     try {
                         encodedPiece = new EncodeBase64().encode(p.getUrl());
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
+                    OkHttpClient client = new OkHttpClient();
+                    JSONObject dataJson = new JSONObject();
                     //Init Json data
                     dataJson.put("piece_name", pieceName + p.getExtension(p.getUrl()));
                     dataJson.put("piece_b64", encodedPiece.trim());
                     if (email != null) {
                         dataJson.put("email", id);
+                        dataJson.put("alert", null);
                     } else if (alert != null) {
                         dataJson.put("alerte", id);
+                        dataJson.put("email", null);
                     }
 
-                    Log.v("PieceUploadTask base64" + "\n", dataJson.toString());
+                    Log.v("PieceUploadTask params", dataJson.toString());
+                    Log.v("Piece path", p.getExtension(p.getUrl()));
 
                     //Build request body
                     RequestBody body = RequestBody.create(JSON, dataJson.toString());
@@ -109,7 +114,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
                             .post(body)
                             .build();
                     //Execute
-                    Response response = client.newCall(request).execute();
+                    response = client.newCall(request).execute();
                     result = response.body().string();
                     if (!response.isSuccessful()) {
                         throw new IOException("Unexpected code " + response);

@@ -53,6 +53,9 @@ public class AppController extends Application {
     private static String audioPath;
     public Map<String, Integer> alert_categories = new HashMap();
 
+    public Double latitude;
+    public Double longitude;
+
 
     public CopyOnWriteArrayList<Piece> getPieceList() {
         return pieceList;
@@ -164,6 +167,7 @@ public class AppController extends Application {
     public String getToken() {
         try {
             token = Save.defaultLoadString(Constants.PREF_TOKEN, getApplicationContext());
+            Log.v("JWT TOKEN",token);
         } catch (Exception e) {
             e.printStackTrace();
         }

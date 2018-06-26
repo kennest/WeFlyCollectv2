@@ -9,79 +9,72 @@
         android:id="@+id/card_view_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="@dimen/spacing_xs"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/spacing_xs"
+        android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="50dp"
         app:cardCornerRadius="6dp"
         app:cardPreventCornerOverlap="true">
 
         <RelativeLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_m">
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/pImage"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="centerCrop"
-                android:layout_alignParentLeft="true"
+                android:layout_width="62dp"
+                android:layout_height="57dp"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                />
-
-            <com.wefly.wecollect.utils.design.RobotoTextView
-                android:id="@+id/dateTView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/listTitleStyle"
-                android:text="@string/empty_string"
-                android:padding="@dimen/spacing_s"
-                android:textSize="@dimen/item_text_size_very_small"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:color="@color/gray_special"
-                app:typeface="robotoThin"
-                android:layout_toEndOf="@id/pImage"
-                android:layout_toRightOf="@id/pImage" />
-
-            <com.wefly.wecollect.utils.design.RobotoTextView
-                android:id="@+id/expeditorTView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/listTitleStyle"
-                android:text="@string/empty_string"
-                android:padding="@dimen/spacing_s"
-                android:textSize="@dimen/item_text_size"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:color="@color/black_two"
-                app:typeface="robotoBold"
-                android:layout_below="@+id/dateTView"
-                android:layout_toEndOf="@id/pImage"
-                android:layout_toRightOf="@id/pImage" />
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop" />
 
             <com.wefly.wecollect.utils.design.RobotoTextView
                 android:id="@+id/labelTView"
+                style="@style/listTitleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="23dp"
+                android:layout_toEndOf="@id/pImage"
+                android:layout_toRightOf="@id/pImage"
+                android:color="@color/gray_special"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/empty_string"
+                android:textSize="18sp"
+                app:typeface="robotoThin" />
+
+            <com.wefly.wecollect.utils.design.RobotoTextView
+                android:id="@+id/expeditorTView"
+                style="@style/listTitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/listTitleStyle"
-                android:text="@string/empty_string"
-                android:padding="@dimen/spacing_s"
-                android:textSize="@dimen/item_text_size_super"
-                android:maxLines="1"
+                android:layout_below="@+id/labelTView"
+                android:layout_toEndOf="@id/pImage"
+                android:layout_toRightOf="@id/pImage"
+                android:color="@color/black_two"
                 android:ellipsize="end"
-                android:color="@color/gray_special"
-                app:typeface="robotoBoldCondensed"
+                android:maxLines="1"
+                android:text="@string/empty_string"
+                android:textSize="@dimen/item_text_size"
+                app:typeface="robotoBold" />
+
+            <com.wefly.wecollect.utils.design.RobotoTextView
+                android:id="@+id/dateTView"
+                style="@style/listTitleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/expeditorTView"
                 android:layout_toEndOf="@id/pImage"
-                android:layout_toRightOf="@id/pImage" />
+                android:layout_toRightOf="@id/pImage"
+                android:color="@color/gray_special"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/empty_string"
+                android:textSize="12sp"
+                app:typeface="robotoBoldCondensed" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

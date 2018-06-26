@@ -29,7 +29,8 @@
     <string name="recipients">Destinataire(s)</string>
     <string name="content">Contenu</string>
     <string name="email">Email</string>
-    <string name="object">Objet</string>
+    <string name="objet">Objet</string>
+    <string name="titre">Titre</string>
     <string name="attachement">Pièce jointe</string>
     <string name="send">Envoyer</string>
     <string name="sender">Expéditeur</string>

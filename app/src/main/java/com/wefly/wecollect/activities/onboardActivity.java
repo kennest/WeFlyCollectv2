@@ -33,12 +33,12 @@ public class onboardActivity extends AhoyOnboarderActivity {
         databaseCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
 
         AhoyOnboarderCard emailCard = new AhoyOnboarderCard("Communication entre acteurs", "Gardez tout vos collaborateurs informer à l'aide de la messagerie intégré", R.drawable.email);
-        databaseCard.setBackgroundColor(R.color.black_transparent);
-        databaseCard.setTitleColor(R.color.white);
-        databaseCard.setDescriptionColor(R.color.grey_200);
-        databaseCard.setTitleTextSize(dpToPixels(10, this));
-        databaseCard.setDescriptionTextSize(dpToPixels(8, this));
-        databaseCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
+        emailCard.setBackgroundColor(R.color.black_transparent);
+        emailCard.setTitleColor(R.color.white);
+        emailCard.setDescriptionColor(R.color.grey_200);
+        emailCard.setTitleTextSize(dpToPixels(10, this));
+        emailCard.setDescriptionTextSize(dpToPixels(8, this));
+        emailCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
 
         AhoyOnboarderCard lastCard = new AhoyOnboarderCard("C'est parti !", "Vous Pouvez commencer", R.drawable.success);
         lastCard.setBackgroundColor(R.color.black_transparent);

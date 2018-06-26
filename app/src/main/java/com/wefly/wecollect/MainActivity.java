@@ -5,6 +5,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,10 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.wefly.wecollect.activities.CreateAlertActivity;
 import com.wefly.wecollect.activities.CreateEmailActivity;
 import com.wefly.wecollect.activities.CreateSMSActivity;
+import com.wefly.wecollect.activities.EmailListActivity;
 import com.wefly.wecollect.activities.LoginActivity;
+import com.wefly.wecollect.adapters.emailAdapter;
+import com.wefly.wecollect.models.Email;
 import com.wefly.wecollect.presenters.DBActivity;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.BuilderManager;
@@ -29,6 +34,7 @@ import com.wefly.wecollect.utils.Constants;
 import com.weflyagri.wecollect.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
@@ -52,6 +58,9 @@ public class MainActivity extends DBActivity {
         vEmail = LayoutInflater.from(
                 getBaseContext()).inflate(R.layout.fragment_email, null, false);
 
+        //On charge la liste des Emails
+        loadEmailList(vEmail);
+
         // Sms fragment
         vSms = LayoutInflater.from(
                 getBaseContext()).inflate(R.layout.fragment_sms, null, false);
@@ -69,7 +78,6 @@ public class MainActivity extends DBActivity {
 
         vsDraft = LayoutInflater.from(
                 getBaseContext()).inflate(R.layout.fragment_sms_draft, null, false);
-
 
 
         // Setup custom tab
@@ -103,7 +111,7 @@ public class MainActivity extends DBActivity {
                 final View view;
 
                 try {
-                    switch (position){
+                    switch (position) {
                         case 0:
                             //EMAIL fragment
                             view = vEmail;
@@ -117,14 +125,15 @@ public class MainActivity extends DBActivity {
                             view = vAlert;
                             break;
                         default:
-                            view = vEmail;// do something
+                            view = vEmail;
+                            // do something
                             break;
                     }
 
                     container.addView(view);
                     return view;
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     // Details
                     View mView = LayoutInflater.from(
@@ -155,54 +164,54 @@ public class MainActivity extends DBActivity {
 
         iniBoomButton();
         initTabSms();
-        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == 10) {
-                Log.v("Record OK","OK");
-            } else{
+                Log.v("Record OK", "OK");
+            } else {
                 // Oops! User has canceled the recording
-                Log.v("Record OK","No");
+                Log.v("Record OK", "No");
             }
         }
     }
 
 
-        //initialize BoomButton
+    //initialize BoomButton
     private void iniBoomButton() {
         bmb = findViewById(R.id.bmb);
         assert bmb != null;
 
         bmb.addBuilder(BuilderManager.getHamButtonBuilder(getString(R.string.send_sms), "")
                 .normalImageDrawable(new IconicsDrawable(this, FontAwesome.Icon.faw_mobile_alt)
-                        .color(ContextCompat.getColor(this,R.color.white))
+                        .color(ContextCompat.getColor(this, R.color.white))
                         .paddingDp(Constants.DRAWER_ICON_PADDING)
                         .sizeDp(Constants.DRAWER_ICON_BIG_SIZE)));
 
         bmb.addBuilder(BuilderManager.getHamButtonBuilder(getString(R.string.send_email), "")
                 .normalImageDrawable(new IconicsDrawable(this, FontAwesome.Icon.faw_envelope)
-                        .color(ContextCompat.getColor(this,R.color.white))
+                        .color(ContextCompat.getColor(this, R.color.white))
                         .paddingDp(Constants.DRAWER_ICON_PADDING)
                         .sizeDp(Constants.DRAWER_ICON_BIG_SIZE)));
 
         bmb.addBuilder(BuilderManager.getHamButtonBuilder(getString(R.string.send_alert), "")
                 .normalImageDrawable(new IconicsDrawable(this, FontAwesome.Icon.faw_exclamation_triangle)
-                        .color(ContextCompat.getColor(this,R.color.white))
+                        .color(ContextCompat.getColor(this, R.color.white))
                         .paddingDp(Constants.DRAWER_ICON_PADDING)
                         .sizeDp(Constants.DRAWER_ICON_BIG_SIZE)));
 
         bmb.addBuilder(BuilderManager.getHamButtonBuilder(getString(R.string.profil), "")
                 .normalImageDrawable(new IconicsDrawable(this, FontAwesome.Icon.faw_user)
-                        .color(ContextCompat.getColor(this,R.color.white))
+                        .color(ContextCompat.getColor(this, R.color.white))
                         .paddingDp(Constants.DRAWER_ICON_PADDING)
                         .sizeDp(Constants.DRAWER_ICON_BIG_SIZE)));
 
         bmb.addBuilder(BuilderManager.getHamButtonBuilder(getString(R.string.exit), "")
                 .normalImageDrawable(new IconicsDrawable(this, FontAwesome.Icon.faw_times_circle)
-                        .color(ContextCompat.getColor(this,R.color.white))
+                        .color(ContextCompat.getColor(this, R.color.white))
                         .paddingDp(Constants.DRAWER_ICON_PADDING)
                         .sizeDp(Constants.DRAWER_ICON_BIG_SIZE)));
 
@@ -211,7 +220,7 @@ public class MainActivity extends DBActivity {
             public void onClicked(int index, BoomButton boomButton) {
                 super.onClicked(index, boomButton);
 
-                switch (index){
+                switch (index) {
                     case 0:
                         // Sender Sms
                         startActivity(new Intent(MainActivity.this, CreateSMSActivity.class));
@@ -227,14 +236,14 @@ public class MainActivity extends DBActivity {
                     case 3:
                         //PROFIL
 
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        startActivity(new Intent(MainActivity.this, EmailListActivity.class));
                         break;
                     case 4:
                         //EXIT
                         AppController.clearAsynTask();
                         AppController.clearDestroyList();
-                        finish();
-
+                        finishAffinity();
+                        System.exit(0);
                         break;
                     default:
                         break;
@@ -272,12 +281,28 @@ public class MainActivity extends DBActivity {
 //        }
 //    }
 
+    protected void loadEmailList(View v) {
+        //On charge la page email avec les emails
+        RecyclerView mRecyclerView;
+        List<Email> list;
+        emailAdapter emailAdapter;
+
+        mRecyclerView = v.findViewById(R.id.emailRecyclerView);
+
+        list = new ArrayList<>();
+        list.add(new Email("Email test 1", "2018-06-15"));
+        list.add(new Email("Email test 2", "2018-06-15"));
+
+        emailAdapter = new emailAdapter(list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(emailAdapter);
+    }
 
     @Override
     public void onConnected() {
         super.onConnected();
 
-        switch (selected){
+        switch (selected) {
 
             case 1: // 1 is undefine
 
@@ -327,7 +352,7 @@ public class MainActivity extends DBActivity {
 
                 try {
 
-                    switch (position){
+                    switch (position) {
                         case 1:
                             // SMS sent
                             view = vsSent;
@@ -349,7 +374,7 @@ public class MainActivity extends DBActivity {
                     container.addView(view);
                     return view;
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     // Details
                     View mView = LayoutInflater.from(
@@ -367,12 +392,12 @@ public class MainActivity extends DBActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         new IconicsDrawable(this, FontAwesome.Icon.faw_chevron_down)
-                                .color(ContextCompat.getColor(this,R.color.white))
+                                .color(ContextCompat.getColor(this, R.color.white))
                                 .sizeDp(Constants.HAMBURGER_ICON_SIZE),
                         ContextCompat.getColor(this, R.color.material_orange_700))
                         .selectedIcon(
                                 new IconicsDrawable(this, FontAwesome.Icon.faw_download)
-                                        .color(ContextCompat.getColor(this,R.color.white))
+                                        .color(ContextCompat.getColor(this, R.color.white))
                                         .sizeDp(Constants.HAMBURGER_ICON_SIZE)
                         )
                         .title("Reçu(s)")
@@ -383,12 +408,12 @@ public class MainActivity extends DBActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         new IconicsDrawable(this, FontAwesome.Icon.faw_cloud_upload_alt)
-                                .color(ContextCompat.getColor(this,R.color.white))
+                                .color(ContextCompat.getColor(this, R.color.white))
                                 .sizeDp(Constants.HAMBURGER_ICON_SIZE),
                         ContextCompat.getColor(this, R.color.material_lime_700))
                         .selectedIcon(
                                 new IconicsDrawable(this, FontAwesome.Icon.faw_upload)
-                                        .color(ContextCompat.getColor(this,R.color.white))
+                                        .color(ContextCompat.getColor(this, R.color.white))
                                         .sizeDp(Constants.HAMBURGER_ICON_SIZE)
                         )
                         .title("Envoyé(s)")
@@ -399,12 +424,12 @@ public class MainActivity extends DBActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         new IconicsDrawable(this, FontAwesome.Icon.faw_save)
-                                .color(ContextCompat.getColor(this,R.color.white))
+                                .color(ContextCompat.getColor(this, R.color.white))
                                 .sizeDp(Constants.HAMBURGER_ICON_SIZE),
                         ContextCompat.getColor(this, R.color.material_lime_700))
                         .selectedIcon(
                                 new IconicsDrawable(this, FontAwesome.Icon.faw_save2)
-                                        .color(ContextCompat.getColor(this,R.color.white))
+                                        .color(ContextCompat.getColor(this, R.color.white))
                                         .sizeDp(Constants.HAMBURGER_ICON_SIZE)
                         )
                         .title("Brouillon")

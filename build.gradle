@@ -35,7 +35,7 @@ project.ext {
     minSdkVersion = 19
     targetSdkVersion = 26
     compileSdkVersion = 26
-    androidSupportVersion = '26.1.0'
+    androidSupportVersion = '27.1.1'
     gmsVersion = '11.2.2'
     buildToolsVersion = '26.0.2'
 }

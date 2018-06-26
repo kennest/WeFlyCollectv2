@@ -6,12 +6,20 @@
   android:gravity="center"
   >
 
-  <FrameLayout
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="464dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-
-  </FrameLayout>
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/emailRecyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+    </LinearLayout>
+  </ScrollView>
 
 </LinearLayout>

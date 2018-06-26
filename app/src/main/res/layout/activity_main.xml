@@ -24,8 +24,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        >
+        android:background="@android:color/transparent">
         <FrameLayout
             android:id="@+id/tab"
             android:layout_width="match_parent"
@@ -36,11 +35,11 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/header"
-        />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -58,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="59dp"
-            android:layout_marginEnd="57dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
             app:bmb_autoHide="false"
             app:bmb_buttonEnum="ham"
             app:bmb_buttonPlaceEnum="buttonPlace_ham_5"

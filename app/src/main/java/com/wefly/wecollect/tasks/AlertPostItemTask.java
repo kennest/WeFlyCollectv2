@@ -8,7 +8,6 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 import com.wefly.wecollect.models.Alert;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.presenters.TaskPresenter;
-import com.wefly.wecollect.services.GPSTracker;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.Constants;
 
@@ -60,11 +59,10 @@ public class AlertPostItemTask extends TaskPresenter {
             Log.v("Alert Sent Response ", response.trim());
 
             //Store the response in the sharedPref
-            SharedPreferences sp = appController.getSharedPreferences("alert_sent_data", 0);
+            SharedPreferences sp = appController.getSharedPreferences("sent_data", 0);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("alert_sent_response", response);
+            editor.putString("sent_response", response);
             editor.apply();
-            editor.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,19 +151,17 @@ public class AlertPostItemTask extends TaskPresenter {
 //        }
             OkHttpClient client = new OkHttpClient();
             JSONObject json = new JSONObject();
-            GPSTracker gps = new GPSTracker(appController.getApplicationContext());
-
-            //Populate the json parameters
+                        //Populate the json parameters
             try {
                 json.put("titre", alert.getObject());
                 json.put("contenu", alert.getContent());
                 json.put("destinataires", alert.getRecipientsIds());
-                json.put("longitude", gps.getLocation().getLongitude());
-                json.put("latitude", gps.getLocation().getLatitude());
+                json.put("longitude", appController.longitude.toString());
+                json.put("latitude", appController.latitude.toString());
                 json.put("date_alerte", "2018-06-15T16:59:49.352849Z");
 
                 for (Map.Entry entry : appController.alert_categories.entrySet()) {
-                    if (entry.equals(alert.getCategory()))
+                    if (entry.getKey().equals(alert.getCategory()))
                         json.put("categorie", entry.getValue());
                 }
                 Log.v("ALERT JSON PARAMS", json.toString());

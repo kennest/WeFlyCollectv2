@@ -110,7 +110,6 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
 
         butList.clear();
         butList.add(bCancel);
-        butList.add(bClose);
         butList.add(bSend);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -224,18 +223,9 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         for (AppCompatImageButton btn : butList) {
             btn.setOnClickListener(this);
         }
+        bClose.setOnClickListener(v -> finish());
 
-        vImages.findViewById(R.id.liSelectImage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AnimeView(view, new AnimeView.OnAnimationEndCallBack() {
-                    @Override
-                    public void onEnd(@NonNull View view) {
-                        Pix.start(CreateAlertActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT);
-                    }
-                }).startAnimation();
-            }
-        });
+        vImages.findViewById(R.id.liSelectImage).setOnClickListener(view -> new AnimeView(view, view12 -> Pix.start(CreateAlertActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT)).startAnimation());
 
         vAudio.findViewById(R.id.liSelectImage).setOnClickListener(view -> new AnimeView(view, view1 -> {
             Log.v("Audio recordbtn", "clicked");
@@ -300,9 +290,13 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                     p.setContentUrl(Uri.fromFile(new File(p.getUrl())));
                     pieces.add(p);
 
-                    CopyOnWriteArrayList<Piece> pieces_with_audio = appController.getPieceList();
-                    Log.v("PIECE SIZE 1", String.valueOf(pieces_with_audio.size()));
+                    CopyOnWriteArrayList<Piece> pieces_with_audio=new CopyOnWriteArrayList<>() ;
+                    Log.v("PIECE SIZE 1", String.valueOf(appController.getPieceList().size()));
                     pieces_with_audio.addAll(pieces);
+
+                    for(Piece piece:pieces_with_audio){
+                        Log.v("PIECE PATH",piece.getUrl());
+                    }
                     appController.setPieceList(pieces_with_audio);
 
                     Log.v("PIECE SIZE 2", String.valueOf(pieces_with_audio.size()));
@@ -315,56 +309,6 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                 }
             }
             break;
-        }
-    }
-
-    private void onDisplayUi(@NonNull Alert sms, boolean isRestoreState, boolean isSaving, boolean isSending) {
-
-        if (isRestoreState) {
-            if (edContent != null && ciRecipients != null) {
-                edContent.setText(sms.getContent());
-
-                //Existing Sms
-                // old Selected recipients
-                if (sms.getRecipients().size() > 0) {
-                    for (Recipient dm : sms.getRecipients()) {
-                        ciRecipients.addChip(dm);
-                    }
-                }
-
-            }
-
-        }
-
-        if (isSaving) {
-            if (srvMain != null && liProgress != null) {
-                TextView textView = liProgress.findViewById(R.id.loadingTitleTView);
-                if (textView != null)
-                    textView.setText(R.string.saving);
-                srvMain.setVisibility(View.INVISIBLE);
-                liProgress.setVisibility(View.VISIBLE);
-            }
-        } else {
-            showUI();
-        }
-
-        if (isSending) {
-            if (srvMain != null && liProgress != null) {
-                srvMain.setVisibility(View.INVISIBLE);
-                liProgress.setVisibility(View.VISIBLE);
-            }
-        } else {
-            showUI();
-        }
-    }
-
-    private void showUI() {
-        if (srvMain != null && liProgress != null) {
-            if (srvMain.getVisibility() != View.VISIBLE)
-                srvMain.setVisibility(View.VISIBLE);
-            if (liProgress.getVisibility() != View.GONE)
-                liProgress.setVisibility(View.GONE);
-
         }
     }
 

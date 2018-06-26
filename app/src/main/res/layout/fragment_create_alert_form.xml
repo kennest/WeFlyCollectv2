@@ -79,22 +79,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               style="@style/ObjectStyle"
-              android:hint="@string/object" />
+              android:hint="@string/titre" />
 
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-          <EditText
-              android:id="@+id/edAttachement"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="@string/attachement"
-              android:drawableLeft="@drawable/ic_attachement"
-              style="@style/AttachementStyle"
-              />
         </android.support.design.widget.TextInputLayout>
 
 
