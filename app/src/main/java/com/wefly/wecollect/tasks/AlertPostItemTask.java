@@ -100,7 +100,7 @@ public class AlertPostItemTask extends TaskPresenter {
         //Envoi des pieces jointes
         if (appController.getPieceList().size() > 0) {
             Log.v("Alert Post Execute", "RUN");
-            new PieceUploadTask(pieces, null, alert).execute();
+            new PieceUploadTask(appController.getPieceList(), null, alert).execute();
         }
     }
 

@@ -56,7 +56,9 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
         PieceUploadNetworkUtilities util = new PieceUploadNetworkUtilities();
         String result = "";
         try {
-            result = util.uploadPiece(pieces, "PJ_" + System.nanoTime(), Constants.SEND_FILE_URL);
+            for (Piece p : pieces) {
+                result = util.uploadPiece(p, "PJ_" + System.nanoTime(), Constants.SEND_FILE_URL);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +72,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     }
 
     private final class PieceUploadNetworkUtilities {
-        private String uploadPiece(@Nullable List<Piece> piecesList, @Nullable String pieceName, @Nullable String url) throws IOException {
+        private String uploadPiece(@Nullable Piece piece, @Nullable String pieceName, @Nullable String url) throws IOException {
             Response response;
             Integer id = 0;
             try {
@@ -82,18 +84,17 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
 
             String result = "";
 
-            for (Piece p : piecesList) {
                 String encodedPiece = "";
                 try {
                     try {
-                        encodedPiece = new EncodeBase64().encode(p.getUrl());
+                        encodedPiece = new EncodeBase64().encode(piece.getUrl());
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                     OkHttpClient client = new OkHttpClient();
                     JSONObject dataJson = new JSONObject();
                     //Init Json data
-                    dataJson.put("piece_name", pieceName + p.getExtension(p.getUrl()));
+                    dataJson.put("piece_name", pieceName + piece.getExtension(piece.getUrl()));
                     dataJson.put("piece_b64", encodedPiece.trim());
                     if (email != null) {
                         dataJson.put("email", id);
@@ -104,7 +105,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
                     }
 
                     Log.v("PieceUploadTask params", dataJson.toString());
-                    Log.v("Piece path", p.getExtension(p.getUrl()));
+                    Log.v("Piece path", piece.getExtension(piece.getUrl()));
 
                     //Build request body
                     RequestBody body = RequestBody.create(JSON, dataJson.toString());
@@ -122,7 +123,6 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
             Log.v("Piece Upload Result", result);
             return result;
         }

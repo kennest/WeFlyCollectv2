@@ -289,17 +289,14 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                     myAudioAdapter.addAudio(p.getUrl());
                     p.setContentUrl(Uri.fromFile(new File(p.getUrl())));
                     pieces.add(p);
+                    appController.setPieceList(pieces);
 
-                    CopyOnWriteArrayList<Piece> pieces_with_audio=new CopyOnWriteArrayList<>() ;
                     Log.v("PIECE SIZE 1", String.valueOf(appController.getPieceList().size()));
-                    pieces_with_audio.addAll(pieces);
+                    //pieces_with_audio.add(p);
 
-                    for(Piece piece:pieces_with_audio){
-                        Log.v("PIECE PATH",piece.getUrl());
+                    for(Piece piece:appController.getPieceList()){
+                        System.out.println("PIECE EXT"+piece.getExtension(piece.getUrl()));
                     }
-                    appController.setPieceList(pieces_with_audio);
-
-                    Log.v("PIECE SIZE 2", String.valueOf(pieces_with_audio.size()));
 
                     if (audioRecyclerView.getVisibility() != View.VISIBLE)
                         audioRecyclerView.setVisibility(View.VISIBLE);

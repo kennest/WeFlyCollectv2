@@ -48,7 +48,8 @@ public class Piece {
 
 
     public String getExtension(String url) {
-        String ext = url.substring(url.lastIndexOf("."));
+        String ext="";
+               ext = url.substring(url.lastIndexOf("."));
         return ext;
     }
 }
