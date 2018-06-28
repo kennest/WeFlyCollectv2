@@ -10,7 +10,6 @@ import com.wefly.wecollect.adapters.emailAdapter;
 import com.wefly.wecollect.models.Email;
 import com.weflyagri.wecollect.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmailListActivity extends Activity {
@@ -27,12 +26,9 @@ public class EmailListActivity extends Activity {
 
         mRecyclerView=findViewById(R.id.emailRecyclerView);
 
-        list=new ArrayList<>();
-        list.add(new Email("Test 1","2018-06-15T16:59:49.352849Z"));
-        list.add(new Email("Test 2","2018-06-15T16:59:49.352849Z"));
+//        list=new ArrayList<>();
+//        list.add(new Email("Test 1","2018-06-15T16:59:49.352849Z"));
+//        list.add(new Email("Test 2","2018-06-15T16:59:49.352849Z"));
 
-        emailAdapter=new emailAdapter(list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(emailAdapter);
     }
 }

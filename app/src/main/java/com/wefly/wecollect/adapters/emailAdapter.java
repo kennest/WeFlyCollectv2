@@ -1,11 +1,13 @@
 package com.wefly.wecollect.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import com.wefly.wecollect.models.Email;
 import com.wefly.wecollect.utils.design.RobotoTextView;
@@ -15,64 +17,52 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class emailAdapter extends RecyclerView.Adapter<emailAdapter.Holder> {
+public class emailAdapter extends BaseAdapter {
+    private List<Email> list;
+    private Context context;
+    private LayoutInflater inflater;
 
-    List<Email> list;
-
-    public emailAdapter(List<Email> list) {
+    public emailAdapter(Context ctx,List<Email> list) {
         this.list = list;
+        this.context=ctx;
+        this.inflater=LayoutInflater.from(context);
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.row_item, parent, false);
-        return new Holder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(Holder holder, int position) {
-        holder.display(list.get(position));
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return list.size();
     }
 
+    @Override
+    public Email getItem(int position) {
+        return list.get(position);
+    }
 
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
 
-    class Holder extends RecyclerView.ViewHolder {
+    @SuppressLint("ViewHolder")
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-        CircleImageView image;
-        RobotoTextView date;
-        RobotoTextView objet;
-        //RobotoTextView expediteur;
+        convertView=inflater.inflate(R.layout.row_item,null);
 
-        CardView emailView;
+        RobotoTextView objet=convertView.findViewById(R.id.labelTView);
+        RobotoTextView expediteur=convertView.findViewById(R.id.expeditorTView);
+        CircleImageView image=convertView.findViewById(R.id.pImage);
+        RobotoTextView date=convertView.findViewById(R.id.dateTView);
 
-        public Holder(View itemView) {
-            super(itemView);
+        Email e=getItem(position);
 
-            emailView = itemView.findViewById(R.id.card_view_layout);
+        objet.setText(e.getObject());
+        expediteur.setText(e.getExpediteur());
+        date.setText(e.getDateCreated());
+        image.setImageResource(R.drawable.email);
 
-            image = itemView.findViewById(R.id.pImage);
-            date = itemView.findViewById(R.id.dateTView);
-            objet = itemView.findViewById(R.id.labelTView);
-            //expediteur = itemView.findViewById(R.id.expeditorTView);
+        convertView.setOnClickListener(v -> Toast.makeText(context,expediteur.getText()+" clicked!",Toast.LENGTH_SHORT).show());
 
-        }
-
-        void display(Email email) {
-            image.setImageResource(R.drawable.email);
-            date.setText(email.getDateCreated());
-            objet.setText(email.getObject());
-            //expediteur.setText((CharSequence) email.getRecipientsIds());
-        }
+        return convertView;
     }
 }

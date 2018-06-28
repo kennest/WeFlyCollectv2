@@ -20,7 +20,7 @@
         app:showChipDetailed="false"
         android:background="@color/white"
         android:textColor="@color/gray_two"
-        app:hint="Entrez le nom de la personne"
+        app:hint="@string/recipient_name_hint"
         app:hintColor="@color/gray_two" />
 
 </LinearLayout>

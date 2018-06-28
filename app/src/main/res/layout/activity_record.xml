@@ -28,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="81dp"
         android:backgroundTint="#30b619"
-        android:text="Stopper et Sauvegarder"
+        android:text="@string/stopper_et_sauvegarder"
         android:textColor="#FFFF" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="148dp"
-        android:text="Enregistrement en cours..."
+        android:text="@string/enregistrement_en_cours"
         android:textColor="#35ae31"
         android:textSize="20sp"
         android:textStyle="bold" />

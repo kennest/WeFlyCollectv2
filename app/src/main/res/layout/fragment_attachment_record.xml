@@ -29,6 +29,15 @@
             android:text="@string/icon_select_audio"
             android:textColor="@color/colorPrimary"
             android:textSize="110dp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Rec_hint"
+            android:textColor="#35ae31"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
     </LinearLayout>
 
 </LinearLayout>

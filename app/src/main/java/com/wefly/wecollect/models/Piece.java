@@ -1,10 +1,17 @@
 package com.wefly.wecollect.models;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
+
+import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.ChipInterface;
+import com.wefly.wecollect.utils.AppController;
+import com.weflyagri.wecollect.R;
 
 import java.io.File;
 
-public class Piece {
+public class Piece implements ChipInterface{
     private String url;
     private Uri contentUrl;
     private Integer email;
@@ -51,5 +58,32 @@ public class Piece {
         String ext="";
                ext = url.substring(url.lastIndexOf("."));
         return ext;
+    }
+
+
+    //CHIPS INPUT METHODS
+    @Override
+    public Object getId() {
+        return null;
+    }
+
+    @Override
+    public Uri getAvatarUri() {
+        return null;
+    }
+
+    @Override
+    public Drawable getAvatarDrawable() {
+        return ContextCompat.getDrawable(AppController.getInstance().getApplicationContext(), R.drawable.ic_attachement);
+    }
+
+    @Override
+    public String getLabel() {
+        return "PJ_"+this.getExtension(this.getUrl());
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
     }
 }

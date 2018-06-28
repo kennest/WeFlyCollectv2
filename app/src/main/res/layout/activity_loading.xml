@@ -9,8 +9,8 @@
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
         style="@style/SpinKitView.Large.CubeGrid"
-        android:layout_width="321dp"
-        android:layout_height="437dp"
+        android:layout_width="269dp"
+        android:layout_height="192dp"
         android:layout_gravity="center"
         app:SpinKit_Color="#30b619" />
 

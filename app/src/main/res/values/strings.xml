@@ -27,10 +27,10 @@
     <string name="exit">Quitter</string>
     <string name="empty_string">Sed ut perspiciatis unde omnis </string>
     <string name="recipients">Destinataire(s)</string>
-    <string name="content">Contenu</string>
+    <string name="content">Content</string>
     <string name="email">Email</string>
     <string name="objet">Objet</string>
-    <string name="titre">Titre</string>
+    <string name="titre">Title</string>
     <string name="attachement">Pièce jointe</string>
     <string name="send">Envoyer</string>
     <string name="sender">Expéditeur</string>
@@ -84,4 +84,9 @@
 
     <string name="ic_fonte_error_api">&#xe89e;</string>
     <string name="title_activity_loading">LoadingActivity</string>
+    <string name="Pix_hint">Take a Picture</string>
+    <string name="Rec_hint">Record a sound</string>
+    <string name="recipient_name_hint">Enter a recipient name</string>
+    <string name="stopper_et_sauvegarder">Stop Recording and save</string>
+    <string name="enregistrement_en_cours">Recording</string>
 </resources>

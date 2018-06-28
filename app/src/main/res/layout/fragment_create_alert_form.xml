@@ -20,8 +20,7 @@
       android:layout_marginStart="@dimen/activity_horizontal_margin_custom"
       android:layout_marginEnd="@dimen/activity_horizontal_margin_custom"
       android:layout_marginRight="@dimen/activity_horizontal_margin_custom"
-      android:elevation="@dimen/elevation_custom"
-      >
+      android:elevation="@dimen/elevation_custom">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:orientation="vertical"
@@ -49,6 +48,18 @@
           android:padding="5dp"/>
 
       <include layout="@layout/recipients_layout"/>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/chipAttachement"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:hint="@string/attachement"/>
+      </LinearLayout>
 
       <LinearLayout
           android:layout_width="match_parent"

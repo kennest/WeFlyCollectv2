@@ -156,7 +156,6 @@ public class ChipsInput extends ScrollViewMaxHeight {
             mChipsAdapter.addChip(chip);
         if (isMaxIsOne())
             locked= true;
-
     }
 
     public void addChip(Object id, Drawable icon, String label, String info) {

@@ -20,12 +20,22 @@ public class Email extends Common implements Serializable {
     private String attachment;
     private String dateCreated;
     private String stRecipients;
+    private String expediteur;
     private CopyOnWriteArrayList<Recipient> recipients = new CopyOnWriteArrayList<>();
 
-    public Email(String object, String dateCreated) {
+    public Email(String object, String dateCreated,String content) {
         this.object = object;
         this.dateCreated = dateCreated;
         this.recipients = recipients;
+        this.content=content;
+    }
+
+    public String getExpediteur() {
+        return expediteur;
+    }
+
+    public void setExpediteur(String expediteur) {
+        this.expediteur = expediteur;
     }
 
     public Email() {

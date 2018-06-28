@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -24,10 +25,10 @@ import com.wefly.wecollect.activities.CreateAlertActivity;
 import com.wefly.wecollect.activities.CreateEmailActivity;
 import com.wefly.wecollect.activities.CreateSMSActivity;
 import com.wefly.wecollect.activities.EmailListActivity;
-import com.wefly.wecollect.activities.LoginActivity;
 import com.wefly.wecollect.adapters.emailAdapter;
 import com.wefly.wecollect.models.Email;
 import com.wefly.wecollect.presenters.DBActivity;
+import com.wefly.wecollect.tasks.EmailReceiveGetTask;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.BuilderManager;
 import com.wefly.wecollect.utils.Constants;
@@ -35,6 +36,7 @@ import com.weflyagri.wecollect.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
@@ -46,6 +48,7 @@ public class MainActivity extends DBActivity {
     private RelativeLayout rLayout;
     View vEmail, vSms, vAlert;
     View vsSent, vsReceive, vsDraft;
+    List<Email> emailList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,20 +285,21 @@ public class MainActivity extends DBActivity {
 //    }
 
     protected void loadEmailList(View v) {
+
         //On charge la page email avec les emails
-        RecyclerView mRecyclerView;
-        List<Email> list;
-        emailAdapter emailAdapter;
+        try {
+            emailList = new EmailReceiveGetTask(appController).execute().get();
+            Log.v(getPackageName() + "emailList Size", String.valueOf(emailList.size()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        ListView emailListView = v.findViewById(R.id.emailListView);
 
-        mRecyclerView = v.findViewById(R.id.emailRecyclerView);
-
-        list = new ArrayList<>();
-        list.add(new Email("Email test 1", "2018-06-15"));
-        list.add(new Email("Email test 2", "2018-06-15"));
-
-        emailAdapter = new emailAdapter(list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(emailAdapter);
+        if (emailList.size() > 0) {
+            emailListView.setAdapter(new emailAdapter(getApplicationContext(), emailList));
+        }
     }
 
     @Override

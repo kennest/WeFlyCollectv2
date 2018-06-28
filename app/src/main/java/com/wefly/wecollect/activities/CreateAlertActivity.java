@@ -1,5 +1,6 @@
 package com.wefly.wecollect.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -22,10 +23,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.fxn.pix.Pix;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.Chip;
 import com.wefly.wecollect.adapters.audioAdapter;
 import com.wefly.wecollect.adapters.imageAdapter;
 import com.wefly.wecollect.models.Alert;
@@ -58,6 +60,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
     imageAdapter myAdapter;
     CopyOnWriteArrayList<Piece> pieces = new CopyOnWriteArrayList<>();
     Piece p = new Piece();
+    ChipsInput ChipsAttachments;
     private EditText edObject, edContent;
     private RelativeLayout rlMain;
     private audioAdapter myAudioAdapter;
@@ -100,6 +103,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         iniChipInput();
     }
 
+    @SuppressLint("RestrictedApi")
     private void iniViewAndColors() {
         bCancel = vForm.findViewById(R.id.btnCancel);
         bClose = vForm.findViewById(R.id.btnClose);
@@ -230,7 +234,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         vAudio.findViewById(R.id.liSelectImage).setOnClickListener(view -> new AnimeView(view, view1 -> {
             Log.v("Audio recordbtn", "clicked");
             Intent recorder = new Intent(CreateAlertActivity.this, RecorderActivity.class);
-            startActivityForResult(recorder, 101);
+            startActivityForResult(recorder, 352);
         }).startAnimation());
     }
 
@@ -255,10 +259,13 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
+        ChipsAttachments = findViewById(R.id.chipAttachement);
         switch (requestCode) {
-            case (100): {
+            case 100:
                 if (resultCode == Activity.RESULT_OK) {
+
                     ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                     myAdapter.AddImage(returnValue);
                     if (recyclerView.getVisibility() != View.VISIBLE)
@@ -269,7 +276,9 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                         try {
                             p.setUrl(PathUtil.getPath(this, Uri.fromFile(new File(r))));
                             p.setContentUrl(Uri.fromFile(new File(r)));
-                            Log.v("Image URI", p.getContentUrl().toString());
+                            ChipsAttachments.addChip(p.getAvatarDrawable(), p.getLabel(), p.getExtension(p.getUrl()));
+                            Log.v("Image URL", p.getUrl());
+
                             pieces.add(p);
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
@@ -278,25 +287,31 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                     //Stockons les pieces dans l'appcontroller
                     appController.setPieceList(pieces);
                 }
-            }
-            break;
-            case (101): {
+                break;
+            case 352:
                 if (resultCode == 200) {
-
-                    Piece p = new Piece();
                     //Fill the path
-                    p.setUrl(Objects.requireNonNull(data.getExtras()).getString("audioPath"));
-                    myAudioAdapter.addAudio(p.getUrl());
-                    p.setContentUrl(Uri.fromFile(new File(p.getUrl())));
+                    Piece audio = new Piece();
+                    audio.setUrl(data.getExtras().getString("audioPath"));
+                    audio.setContentUrl(Uri.fromFile(new File(audio.getUrl())));
+                    Chip chip=new Chip(audio.getAvatarDrawable(),audio.getLabel(),audio.getExtension(audio.getUrl()));
+                    if(!audio.equals(null))
+                        ChipsAttachments = vForm.findViewById(R.id.chipAttachement);
+                        ChipsAttachments.addChip(chip);
+                    Log.v("Audio URL", audio.getUrl());
+
                     pieces.add(p);
+                    myAudioAdapter.addAudio(p.getUrl());
+
+                    for (Piece item : appController.getPieceList()) {
+                        System.out.println("PIECE EXT" + item.getExtension(item.getUrl()));
+                    }
+
+                    //Log.v("PIECE SIZE 1", String.valueOf(pieces.size()));
+
                     appController.setPieceList(pieces);
 
                     Log.v("PIECE SIZE 1", String.valueOf(appController.getPieceList().size()));
-                    //pieces_with_audio.add(p);
-
-                    for(Piece piece:appController.getPieceList()){
-                        System.out.println("PIECE EXT"+piece.getExtension(piece.getUrl()));
-                    }
 
                     if (audioRecyclerView.getVisibility() != View.VISIBLE)
                         audioRecyclerView.setVisibility(View.VISIBLE);
@@ -304,9 +319,10 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                 } else {
                     Log.v("AUDIO PATH", "ERROR");
                 }
-            }
-            break;
+                break;
         }
+
+        Log.v("PIECE SIZE ", String.valueOf(pieces.size()));
     }
 
     @Override
@@ -314,7 +330,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         super.onSendSucces(s);
 //        if (liMain != null)
 //            Utils.showToast(this, R.string.email_sent, liMain);
-//        finish();
+        finish();
     }
 
     @Override

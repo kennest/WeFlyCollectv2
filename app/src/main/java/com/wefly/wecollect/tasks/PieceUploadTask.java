@@ -56,9 +56,10 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
         PieceUploadNetworkUtilities util = new PieceUploadNetworkUtilities();
         String result = "";
         try {
-            for (Piece p : pieces) {
-                result = util.uploadPiece(p, "PJ_" + System.nanoTime(), Constants.SEND_FILE_URL);
-            }
+            if(pieces.size()>0)
+                for (Piece p : pieces) {
+                    result = util.uploadPiece(p, "PJ_" + System.nanoTime(), Constants.SEND_FILE_URL);
+                }
         } catch (IOException e) {
             e.printStackTrace();
         }

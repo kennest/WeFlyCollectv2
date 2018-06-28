@@ -30,12 +30,9 @@ public class RecorderActivity extends Activity {
         setContentView(R.layout.activity_record);
 
         btnSave = findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StopRecord();
-                finish();
-            }
+        btnSave.setOnClickListener(v -> {
+            StopRecord();
+            finish();
         });
 
         Thread thread = new Thread() {
@@ -53,7 +50,7 @@ public class RecorderActivity extends Activity {
         audioPath = Environment
                 .getExternalStorageDirectory()
                 .getAbsolutePath() +
-                File.separator + System.nanoTime() + ".file.m4a";
+                File.separator + System.nanoTime() + ".m4a";
         mAudioFile = new File(audioPath);
         mAudioRecorder.prepareRecord(MediaRecorder.AudioSource.MIC,
                 MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.AudioEncoder.AAC,
@@ -64,12 +61,10 @@ public class RecorderActivity extends Activity {
 
     @Override
     public void finish() {
-        // Create one data intent
-        Intent data = new Intent();
         audioPathList.add(audioPath);
+        getIntent().putExtra("audioPath", audioPath);
         Log.v("RECORD FILEPATH", audioPath);
-        data.putExtra("audioPath", audioPath);
-        setResult(200, data);
+        setResult(200, getIntent());
         super.finish();
     }
 
