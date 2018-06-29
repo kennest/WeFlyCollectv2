@@ -113,15 +113,15 @@ public class LoginActivity extends BaseActivity implements LoginTask.OnLoginList
     }
 
     private void iniView() {
-        login = (AppCompatImageButton) findViewById(R.id.loginBtn);
+        login = findViewById(R.id.loginBtn);
 
-        rlMain = (RelativeLayout) findViewById(R.id.Rlayout);
+        rlMain = findViewById(R.id.Rlayout);
 
-        liMain = (LinearLayout) findViewById(R.id.liMain);
-        liLoading = (LinearLayout) findViewById(R.id.liLoading);
+        liMain = findViewById(R.id.liMain);
+        liLoading = findViewById(R.id.liLoading);
 
-        edName = (EditText) findViewById(R.id.nameEdText);
-        edPassword = (EditText) findViewById(R.id.passwordEdText);
+        edName = findViewById(R.id.nameEdText);
+        edPassword = findViewById(R.id.passwordEdText);
     }
 
     private void onDisplayUI(boolean canDisplayUI, boolean canDisableBtn, boolean isLoginError, boolean isServerError) {

@@ -298,7 +298,7 @@ public class BoomMenuButton extends FrameLayout implements InnerOnBoomButtonClic
     }
 
     private void initShadow() {
-        if (shadow == null) shadow = (BMBShadow) findViewById(R.id.shadow);
+        if (shadow == null) shadow = findViewById(R.id.shadow);
         boolean hasShadow = shadowEffect && backgroundEffect && !inList;
         shadow.setShadowEffect(hasShadow);
         if (hasShadow) {
@@ -313,7 +313,7 @@ public class BoomMenuButton extends FrameLayout implements InnerOnBoomButtonClic
     }
 
     private void initButton() {
-        if (button == null) button = (FrameLayout) findViewById(R.id.button);
+        if (button == null) button = findViewById(R.id.button);
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

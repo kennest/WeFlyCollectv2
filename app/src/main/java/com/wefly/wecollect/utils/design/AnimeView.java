@@ -47,7 +47,7 @@ public final class AnimeView {
         }
     }
 
-    public static interface OnAnimationEndCallBack {
+    public interface OnAnimationEndCallBack {
         void onEnd(@NonNull final View view);
     }
 

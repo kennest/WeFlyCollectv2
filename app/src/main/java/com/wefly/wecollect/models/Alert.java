@@ -2,21 +2,39 @@ package com.wefly.wecollect.models;
 
 import android.support.annotation.NonNull;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import java.io.Serializable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by admin on 07/06/2018.
  */
-
-public class Alert extends Common implements Serializable {
+@Table(name = "alertes")
+public class Alert extends Model implements Serializable {
     private static final long serialVersionUID = 10L;
+
+    @Column(name = "id")
     private int alertId;
+
+    @Column(name ="objet")
     private String object;
+
+    @Column(name = "contenu")
     private String content;
+
+    @Column(name = "categorie")
     private String category;
+
+    @Column(name = "date_creation")
     private String dateCreated;
+
+
     private String stRecipients;
+
+    @Column(name = "destinataires")
     private CopyOnWriteArrayList<Recipient> recipients = new CopyOnWriteArrayList<>();
 
     public String getDateCreated() {

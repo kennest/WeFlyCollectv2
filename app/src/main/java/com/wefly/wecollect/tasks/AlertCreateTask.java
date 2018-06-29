@@ -77,7 +77,7 @@ public class AlertCreateTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    public static interface OnAlertSaveCompleteListener {
+    public interface OnAlertSaveCompleteListener {
         void onSaveError(@NonNull Alert a, @NonNull View view);
 
         void onSaveSucces(@NonNull Alert a, @NonNull View view);

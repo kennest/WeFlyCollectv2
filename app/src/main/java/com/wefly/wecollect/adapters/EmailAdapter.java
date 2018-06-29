@@ -2,7 +2,6 @@ package com.wefly.wecollect.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,12 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class emailAdapter extends BaseAdapter {
+public class EmailAdapter extends BaseAdapter {
     private List<Email> list;
     private Context context;
     private LayoutInflater inflater;
 
-    public emailAdapter(Context ctx,List<Email> list) {
+    public EmailAdapter(Context ctx, List<Email> list) {
         this.list = list;
         this.context=ctx;
         this.inflater=LayoutInflater.from(context);

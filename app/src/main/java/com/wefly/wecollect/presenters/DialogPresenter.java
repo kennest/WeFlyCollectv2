@@ -35,7 +35,7 @@ public class DialogPresenter {
         }
     }
 
-    public static interface OnDialogListener {
+    public interface OnDialogListener {
         void onSaveRequest();
 
         void onDeleteRequest();

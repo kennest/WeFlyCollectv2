@@ -12,11 +12,11 @@ import com.weflyagri.wecollect.R;
 
 import java.util.ArrayList;
 
-public class audioAdapter extends RecyclerView.Adapter<audioAdapter.Holder> {
+public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.Holder> {
     Context context;
     ArrayList<JcAudio> jcAudios = new ArrayList<>();
 
-    public audioAdapter(Context context) {
+    public AudioAdapter(Context context) {
         this.context = context;
     }
 

@@ -49,6 +49,18 @@
 
       <include layout="@layout/recipients_layout"/>
 
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/chipAttachement"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:hint="@string/attachement"/>
+      </LinearLayout>
+
       <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

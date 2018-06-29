@@ -280,14 +280,14 @@ public abstract class BoomButton extends FrameLayout {
     }
 
     protected void initTextOutsideCircleButtonLayout() {
-        layout = (ViewGroup) findViewById(R.id.layout);
+        layout = findViewById(R.id.layout);
         FrameLayout.LayoutParams params = new LayoutParams(trueRadius * 2, trueRadius * 2);
         layout.setLayoutParams(params);
     }
 
     protected void initShadow(int shadowCornerRadius) {
         if (shadowEffect) {
-            shadow = (BMBShadow) findViewById(R.id.shadow);
+            shadow = findViewById(R.id.shadow);
             shadow.setShadowOffsetX(shadowOffsetX);
             shadow.setShadowOffsetY(shadowOffsetY);
             shadow.setShadowColor(shadowColor);
@@ -387,7 +387,7 @@ public abstract class BoomButton extends FrameLayout {
 
     @SuppressLint("NewApi")
     protected void initCircleButton() {
-        button = (FrameLayout) findViewById(R.id.button);
+        button = findViewById(R.id.button);
         LayoutParams params = (LayoutParams) button.getLayoutParams();
         params.width = buttonRadius * 2;
         params.height = buttonRadius * 2;
@@ -464,7 +464,7 @@ public abstract class BoomButton extends FrameLayout {
 
     @SuppressLint("NewApi")
     protected void initHamButton() {
-        button = (FrameLayout) findViewById(R.id.button);
+        button = findViewById(R.id.button);
         LayoutParams params = (LayoutParams) button.getLayoutParams();
         params.width = buttonWidth;
         params.height = buttonHeight;

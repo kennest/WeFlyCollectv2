@@ -56,6 +56,7 @@ public class onboardActivity extends AhoyOnboarderActivity {
         pages.add(lastCard);
         setOnboardPages(pages);
         setImageBackground(R.drawable.img_background);
+        setFinishButtonTitle("Démarrer");
     }
 
     @Override

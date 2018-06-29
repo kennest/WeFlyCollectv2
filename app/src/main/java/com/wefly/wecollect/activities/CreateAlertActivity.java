@@ -28,8 +28,8 @@ import com.fxn.pix.Pix;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.Chip;
-import com.wefly.wecollect.adapters.audioAdapter;
-import com.wefly.wecollect.adapters.imageAdapter;
+import com.wefly.wecollect.adapters.AudioAdapter;
+import com.wefly.wecollect.adapters.ImageAdapter;
 import com.wefly.wecollect.models.Alert;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
@@ -42,35 +42,31 @@ import com.wefly.wecollect.utils.design.AnimeView;
 import com.weflyagri.wecollect.R;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class CreateAlertActivity extends FormActivity implements View.OnClickListener {
-
     static Map<String, Integer> response_category = new HashMap<>();
     protected Alert alert;
     View vForm, vImages, vAudio;
     RecyclerView recyclerView, audioRecyclerView;
-    imageAdapter myAdapter;
+    ImageAdapter myAdapter;
     CopyOnWriteArrayList<Piece> pieces = new CopyOnWriteArrayList<>();
     Piece p = new Piece();
     ChipsInput ChipsAttachments;
     private EditText edObject, edContent;
     private RelativeLayout rlMain;
-    private audioAdapter myAudioAdapter;
+    private AudioAdapter myAudioAdapter;
     private Spinner category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alert);
-
         // Form fragment
         vForm = LayoutInflater.from(getBaseContext()).inflate(R.layout.fragment_create_alert_form, null, false);
 
@@ -90,6 +86,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                 category_list.add((String) entry.getKey());
             }
         }
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category_list);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(spinnerAdapter);
@@ -139,7 +136,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
 
 
         // Setup custom tab
-        ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
+        ViewGroup tab = findViewById(R.id.tab);
         tab.addView(LayoutInflater.from(this).inflate(R.layout.fragment_main, tab, false));
 
         ViewPager viewPager = findViewById(R.id.viewpager);
@@ -186,10 +183,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                     container.addView(mView);
                     return mView;
                 }
-
-
                 return view;
-
             }
         });
         viewPagerTab.setViewPager(viewPager);
@@ -213,13 +207,13 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         // Setup multiimage picker
         recyclerView = vImages.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new imageAdapter(this);
+        myAdapter = new ImageAdapter(this);
         recyclerView.setAdapter(myAdapter);
 
         //List recorded audio
         audioRecyclerView = vAudio.findViewById(R.id.AudiorecyclerView);
         audioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAudioAdapter = new audioAdapter(this);
+        myAudioAdapter = new AudioAdapter(this);
         audioRecyclerView.setAdapter(myAudioAdapter);
     }
 
@@ -248,7 +242,7 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         if (sAlert != null) {
             sAlert.setObject(edObject.getText().toString().trim());
             sAlert.setContent(edContent.getText().toString().trim());
-            sAlert.setCategory((String) category.getSelectedItem().toString());
+            sAlert.setCategory(category.getSelectedItem().toString());
             recipientsSelected.clear();
             List<Recipient> list = (List<Recipient>) ciRecipients.getSelectedChipList();
             recipientsSelected.addAll(list);
@@ -263,45 +257,44 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         ChipsAttachments = findViewById(R.id.chipAttachement);
         switch (requestCode) {
-            case 100:
+            case (100): {
                 if (resultCode == Activity.RESULT_OK) {
 
                     ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+                    ChipsAttachments = vForm.findViewById(R.id.chipAttachement);
                     myAdapter.AddImage(returnValue);
                     if (recyclerView.getVisibility() != View.VISIBLE)
                         recyclerView.setVisibility(View.VISIBLE);
 
                     //On recupere la liste des URL des images
                     for (String r : returnValue) {
-                        try {
-                            p.setUrl(PathUtil.getPath(this, Uri.fromFile(new File(r))));
-                            p.setContentUrl(Uri.fromFile(new File(r)));
-                            ChipsAttachments.addChip(p.getAvatarDrawable(), p.getLabel(), p.getExtension(p.getUrl()));
-                            Log.v("Image URL", p.getUrl());
+                        p.setUrl(PathUtil.getPath(this, Uri.fromFile(new File(r))));
+                        p.setContentUrl(Uri.fromFile(new File(r)));
+                        ChipsAttachments.addChip(p.getAvatarDrawable(), p.getLabel(), p.getExtension(p.getUrl()));
 
-                            pieces.add(p);
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        Log.v("Image URL", p.getUrl());
+
+                        pieces.add(p);
                     }
                     //Stockons les pieces dans l'appcontroller
                     appController.setPieceList(pieces);
                 }
-                break;
-            case 352:
+            }
+            break;
+            case (352): {
                 if (resultCode == 200) {
                     //Fill the path
                     Piece audio = new Piece();
                     audio.setUrl(data.getExtras().getString("audioPath"));
                     audio.setContentUrl(Uri.fromFile(new File(audio.getUrl())));
-                    Chip chip=new Chip(audio.getAvatarDrawable(),audio.getLabel(),audio.getExtension(audio.getUrl()));
-                    if(!audio.equals(null))
+                    Chip chip = new Chip(audio.getAvatarDrawable(), audio.getLabel(), audio.getExtension(audio.getUrl()));
+                    if (!audio.equals(null))
                         ChipsAttachments = vForm.findViewById(R.id.chipAttachement);
-                        ChipsAttachments.addChip(chip);
+                    ChipsAttachments.addChip(chip);
                     Log.v("Audio URL", audio.getUrl());
 
-                    pieces.add(p);
-                    myAudioAdapter.addAudio(p.getUrl());
+                    pieces.add(audio);
+                    myAudioAdapter.addAudio(audio.getUrl());
 
                     for (Piece item : appController.getPieceList()) {
                         System.out.println("PIECE EXT" + item.getExtension(item.getUrl()));
@@ -319,7 +312,8 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
                 } else {
                     Log.v("AUDIO PATH", "ERROR");
                 }
-                break;
+            }
+            break;
         }
 
         Log.v("PIECE SIZE ", String.valueOf(pieces.size()));
@@ -336,5 +330,20 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveInput();
+        //appController.manager.createAlert(sAlert);
+        if (sAlert != null) {
+            if (sAlert.getRecipients().size() > 0 || !sAlert.getContent().equals("")) {
+                showDialog(null, null, sAlert);
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
 }

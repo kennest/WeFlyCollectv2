@@ -1,5 +1,6 @@
 package com.wefly.wecollect.presenters;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,10 +22,6 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.daimajia.numberprogressbar.OnProgressBarListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
-import com.orhanobut.dialogplus.OnCancelListener;
-import com.orhanobut.dialogplus.OnClickListener;
-import com.orhanobut.dialogplus.OnDismissListener;
-import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.pchmn.materialchips.ChipsInput;
 import com.wefly.wecollect.models.Alert;
@@ -63,15 +60,16 @@ public class FormActivity extends DBActivity implements RecipientPresenter.OnRec
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("RestrictedApi")
     protected void iniViewColors() {
-        bCancel = (AppCompatImageButton) findViewById(R.id.btnCancel);
-        bClose = (AppCompatImageButton) findViewById(R.id.btnClose);
-        bSend = (AppCompatImageButton) findViewById(R.id.btnSend);
-        bnp = (NumberProgressBar) findViewById(R.id.numberbar1);
-        liMain = (LinearLayout) findViewById(R.id.liMain);
-        liLoading = (LinearLayout) findViewById(R.id.liLoadingNum);
-        liProgress = (LinearLayout) findViewById(R.id.liLoading);
-        srvMain = (ScrollView) findViewById(R.id.srvMain);
+        bCancel = findViewById(R.id.btnCancel);
+        bClose = findViewById(R.id.btnClose);
+        bSend = findViewById(R.id.btnSend);
+        bnp = findViewById(R.id.numberbar1);
+        liMain = findViewById(R.id.liMain);
+        liLoading = findViewById(R.id.liLoadingNum);
+        liProgress = findViewById(R.id.liLoading);
+        srvMain = findViewById(R.id.srvMain);
         butList.clear();
         butList.add(bCancel);
         butList.add(bClose);
@@ -396,51 +394,41 @@ public class FormActivity extends DBActivity implements RecipientPresenter.OnRec
                 .setHeader(R.layout.header)
                 .setCancelable(true)
                 .setGravity(Gravity.BOTTOM)
-                .setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(DialogPlus dialogPlus, View v) {
-                        switch (v.getId()) {
-                            case R.id.noButton:
-                                pre.shouldNotify(false);
-                                dialogPlus.dismiss();
-                                break;
+                .setOnClickListener((dialogPlus, v) -> {
+                    switch (v.getId()) {
+                        case R.id.noButton:
+                            pre.shouldNotify(false);
+                            dialogPlus.dismiss();
+                            break;
 
-                            case R.id.yesButton:
-                                // Can Save
-                                if (email != null) {
-                                    // SAVE EMAIL
-                                } else if (sms != null) {
-                                    // SAVE SMS
-                                    pre.shouldNotify(true);
+                        case R.id.yesButton:
+                            // Can Save
+                            if (email != null) {
+                                // SAVE EMAIL
+                                pre.shouldNotify(true);
+                            } else if (sms != null) {
+                                // SAVE SMS
+                                pre.shouldNotify(true);
 
-                                } else if (alert != null) {
-                                    // SAVE ALERT
-                                }
+                            } else if (alert != null) {
+                                // SAVE ALERT
+                                pre.shouldNotify(true);
+                            }
 
-                                dialogPlus.dismiss();
-                            default:
-                                break;
-
-                        }
-                    }
-                })
-                .setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(DialogPlus dialog, Object item, View v, int position) {
+                            dialogPlus.dismiss();
+                        default:
+                            break;
 
                     }
                 })
-                .setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogPlus dialogPlus) {
+                .setOnItemClickListener((dialog1, item, v, position) -> {
 
-                    }
                 })
-                .setOnCancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogPlus dialogPlus) {
+                .setOnDismissListener(dialogPlus -> {
 
-                    }
+                })
+                .setOnCancelListener(dialogPlus -> {
+
                 })
                 .create();
 //        Button btnNo = (Button) dialog.findViewById(R.id.noButton);

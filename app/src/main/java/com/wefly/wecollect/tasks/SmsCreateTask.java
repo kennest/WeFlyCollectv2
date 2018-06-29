@@ -32,7 +32,7 @@ public class SmsCreateTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPreExecute() {
         super.onPreExecute();
         try {
-            dotsTView = (DotsTextView) act.findViewById(R.id.dots);
+            dotsTView = act.findViewById(R.id.dots);
             dotsTView.showAndPlay();
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class SmsCreateTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    public static interface OnSmsSaveCompleteListener {
+    public interface OnSmsSaveCompleteListener {
         void onSaveError(@NonNull Sms s);
 
         void onSaveSucces(@NonNull Sms s);

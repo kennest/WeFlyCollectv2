@@ -94,6 +94,7 @@ public class DBActivity extends BaseActivity implements SmsPostItemTask.OnSmsSen
     protected void sendAlert(@NonNull Alert alert) {
         Log.v(TAG + "send alert", "RUN");
         AlertPostItemTask task = new AlertPostItemTask(alert);
+        task.setOnAlertSendListener(this);
         task.execute();
     }
 

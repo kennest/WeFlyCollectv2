@@ -7,12 +7,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 public class EncodeBase64 {
 
-    public String encode(String filepath) throws IOException {
-        FileInputStream fileInputStream = null;
+    public String encode(String filepath) {
+        FileInputStream fileInputStream;
         String val = "";
         try {
             File f = new File(filepath);

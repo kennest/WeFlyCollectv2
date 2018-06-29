@@ -258,8 +258,6 @@ public class CreateSMSActivity extends FormActivity implements View.OnClickListe
         } else {
             super.onBackPressed();
         }
-
-
     }
 
 

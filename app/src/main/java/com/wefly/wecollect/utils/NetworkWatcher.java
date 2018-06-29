@@ -46,7 +46,7 @@ public class NetworkWatcher {
                         });
                 snackbar.setActionTextColor(Color.RED);
                 View sbView = snackbar.getView();
-                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
                 textView.setTextColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
                 snackbar.show();
                 notifyOnInternetListener(false, false);
@@ -79,7 +79,7 @@ public class NetworkWatcher {
                         });
                 snackbar.setActionTextColor(Color.RED);
                 View sbView = snackbar.getView();
-                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
                 textView.setTextColor(ContextCompat.getColor(ctx, R.color.colorPrimary));
                 snackbar.show();
             } catch (Exception e){
@@ -100,13 +100,13 @@ public class NetworkWatcher {
 
     }
 
-    public static interface OnInternetListener {
+    public interface OnInternetListener {
         void onConnected();
         void onNotConnected();
         void onRetry();
     }
 
-    public static interface OnOffLineListener {
+    public interface OnOffLineListener {
         void onOffLine();
         void onOnLine();
     }

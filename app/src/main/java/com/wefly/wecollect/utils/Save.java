@@ -298,7 +298,7 @@ public class Save {
         list.remove(element);
         int[] output = new int[input.length - 1];
         for (int i = 0; i < list.size(); i++)
-            output[i] = (int) list.get(i);
+            output[i] = list.get(i);
 
         return output;
     }
@@ -318,7 +318,7 @@ public class Save {
         list.remove(element);
         String[] output = new String[input.length - 1];
         for (int i = 0; i < list.size(); i++)
-            output[i] = (String) list.get(i);
+            output[i] = list.get(i);
 
         return output;
     }
@@ -330,7 +330,7 @@ public class Save {
         return editor.commit();
     }
 
-    public static @Nullable String defaultLoadString(@NonNull String key, @NonNull final Context context) throws Exception{
+    public static @Nullable String defaultLoadString(@NonNull String key, @NonNull final Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(key, null);
     }

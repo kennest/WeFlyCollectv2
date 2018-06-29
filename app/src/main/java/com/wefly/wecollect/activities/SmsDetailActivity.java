@@ -29,8 +29,8 @@ public class SmsDetailActivity extends FormActivity implements View.OnClickListe
     }
 
     private void iniViews() {
-        tvContent = (TextView) findViewById(R.id.contentTView);
-        tvSendBy = (TextView) findViewById(R.id.sendByTView);
+        tvContent = findViewById(R.id.contentTView);
+        tvSendBy = findViewById(R.id.sendByTView);
     }
 
     private void iniListeners() {

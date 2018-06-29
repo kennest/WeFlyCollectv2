@@ -87,14 +87,14 @@ public class CheckUpdateTask extends TaskPresenter {
         }
     }
 
-    public static interface OnUpdateCheckCompleteListener {
+    public interface OnUpdateCheckCompleteListener {
         void onDownloadError(@NonNull String errorMsg);
 
         void onDownloadSucces(@NonNull JSONObject response);
     }
 
     public final class SignInTaskNetworkUtilities {
-        public String getResponseFromHttpUrl(@Nullable String base_url) throws IOException {
+        public String getResponseFromHttpUrl(@Nullable String base_url) {
 
             HttpClient httpclient;
             HttpGet httpget = new HttpGet(base_url);

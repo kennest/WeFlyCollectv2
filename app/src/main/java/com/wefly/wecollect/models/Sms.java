@@ -63,7 +63,7 @@ public class Sms extends Common implements Serializable {
     }
 
     public @Nullable
-    JSONObject toPostItem() throws Exception {
+    JSONObject toPostItem() {
         JSONObject obj = null;
         String stItem = "";
 

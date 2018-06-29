@@ -79,7 +79,7 @@ public class EmailCreateTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    public static interface OnEmailSaveCompleteListener {
+    public interface OnEmailSaveCompleteListener {
         void onSaveError(@NonNull Email e, @NonNull View view);
 
         void onSaveSucces(@NonNull Email e, @NonNull View view);

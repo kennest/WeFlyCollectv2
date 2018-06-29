@@ -55,8 +55,8 @@ public class SmsPostItemTask extends TaskPresenter {
     protected void onPreExecute() {
         super.onPreExecute();
         try {
-            dotsTView = (DotsTextView) act.findViewById(R.id.dots);
-            TextView textView = (TextView) act.findViewById(R.id.loadingTitleTView);
+            dotsTView = act.findViewById(R.id.dots);
+            TextView textView = act.findViewById(R.id.loadingTitleTView);
             if (textView != null)
                 textView.setText(R.string.sending_short);
             dotsTView.showAndPlay();
@@ -133,7 +133,7 @@ public class SmsPostItemTask extends TaskPresenter {
 
     }
 
-    public static interface OnSmsSendListener {
+    public interface OnSmsSendListener {
         void onSendError(@NonNull Sms s);
 
         void onSendErrorNetwork(@NonNull Sms s);
@@ -142,7 +142,7 @@ public class SmsPostItemTask extends TaskPresenter {
     }
 
     public final class SmsPostItemNetworkUtilities {
-        public String getResponseFromHttpUrl(@NonNull JSONObject jsonParam, @Nullable String url) throws IOException {
+        public String getResponseFromHttpUrl(@NonNull JSONObject jsonParam, @Nullable String url) {
 
             HttpClient httpclient;
             HttpPost httppost = new HttpPost(url);

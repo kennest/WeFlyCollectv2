@@ -1,5 +1,6 @@
 package com.wefly.wecollect.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -23,7 +24,8 @@ import android.widget.LinearLayout;
 
 import com.fxn.pix.Pix;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.wefly.wecollect.adapters.imageAdapter;
+import com.pchmn.materialchips.ChipsInput;
+import com.wefly.wecollect.adapters.ImageAdapter;
 import com.wefly.wecollect.models.Email;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
@@ -36,7 +38,6 @@ import com.wefly.wecollect.utils.design.AnimeView;
 import com.weflyagri.wecollect.R;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -44,9 +45,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class CreateEmailActivity extends FormActivity implements View.OnClickListener {
     View vForm, vImages;
     RecyclerView recyclerView;
-    imageAdapter myAdapter;
+    ImageAdapter myAdapter;
     CopyOnWriteArrayList<Piece> pieces = new CopyOnWriteArrayList<>();
     Piece p = new Piece();
+    ChipsInput ChipsAttachments;
     private EditText edObject, edContent;
     private LinearLayout liMain;
 
@@ -154,7 +156,7 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
         // Setup multiimage picker
         recyclerView = vImages.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new imageAdapter(this);
+        myAdapter = new ImageAdapter(this);
         recyclerView.setAdapter(myAdapter);
     }
 
@@ -164,19 +166,10 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
             btn.setOnClickListener(this);
         }
         //Lance l'activite de camera Pix
-        vImages.findViewById(R.id.liSelectImage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AnimeView(view, new AnimeView.OnAnimationEndCallBack() {
-                    @Override
-                    public void onEnd(@NonNull View view) {
-                        Pix.start(CreateEmailActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT);
-                    }
-                }).startAnimation();
-            }
-        });
+        vImages.findViewById(R.id.liSelectImage).setOnClickListener(view -> new AnimeView(view, view1 -> Pix.start(CreateEmailActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT)).startAnimation());
     }
 
+    @SuppressLint("RestrictedApi")
     private void iniViewAndColors() {
         bCancel = vForm.findViewById(R.id.btnCancel);
         bClose = vForm.findViewById(R.id.btnClose);
@@ -189,7 +182,6 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
         butList.add(bCancel);
         butList.add(bClose);
         butList.add(bSend);
-
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // below lollipop
@@ -210,6 +202,7 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        ChipsAttachments = vForm.findViewById(R.id.chipAttachement);
         switch (requestCode) {
             case (100): {
                 if (resultCode == Activity.RESULT_OK) {
@@ -221,14 +214,11 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
 
                     //On recupere la liste des URL des images
                     for (String r : returnValue) {
-                        try {
-                            p.setUrl(PathUtil.getPath(this, Uri.fromFile(new File(r))));
-                            p.setContentUrl(Uri.fromFile(new File(r)));
-                            Log.v("Image URI", p.getContentUrl().toString());
-                            pieces.add(p);
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        p.setUrl(PathUtil.getPath(this, Uri.fromFile(new File(r))));
+                        p.setContentUrl(Uri.fromFile(new File(r)));
+                        Log.v("Image URI", p.getContentUrl().toString());
+                        ChipsAttachments.addChip(p.getAvatarDrawable(), p.getLabel(), p.getExtension(p.getUrl()));
+                        pieces.add(p);
                     }
                     //Stockons les pieces dans l'appcontroller
                     appController.setPieceList(pieces);

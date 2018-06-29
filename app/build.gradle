@@ -96,4 +96,9 @@ dependencies {
     //implementation files('libs/ImageBase64Encoder.jar')
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
     implementation 'com.github.jeancsanchez:JcPlayer:2.6.10'
+    //    implementation files('libs/ormlite-android-5.1.jar')
+    //    implementation files('libs/ormlite-core-5.1.jar')
+    //    implementation files('libs/ormlite-jdbc-5.1.jar')
+    //implementation 'com.github.satyan:sugar:1.5'
+    implementation files('libs/activeandroid-3.1-beta.jar')
 }

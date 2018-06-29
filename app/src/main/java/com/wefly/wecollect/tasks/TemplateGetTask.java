@@ -84,14 +84,14 @@ public class TemplateGetTask extends TaskPresenter {
         }
     }
 
-    public static interface OnRegionDownloadCompleteListener {
+    public interface OnRegionDownloadCompleteListener {
         void onDownloadError(@NonNull String errorMsg);
 
         void onDownloadSucces(@NonNull JSONArray regionsJArray);
     }
 
     public final class SignInTaskNetworkUtilities {
-        public String getResponseFromHttpUrl(@Nullable String base_url) throws IOException {
+        public String getResponseFromHttpUrl(@Nullable String base_url) {
 
             HttpClient httpclient;
             HttpGet httpget = new HttpGet(base_url);

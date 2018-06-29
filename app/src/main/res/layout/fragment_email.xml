@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="600dp"
     android:gravity="center"
     android:orientation="vertical">
 
   <ListView
       android:id="@+id/emailListView"
-      android:layout_width="match_parent"
+      android:layout_width="330dp"
       android:layout_height="521dp" />
 
 </LinearLayout>

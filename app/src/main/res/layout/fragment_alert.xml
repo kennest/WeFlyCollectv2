@@ -1,17 +1,11 @@
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:gravity="center"
-  >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
-  <FrameLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-
-
-  </FrameLayout>
-
+  <ListView
+      android:id="@+id/alertListView"
+      android:layout_width="330dp"
+      android:layout_height="521dp" />
 </LinearLayout>

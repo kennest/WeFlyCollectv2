@@ -1,5 +1,6 @@
 package com.wefly.wecollect.tasks;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class AlertPostItemTask extends TaskPresenter {
     private OnAlertSendListener listener;
     private String TAG = getClass().getSimpleName();
     private AppController appController;
+    protected ProgressDialog mProgressDialog;
 
     public AlertPostItemTask(@NonNull Alert alert) {
         this.alert = alert;
@@ -89,26 +91,40 @@ public class AlertPostItemTask extends TaskPresenter {
 //            e.printStackTrace();
 //            Log.v(Constants.APP_NAME, TAG +"doInBackground Error ");
 //        }
-        return false;
+        return true;
     }
 
     @Override
     protected void onPostExecute(Boolean isOk) {
         super.onPostExecute(isOk);
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Processus terminé", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi terminé", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
 
         //Envoi des pieces jointes
         if (appController.getPieceList().size() > 0) {
             Log.v("Alert Post Execute", "RUN");
             new PieceUploadTask(appController.getPieceList(), null, alert).execute();
         }
+        notifyOnAlertSendListener(isOk,alert);
     }
 
     public void setOnAlertSendListener(@NonNull OnAlertSendListener listener) {
         this.listener = listener;
     }
 
-    public static interface OnAlertSendListener {
+    private void notifyOnAlertSendListener(boolean isDone, @NonNull Alert alert) {
+        if (listener != null) {
+            try {
+                if (isDone)
+                    listener.onSendSucces(alert);
+                else
+                    listener.onSendError(alert);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public interface OnAlertSendListener {
         void onSendError(@NonNull Alert e);
 
         void onSendSucces(@NonNull Alert e);
@@ -181,5 +197,6 @@ public class AlertPostItemTask extends TaskPresenter {
             return response.body().string();
         }
     }
+
 
 }

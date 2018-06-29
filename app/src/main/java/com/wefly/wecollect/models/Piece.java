@@ -79,7 +79,7 @@ public class Piece implements ChipInterface{
 
     @Override
     public String getLabel() {
-        return "PJ_"+this.getExtension(this.getUrl());
+        return "PJ_"+System.nanoTime()+this.getExtension(this.getUrl());
     }
 
     @Override

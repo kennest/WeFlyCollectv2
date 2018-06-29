@@ -13,11 +13,11 @@ import com.weflyagri.wecollect.R;
 import java.io.File;
 import java.util.ArrayList;
 
-public class imageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<String> list = new ArrayList<>();
     Context context;
 
-    public imageAdapter(Context context) {
+    public ImageAdapter(Context context) {
         this.context = context;
     }
 

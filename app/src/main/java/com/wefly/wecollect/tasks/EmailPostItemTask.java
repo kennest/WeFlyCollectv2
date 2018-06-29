@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by admin on 02/04/2018.
@@ -34,7 +35,6 @@ import java.util.List;
 
 public class EmailPostItemTask extends TaskPresenter {
     final Email email;
-    List<Piece> pieces;
     private String response;
     private OnEmailSendListener listener;
     private String TAG = getClass().getSimpleName();
@@ -43,7 +43,6 @@ public class EmailPostItemTask extends TaskPresenter {
     public EmailPostItemTask(@NonNull Email email) {
         this.email = email;
         appController = AppController.getInstance();
-        this.pieces = appController.getPieceList();
     }
 
     @Override
@@ -86,17 +85,17 @@ public class EmailPostItemTask extends TaskPresenter {
             e.printStackTrace();
             Log.v(Constants.APP_NAME, TAG + "doInBackground Error ");
         }
-        return false;
+        return true;
     }
 
     @Override
     protected void onPostExecute(Boolean isOk) {
         super.onPostExecute(isOk);
-        FancyToast.makeText(appController.getApplicationContext(), "Processus terminé", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+        FancyToast.makeText(appController.getApplicationContext(), "Envoi terminé", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
         //Envoi des Pieces jointes
         if (appController.getPieceList().size() > 0) {
             Log.v("Email Post Execute", "RUN");
-            new PieceUploadTask(pieces, email, null).execute();
+            new PieceUploadTask(appController.getPieceList(), email, null).execute();
         }
         notifyOnEmailSendListener(isOk, email);
     }
@@ -115,20 +114,17 @@ public class EmailPostItemTask extends TaskPresenter {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
-
     }
 
-    public static interface OnEmailSendListener {
+    public interface OnEmailSendListener {
         void onSendError(@NonNull Email e);
 
         void onSendSucces(@NonNull Email e);
     }
 
     public final class EmailPostItemNetworkUtilities {
-        public String getResponseFromHttpUrl(@Nullable JSONObject jsonParam, @Nullable String url) throws IOException {
+        public String getResponseFromHttpUrl(@Nullable JSONObject jsonParam, @Nullable String url) {
 
             HttpClient httpclient;
             HttpPost httppost = new HttpPost(url);
@@ -148,7 +144,7 @@ public class EmailPostItemTask extends TaskPresenter {
                 response = httpclient.execute(httppost);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                 StringBuilder builder = new StringBuilder();
-                for (String line = null; (line = reader.readLine()) != null; ) {
+                for (String line; (line = reader.readLine()) != null; ) {
                     builder.append(line).append("\n");
                 }
                 Log.v(Constants.APP_NAME, TAG + "  doInBackGround parcelJson.toString response ");

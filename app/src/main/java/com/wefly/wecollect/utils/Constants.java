@@ -44,6 +44,9 @@ public class Constants {
     //Util
     public static final double DOUBLE_NULL = 0.0d;
 
+    // Encode value
+    public static final String ENCODE_IMAGE_VALUE = "£";
+
     public static final String PREF_TOKEN = PATH + ".token";
     public static final String PREF_USER_NAME = PATH + ".user.name";
     public static final String PREF_USER_PASSWORD = PATH + ".user.password";
@@ -51,7 +54,7 @@ public class Constants {
     //Preference
     public static final String SAVE_PREFERENCE_NAME = "NonameSave";
     public static final String PREF_RECIPIENTS = PATH + ".precipients";
-
+    public static final String PREF_PREFERE_STORAGE_IS_INTERNAL       = PATH + ".storage.choice";
 
     //Volley
     public static final int VOLLEY_TIME_OUT = 300000; //5 min

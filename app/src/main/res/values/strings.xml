@@ -31,7 +31,7 @@
     <string name="email">Email</string>
     <string name="objet">Objet</string>
     <string name="titre">Title</string>
-    <string name="attachement">Pièce jointe</string>
+    <string name="attachement">Attachments</string>
     <string name="send">Envoyer</string>
     <string name="sender">Expéditeur</string>
     <string name="cancel">Annuler</string>
@@ -42,7 +42,7 @@
 
     <!--Dialog-->
     <string name="request_title">Sauvegarder</string>
-    <string name="request_msg">Votre SMS sera conservé pour une utilisation ultérieure ? </string>
+    <string name="request_msg">Votre Message sera conservé pour une utilisation ultérieure ? </string>
     <string name="save">SAUVEGARDER</string>
     <string name="save_ok">Sauvegarde effectuée</string>
     <string name="save_error">Erreur: Sauvegarde non effectuée</string>
@@ -89,4 +89,6 @@
     <string name="recipient_name_hint">Enter a recipient name</string>
     <string name="stopper_et_sauvegarder">Stop Recording and save</string>
     <string name="enregistrement_en_cours">Recording</string>
+    <string name="perimeter">perimeter</string>
+    <string name="area">area</string>
 </resources>

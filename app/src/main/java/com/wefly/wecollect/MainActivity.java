@@ -5,8 +5,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +22,13 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.wefly.wecollect.activities.CreateAlertActivity;
 import com.wefly.wecollect.activities.CreateEmailActivity;
 import com.wefly.wecollect.activities.CreateSMSActivity;
-import com.wefly.wecollect.activities.EmailListActivity;
-import com.wefly.wecollect.adapters.emailAdapter;
+import com.wefly.wecollect.activities.LoginActivity;
+import com.wefly.wecollect.adapters.AlertAdapter;
+import com.wefly.wecollect.adapters.EmailAdapter;
+import com.wefly.wecollect.models.Alert;
 import com.wefly.wecollect.models.Email;
 import com.wefly.wecollect.presenters.DBActivity;
+import com.wefly.wecollect.tasks.AlertReceiveGetTask;
 import com.wefly.wecollect.tasks.EmailReceiveGetTask;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.BuilderManager;
@@ -49,13 +50,14 @@ public class MainActivity extends DBActivity {
     View vEmail, vSms, vAlert;
     View vsSent, vsReceive, vsDraft;
     List<Email> emailList = new ArrayList<>();
+    List<Alert> alertList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rLayout = (RelativeLayout) findViewById(R.id.Rlayout);
+        rLayout = findViewById(R.id.Rlayout);
 
         // Email fragment
         vEmail = LayoutInflater.from(
@@ -72,6 +74,7 @@ public class MainActivity extends DBActivity {
         vAlert = LayoutInflater.from(
                 getBaseContext()).inflate(R.layout.fragment_alert, null, false);
 
+        loadAlertList(vAlert);
         // SMS -> sent
         vsSent = LayoutInflater.from(
                 getBaseContext()).inflate(R.layout.fragment_sms_sent, null, false);
@@ -84,11 +87,11 @@ public class MainActivity extends DBActivity {
 
 
         // Setup custom tab
-        ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
+        ViewGroup tab = findViewById(R.id.tab);
         tab.addView(LayoutInflater.from(this).inflate(R.layout.fragment_main, tab, false));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        SmartTabLayout viewPagerTab = findViewById(R.id.viewpagertab);
         if (appController != null)
             appController.setup(viewPagerTab);
 
@@ -239,7 +242,7 @@ public class MainActivity extends DBActivity {
                     case 3:
                         //PROFIL
 
-                        startActivity(new Intent(MainActivity.this, EmailListActivity.class));
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     case 4:
                         //EXIT
@@ -284,6 +287,23 @@ public class MainActivity extends DBActivity {
 //        }
 //    }
 
+    protected void loadAlertList(View v){
+        //On charge la page email avec les emails
+        try {
+            alertList = new AlertReceiveGetTask(appController).execute().get();
+            Log.v(getPackageName() + "emailList Size", String.valueOf(alertList.size()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        ListView emailListView = v.findViewById(R.id.alertListView);
+
+        if (alertList.size() > 0) {
+            emailListView.setAdapter(new AlertAdapter(getApplicationContext(), alertList));
+        }
+    }
+
     protected void loadEmailList(View v) {
 
         //On charge la page email avec les emails
@@ -298,7 +318,7 @@ public class MainActivity extends DBActivity {
         ListView emailListView = v.findViewById(R.id.emailListView);
 
         if (emailList.size() > 0) {
-            emailListView.setAdapter(new emailAdapter(getApplicationContext(), emailList));
+            emailListView.setAdapter(new EmailAdapter(getApplicationContext(), emailList));
         }
     }
 

@@ -117,7 +117,7 @@ public class SmsPresenter implements SmsSentGetTask.OnSmsSentDownloadCompleteLis
 
     }
 
-    public static interface OnSmsDownloadCallBack {
+    public interface OnSmsDownloadCallBack {
         void onSmsDownloadSucces(@NonNull CopyOnWriteArrayList<Sms> list);
 
         void onSmsDownloadFailed();

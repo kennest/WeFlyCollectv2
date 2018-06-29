@@ -2,7 +2,6 @@ package com.wefly.wecollect.interfaces;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.Utils;
 

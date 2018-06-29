@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.weflyagri.wecollect">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.weflyagri.wecollect">
+
+    <meta-data android:name="AA_DB_NAME" android:value="my_database.db" />
+    <meta-data android:name="AA_DB_VERSION" android:value="1" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -87,7 +89,6 @@
         <activity android:name="com.wefly.wecollect.activities.SplashScreensActivity" />
         <activity android:name="com.wefly.wecollect.presenters.DBActivity" />
         <activity android:name="com.wefly.wecollect.presenters.FormActivity" />
-        <activity android:name="com.wefly.wecollect.activities.EmailListActivity" />
     </application>
 
 </manifest>

@@ -58,7 +58,7 @@ public class LoginTask extends TaskPresenter {
     protected void onPreExecute() {
         super.onPreExecute();
         try {
-            dotsTView = (DotsTextView) act.findViewById(R.id.dots);
+            dotsTView = act.findViewById(R.id.dots);
             dotsTView.showAndPlay();
 //            obj.put("username", "koffi@weflyagri.com");
 //            obj.put("password", "emp1pass");
@@ -80,10 +80,7 @@ public class LoginTask extends TaskPresenter {
             Log.v(Constants.APP_NAME, TAG + " response " + response);
             if (!response.trim().equals("") && !response.trim().equals(Constants.SERVER_ERROR) && !response.trim().contains(Constants.RESPONSE_ERROR_HTML)) {
                 // post update
-                if (response.trim().contains(Constants.RESPONSE_EMPTY_INPUT)) {
-                    return false;
-                }
-                return true;
+                return !response.trim().contains(Constants.RESPONSE_EMPTY_INPUT);
             } else
                 isNetworkError = true;
 
@@ -138,7 +135,7 @@ public class LoginTask extends TaskPresenter {
 
     }
 
-    public static interface OnLoginListener {
+    public interface OnLoginListener {
         void onLoginError(@NonNull View view);
 
         void onLoginNetworkError();
@@ -147,7 +144,7 @@ public class LoginTask extends TaskPresenter {
     }
 
     public final class LoginNetworkUtilities {
-        public String getResponseFromHttpUrl(@NonNull JSONObject jsonParam, @Nullable String url) throws IOException {
+        public String getResponseFromHttpUrl(@NonNull JSONObject jsonParam, @Nullable String url) {
 
             HttpClient httpclient;
             HttpPost httppost = new HttpPost(url);

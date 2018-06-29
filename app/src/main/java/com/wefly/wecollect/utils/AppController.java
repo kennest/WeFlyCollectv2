@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.activeandroid.ActiveAndroid;
 import com.auth0.android.jwt.Claim;
 import com.auth0.android.jwt.JWT;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -56,7 +57,6 @@ public class AppController extends Application {
     public Double latitude;
     public Double longitude;
 
-
     public CopyOnWriteArrayList<Piece> getPieceList() {
         return pieceList;
     }
@@ -80,7 +80,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        ActiveAndroid.initialize(this);
         mInstance = this;
 
         // Support vector

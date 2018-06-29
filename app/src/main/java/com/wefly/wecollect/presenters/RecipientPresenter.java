@@ -42,10 +42,7 @@ public class RecipientPresenter implements RecipientsGetTask.OnRecipientsDownloa
     public void downloadAllRecipients(boolean goToNext) {
         if (appController != null) {
             if (appController.isTokenValide()) {
-                if (goToNext)
-                    withNext = true;
-                else
-                    withNext = false;
+                withNext = goToNext;
                 launchOnNetworkAvai(2);
             }
         }
@@ -171,7 +168,7 @@ public class RecipientPresenter implements RecipientsGetTask.OnRecipientsDownloa
 
     }
 
-    public static interface OnRecipientDownloadCallBack {
+    public interface OnRecipientDownloadCallBack {
         void onRecipientDownloadSucces();
     }
 }

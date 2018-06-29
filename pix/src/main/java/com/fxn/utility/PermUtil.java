@@ -44,8 +44,7 @@ public abstract class PermUtil {
         if (ac.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
             permissionsList.add(permission);
             // Check for Rationale Option
-            if (!ac.shouldShowRequestPermissionRationale(permission))
-                return false;
+            return ac.shouldShowRequestPermissionRationale(permission);
         }
         return true;
     }

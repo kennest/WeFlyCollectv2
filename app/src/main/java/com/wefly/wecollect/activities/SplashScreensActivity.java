@@ -30,7 +30,7 @@ public class SplashScreensActivity extends FormActivity {
         setContentView(R.layout.activity_splash_screen);
 
         pUtil = new PermissionUtil(this);
-        rLayout = (RelativeLayout) findViewById(R.id.Rlayout);
+        rLayout = findViewById(R.id.Rlayout);
         watcher = new NetworkWatcher(this, rLayout);
 
 

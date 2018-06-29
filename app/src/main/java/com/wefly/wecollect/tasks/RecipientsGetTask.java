@@ -119,14 +119,14 @@ public class RecipientsGetTask extends TaskPresenter {
         }
     }
 
-    public static interface OnRecipientsDownloadCompleteListener {
+    public interface OnRecipientsDownloadCompleteListener {
         void onDownloadError(@NonNull String errorMsg);
 
         void onDownloadSucces(@NonNull CopyOnWriteArrayList<Recipient> recipentsArray, boolean hPrev, boolean hNext, @NonNull String prev, @NonNull String next, int max);
     }
 
     public final class SignInTaskNetworkUtilities {
-        public String getResponseFromHttpUrl(@Nullable String base_url) throws IOException {
+        public String getResponseFromHttpUrl(@Nullable String base_url) {
 
             HttpClient httpclient;
             HttpGet httpget = new HttpGet(base_url);

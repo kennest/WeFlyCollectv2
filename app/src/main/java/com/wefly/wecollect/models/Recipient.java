@@ -3,6 +3,9 @@ package com.wefly.wecollect.models;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.pchmn.materialchips.model.ChipInterface;
 
 import java.io.Serializable;
@@ -10,15 +13,29 @@ import java.io.Serializable;
 /**
  * Created by admin on 13/06/2018.
  */
-
-public class Recipient implements Serializable, ChipInterface {
+@Table(name = "destinataires")
+public class Recipient extends Model implements Serializable, ChipInterface {
     private static final long serialVersionUID = 10L;
+
+    @Column(name = "id")
     private int recipientId;
+
+
     private int idOnServer;
+
+    @Column(name = "nom")
     private String firstName;
+
+    @Column(name = "prenom")
     private String lastName;
+
+    @Column(name = "username")
     private String userName;
+
+    @Column(name = "email")
     private String email;
+
+
     private String tel;
     private String ref;
     private String dateCreate;
@@ -182,10 +199,6 @@ public class Recipient implements Serializable, ChipInterface {
         this.belongId = belongId;
     }
 
-    @Override
-    public Object getId() {
-        return null;
-    }
 
     @Override
     public Uri getAvatarUri() {

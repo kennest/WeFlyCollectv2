@@ -16,7 +16,7 @@ public class PathUtil {
      * Gets the file path of the given Uri.
      */
     @SuppressLint("NewApi")
-    public static String getPath(Context context, Uri uri) throws URISyntaxException {
+    public static String getPath(Context context, Uri uri) {
         final boolean needToCheckUri = Build.VERSION.SDK_INT >= 19;
         String selection = null;
         String[] selectionArgs = null;

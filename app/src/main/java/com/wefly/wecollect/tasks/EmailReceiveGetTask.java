@@ -24,7 +24,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class EmailReceiveGetTask extends AsyncTask<String, Integer, List<Email>> {
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private AppController appController;
     private String result;
     private List<Email> receiveEmails = new ArrayList<>();
@@ -43,26 +42,35 @@ public class EmailReceiveGetTask extends AsyncTask<String, Integer, List<Email>>
 
     @Override
     protected List<Email> doInBackground(String... strings) {
+
         try {
+            JSONObject resultJSON;
             result = getResponseFromUrl(Constants.EMAIL_RECEIVE_URL);
-            receiveEmails.addAll(Objects.requireNonNull(extractEmail(result)));
+            try {
+                resultJSON = new JSONObject(result);
+                count = Integer.parseInt(resultJSON.getString("count"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if(count>0)
+                receiveEmails.addAll(Objects.requireNonNull(extractEmail(result)));
 
 
 
             //Si on a encore d'autres page suivante on extrait les emails et on les ajoutes au emails recus
-            JSONObject resultJSON;
-
             try {
                 resultJSON = new JSONObject(result);
                 int i = 1;
                 count = Integer.parseInt(resultJSON.getString("count"));
                 next = resultJSON.getString("next");
-                do {
-                    receiveEmails.addAll(Objects.requireNonNull(extractEmail(getResponseFromUrl(next))));
-                    resultJSON = new JSONObject(getResponseFromUrl(next));
-                    next = resultJSON.getString("next");
-                    Log.v("Next value" + i, String.valueOf(i));
-                } while (++i == (count-1));
+                if(count>0 && !next.equals("null"))
+                    do {
+                        receiveEmails.addAll(Objects.requireNonNull(extractEmail(getResponseFromUrl(next))));
+                        resultJSON = new JSONObject(getResponseFromUrl(next));
+                        next = resultJSON.getString("next");
+                        Log.v("Next value" + i, String.valueOf(i));
+                    } while (++i == (count-1));
 
                 Log.v("Emails receive count " + i, String.valueOf(receiveEmails.size()));
 
@@ -91,7 +99,6 @@ public class EmailReceiveGetTask extends AsyncTask<String, Integer, List<Email>>
                 .url(url)
                 .addHeader("Authorization", Constants.TOKEN_HEADER_NAME + appController.getToken())
                 .build();
-
         response = client.newCall(request).execute();
 
         return response.body().string();

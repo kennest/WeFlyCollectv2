@@ -24,13 +24,12 @@ public class AlertDetailActivity extends FormActivity implements View.OnClickLis
 
         tvContent.setText(sAlert.getContent());
         tvObject.setText(sAlert.getObject());
-        tvSender.setText(sAlert.getSender());
     }
 
     private void iniViews() {
-        tvSender = (TextView) findViewById(R.id.senderTView);
-        tvObject = (TextView) findViewById(R.id.objectTView);
-        tvContent = (TextView) findViewById(R.id.contentTView);
+        tvSender = findViewById(R.id.senderTView);
+        tvObject = findViewById(R.id.objectTView);
+        tvContent = findViewById(R.id.contentTView);
     }
 
 

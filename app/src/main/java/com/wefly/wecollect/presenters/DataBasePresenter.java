@@ -299,7 +299,6 @@ public class DataBasePresenter extends SQLiteOpenHelper {
             values.put(Constants.TABLE_ALERT_CATEGORY_NAME, alert.getCategory());
             values.put(Constants.TABLE_ALERT_CREATED_DATE_NAME, alert.getDateCreated());
             values.put(Constants.TABLE_ALERT_RECIPIENTS_ID_NAME, alert.getRecipientsIds());
-            values.put(Constants.TABLE_ALERT_SENDER_NAME, alert.getSender());
 
             dba.insert(Constants.TABLE_ALERT, null, values);
 
@@ -469,7 +468,6 @@ public class DataBasePresenter extends SQLiteOpenHelper {
                     alert.setObject(cursor.getString(cursor.getColumnIndex(Constants.TABLE_ALERT_OBJECT_NAME)));
                     alert.setContent(cursor.getString(cursor.getColumnIndex(Constants.TABLE_ALERT_CONTENT_NAME)));
                     alert.setCategory(cursor.getString(cursor.getColumnIndex(Constants.TABLE_ALERT_CATEGORY_NAME)));
-                    alert.setSender(cursor.getString(cursor.getColumnIndex(Constants.TABLE_ALERT_SENDER_NAME)));
                     alert.setRecipientsString(cursor.getString(cursor.getColumnIndex(Constants.TABLE_ALERT_RECIPIENTS_ID_NAME)));
                     alert.setDateCreated(cursor.getString(cursor.getColumnIndex(Constants.TABLE_ALERT_CREATED_DATE_NAME)));
 

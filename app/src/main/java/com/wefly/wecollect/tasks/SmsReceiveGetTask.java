@@ -128,14 +128,14 @@ public class SmsReceiveGetTask extends TaskPresenter {
         }
     }
 
-    public static interface OnSmsReceiveDownloadCompleteListener {
+    public interface OnSmsReceiveDownloadCompleteListener {
         void onSmsRecDownloadError(boolean hPrev, boolean hNext, @NonNull String prev, @NonNull String next);
 
         void onSmsRecDownloadSucces(@NonNull CopyOnWriteArrayList<Sms> list, boolean hPrev, boolean hNext, @NonNull String prev, @NonNull String next);
     }
 
     public final class SmsReceiveNetworkUtilities {
-        public String getResponseFromHttpUrl(@Nullable String base_url) throws IOException {
+        public String getResponseFromHttpUrl(@Nullable String base_url) {
 
             HttpClient httpclient;
             HttpGet httpget = new HttpGet(base_url);
