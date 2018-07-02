@@ -1,46 +1,35 @@
 package com.wefly.wecollect.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 
-import com.wefly.wecollect.presenters.FormActivity;
-import com.wefly.wecollect.utils.NetworkWatcher;
+import com.wefly.wecollect.adapters.AlertDetailAdapter;
+import com.wefly.wecollect.models.Alert;
+import com.wefly.wecollect.tasks.AlertReceiveGetTask;
+import com.wefly.wecollect.utils.AppController;
 import com.weflyagri.wecollect.R;
 
-public class AlertDetailActivity extends FormActivity implements View.OnClickListener {
-    private TextView tvSender, tvObject, tvContent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+public class AlertDetailActivity extends Activity {
+    List<Alert> alertList = new ArrayList<>();
+    AppController appController;
+    RecyclerView cardRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_detail);
-        super.iniViewColors();
-        iniViews();
-        watcher = new NetworkWatcher(this, liMain);
-
-        iniListeners();
-
-        tvContent.setText(sAlert.getContent());
-        tvObject.setText(sAlert.getObject());
-    }
-
-    private void iniViews() {
-        tvSender = findViewById(R.id.senderTView);
-        tvObject = findViewById(R.id.objectTView);
-        tvContent = findViewById(R.id.contentTView);
-    }
-
-
-    private void iniListeners() {
-        for (AppCompatImageButton btn : butList) {
-            btn.setOnClickListener(this);
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        animMe(view, null, null, sAlert, this, watcher);
+        //On recupere le card recycler view et on lui associe son adapter
+        cardRecyclerView = findViewById(R.id.cardRecyclerView);
+        cardRecyclerView.setAdapter(new AlertDetailAdapter(appController.getApplicationContext(), alertList));
     }
 }

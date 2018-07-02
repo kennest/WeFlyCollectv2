@@ -17,10 +17,8 @@ import com.wefly.wecollect.utils.EncodeBase64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -33,11 +31,11 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     final Email email;
     final Alert alert;
-    private CopyOnWriteArrayList<Piece> pieces;
+    private List<Piece> pieces;
     private AppController appController;
     private String prefresponse;
 
-    public PieceUploadTask(@NonNull CopyOnWriteArrayList<Piece> pieces, @Nullable Email email, @Nullable Alert alert) {
+    public PieceUploadTask(@NonNull List<Piece> pieces, @Nullable Email email, @Nullable Alert alert) {
         this.email = email;
         this.alert = alert;
         this.pieces = pieces;

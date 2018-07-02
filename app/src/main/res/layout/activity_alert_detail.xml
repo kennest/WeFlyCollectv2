@@ -8,167 +8,28 @@
     android:orientation="vertical"
     tools:context="com.wefly.wecollect.activities.AlertDetailActivity">
 
-    <include layout="@layout/loading_progress"/>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin_custom"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_custom"
-        android:layout_marginRight="@dimen/activity_horizontal_margin_custom"
-        android:layout_marginStart="@dimen/activity_horizontal_margin_custom"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/layout_rectangle"
-        android:elevation="@dimen/elevation_custom"
-        android:paddingBottom="@dimen/activity_vertical_margin_custom"
-        android:paddingEnd="@dimen/activity_horizontal_margin_custom"
-        android:paddingLeft="@dimen/activity_horizontal_margin_custom"
-        android:paddingRight="@dimen/activity_horizontal_margin_custom"
-        android:paddingStart="@dimen/activity_horizontal_margin_custom"
-        android:paddingTop="@dimen/activity_vertical_margin_custom">
+        android:layout_height="800dp">
 
-        <android.support.v7.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="900dp"
             android:orientation="vertical">
 
-            <include layout="@layout/loading_bar_horizontal" />
-
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cardRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="300dp"
+                android:scrollbars="vertical" />
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
-                    android:layout_width="263dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:hint="LABEL"
-                    android:padding="5dp"
-                    android:textColor="@color/colorTitleGreen"
-                    android:textSize="@dimen/title_text_small_size"
-                    android:textStyle="bold"
-                    app:typeface="robotoBoldCondensed" />
-
-                <android.support.v7.widget.AppCompatImageButton
-                    android:id="@+id/btnClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/ic_close" />
-            </LinearLayout>
-
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pieceJointeRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:layout_height="300dp"
+                android:scrollbars="vertical" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/image"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_marginRight="5dp"
-                        android:padding="45dp"
-                        android:src="@drawable/email" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/titre"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:hint="title"
-                            android:textSize="25dp" />
-
-                        <TextView
-                            android:id="@+id/date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="date creation" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/category"
-                    android:layout_width="163dp"
-                    android:layout_height="match_parent"
-                    android:hint="@string/category" />
-
-                <TextView
-                    android:id="@+id/expeditor"
-                    android:layout_width="226dp"
-                    android:layout_height="match_parent"
-                    android:hint="expeditor" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <EditText
-                    android:id="@+id/content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ems="20"
-                    android:hint="content..."
-                    android:inputType="textMultiLine" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp">
-
-                <GridView
-                    android:id="@+id/pj_images"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:numColumns="3">
-
-                </GridView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/audioBtn"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp" />
-                <TextView
-                    android:id="@+id/audioLbl"
-                    android:layout_marginTop="25dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Audio"/>
-            </LinearLayout>
-
-        </android.support.v7.widget.LinearLayoutCompat>
-
+        </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

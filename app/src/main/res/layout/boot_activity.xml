@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context="com.wefly.wecollect.activities.BootActivity">
+
+        <com.wonderkiln.camerakit.CameraView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/camera"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ckDoubleTapToToggleFacing="true"
+            app:ckFacing="back"
+            app:ckFlash="off"
+            app:ckFocus="tapWithMarker"
+            app:ckMethod="standard"
+            app:ckVideoQuality="highest"
+            android:scaleType="center"
+             />
+
+        <ImageButton
+            android:id="@+id/shootBtn"
+            android:src="@drawable/ic_photo_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:backgroundTint="#59c444"/>
+
+</FrameLayout>

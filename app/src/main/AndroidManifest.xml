@@ -89,6 +89,7 @@
         <activity android:name="com.wefly.wecollect.activities.SplashScreensActivity" />
         <activity android:name="com.wefly.wecollect.presenters.DBActivity" />
         <activity android:name="com.wefly.wecollect.presenters.FormActivity" />
+        <activity android:name="com.wefly.wecollect.activities.BootActivity" />
     </application>
 
 </manifest>

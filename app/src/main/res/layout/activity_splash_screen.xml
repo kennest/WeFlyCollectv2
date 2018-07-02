@@ -5,7 +5,17 @@
     android:id="@+id/Rlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_splash"
     tools:context="com.wefly.wecollect.activities.SplashScreensActivity">
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.CubeGrid"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_marginEnd="104dp"
+        app:SpinKit_Color="#30b619" />
 
 </RelativeLayout>

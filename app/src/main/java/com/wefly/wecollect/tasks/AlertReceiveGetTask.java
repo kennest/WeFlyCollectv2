@@ -1,5 +1,6 @@
 package com.wefly.wecollect.tasks;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -41,6 +42,14 @@ public class AlertReceiveGetTask extends AsyncTask<String, Integer, List<Alert>>
             try {
                 resultJSON = new JSONObject(result);
                 count = Integer.parseInt(resultJSON.getString("count"));
+
+                //On stocke le resultat dans les sharedprefs pour affichache du card View
+                SharedPreferences sp = appController.getSharedPreferences("alert_receive_data", 0);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("alert_responses", resultJSON.toString());
+                editor.apply();
+                Log.v("results array",sp.getString("alert_responses","ARRAY VIDE"));
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

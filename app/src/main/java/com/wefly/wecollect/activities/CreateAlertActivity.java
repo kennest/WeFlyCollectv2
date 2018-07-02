@@ -67,9 +67,11 @@ public class CreateAlertActivity extends FormActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alert);
+
         // Form fragment
         vForm = LayoutInflater.from(getBaseContext()).inflate(R.layout.fragment_create_alert_form, null, false);
 
+        //Execute category task in order to get the list
         CategoryGetTask task = new CategoryGetTask(appController);
         try {
             response_category = task.execute().get();

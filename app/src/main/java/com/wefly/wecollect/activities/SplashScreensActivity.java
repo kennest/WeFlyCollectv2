@@ -124,7 +124,7 @@ public class SplashScreensActivity extends FormActivity {
                     watcher.setOnOffLineListener(new NetworkWatcher.OnOffLineListener() {
                         @Override
                         public void onOffLine() {
-                            startActivity(new Intent(SplashScreensActivity.this, MainActivity.class));
+                            startActivity(new Intent(SplashScreensActivity.this, BootActivity.class));
                             finish();
                         }
 
@@ -132,14 +132,11 @@ public class SplashScreensActivity extends FormActivity {
                         public void onOnLine() {
                             // RECIPIENTS
                             RecipientPresenter presenter = new RecipientPresenter(SplashScreensActivity.this);
-                            presenter.setOnRecipientDownloadCallBack(new RecipientPresenter.OnRecipientDownloadCallBack() {
-                                @Override
-                                public void onRecipientDownloadSucces() {
+                            presenter.setOnRecipientDownloadCallBack(() -> {
 
-                                }
                             });
                             presenter.downloadAllRecipients(false);
-                            startActivity(new Intent(SplashScreensActivity.this, LoadingActivity.class));
+                            startActivity(new Intent(SplashScreensActivity.this, BootActivity.class));
                             finish();
                         }
                     });

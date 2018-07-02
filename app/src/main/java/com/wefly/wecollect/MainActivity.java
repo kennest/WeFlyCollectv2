@@ -19,6 +19,7 @@ import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.OnBoomListenerAdapter;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.wefly.wecollect.activities.BootActivity;
 import com.wefly.wecollect.activities.CreateAlertActivity;
 import com.wefly.wecollect.activities.CreateEmailActivity;
 import com.wefly.wecollect.activities.CreateSMSActivity;
@@ -242,7 +243,7 @@ public class MainActivity extends DBActivity {
                     case 3:
                         //PROFIL
 
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        startActivity(new Intent(MainActivity.this, BootActivity.class));
                         break;
                     case 4:
                         //EXIT
@@ -288,7 +289,7 @@ public class MainActivity extends DBActivity {
 //    }
 
     protected void loadAlertList(View v){
-        //On charge la page email avec les emails
+        //On charge la page alert avec les alerts
         try {
             alertList = new AlertReceiveGetTask(appController).execute().get();
             Log.v(getPackageName() + "emailList Size", String.valueOf(alertList.size()));

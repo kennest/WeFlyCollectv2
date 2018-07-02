@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -50,19 +51,27 @@ public class AppController extends Application {
     private static ArrayList<Activity> activitiesList = new ArrayList<>();
     private static ArrayList<AsyncTask<Void, Integer, Boolean>> tasksList = new ArrayList<>();
     private String token = "";
-    private static CopyOnWriteArrayList<Piece> pieceList = new CopyOnWriteArrayList<>();
+    private static List<Piece> pieceList = new ArrayList<>();
     private static String audioPath;
     public Map<String, Integer> alert_categories = new HashMap();
-
+    private CopyOnWriteArrayList<Recipient> recipientsList = new CopyOnWriteArrayList<>();
     public Double latitude;
     public Double longitude;
 
-    public CopyOnWriteArrayList<Piece> getPieceList() {
+    public CopyOnWriteArrayList<Recipient> getRecipientsList() {
+        return recipientsList;
+    }
+
+    public void setRecipientsList(CopyOnWriteArrayList<Recipient> recipientsList) {
+        this.recipientsList = recipientsList;
+    }
+
+    public List<Piece> getPieceList() {
         return pieceList;
     }
 
-    public void setPieceList(CopyOnWriteArrayList<Piece> pieceList) {
-        AppController.pieceList = pieceList;
+    public void setPieceList(List<Piece> pieceList) {
+        AppController.getInstance().getPieceList().addAll(pieceList);
     }
 
     public static String getAudioPath() {

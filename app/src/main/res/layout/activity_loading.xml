@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.wefly.wecollect.activities.LoadingActivity">
+    android:layout_height="match_parent">
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
         style="@style/SpinKitView.Large.CubeGrid"
-        android:layout_width="269dp"
-        android:layout_height="192dp"
-        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal|center"
         app:SpinKit_Color="#30b619" />
 
 </android.support.design.widget.CoordinatorLayout>

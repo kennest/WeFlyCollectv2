@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.wefly.wecollect.models.Piece;
 import com.weflyagri.wecollect.R;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -388,5 +390,12 @@ public class Utils {
         return bitmap;
     }
 
+    public static void smartCombine(List<Piece> first, List<Piece> second) {
+        for(Piece num : second) {      // iterate through the second list
+            if(first.contains(num)) {   // if first list doesn't contain current element
+                first.remove(num);          // add it to the first list
+            }
+        }
+    }
 
 }

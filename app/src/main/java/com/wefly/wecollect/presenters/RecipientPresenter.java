@@ -1,5 +1,6 @@
 package com.wefly.wecollect.presenters;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -20,6 +21,7 @@ public class RecipientPresenter implements RecipientsGetTask.OnRecipientsDownloa
     final NumberProgressBar pCounter;
     RecipientsGetTask task;
     private FormActivity act;
+    private Activity activity;
     private String stRecipients = "";
     private String nextPage = "", prevPage = "";
     private boolean hasNext;
@@ -37,6 +39,12 @@ public class RecipientPresenter implements RecipientsGetTask.OnRecipientsDownloa
         this.act = act;
         this.appController = AppController.getInstance();
         this.pCounter = act.getCounter();
+    }
+
+    public RecipientPresenter(@NonNull final Activity act) {
+        this.activity = act;
+        this.appController = AppController.getInstance();
+        this.pCounter=new NumberProgressBar(appController.getApplicationContext());
     }
 
     public void downloadAllRecipients(boolean goToNext) {
@@ -59,6 +67,7 @@ public class RecipientPresenter implements RecipientsGetTask.OnRecipientsDownloa
             }
 
         }
+        appController.setRecipientsList(list);
         return list;
     }
 

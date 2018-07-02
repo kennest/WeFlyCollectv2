@@ -37,6 +37,9 @@ public class Alert extends Model implements Serializable {
     @Column(name = "destinataires")
     private CopyOnWriteArrayList<Recipient> recipients = new CopyOnWriteArrayList<>();
 
+    @Column(name = "expediteur")
+    private String expediteur;
+
     public String getDateCreated() {
         if (dateCreated == null)
             dateCreated = "";
@@ -47,6 +50,13 @@ public class Alert extends Model implements Serializable {
         this.dateCreated = dateCreated;
     }
 
+    public String getExpediteur() {
+        return expediteur;
+    }
+
+    public void setExpediteur(String expediteur) {
+        this.expediteur = expediteur;
+    }
 
     public int getAlertId() {
         return alertId;

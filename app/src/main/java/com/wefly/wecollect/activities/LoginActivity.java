@@ -164,7 +164,7 @@ public class LoginActivity extends BaseActivity implements LoginTask.OnLoginList
     @Override
     public void onLoginSucces() {
         onDisplayUI(true, false, false, false);
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        startActivity(new Intent(LoginActivity.this, BootActivity.class));
         finish();
 
     }

@@ -17,17 +17,7 @@ public class LoadingActivity extends BaseActivity {
         setContentView(R.layout.activity_loading);
         AppController.addToDestroyList(this);
         Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-                });
-            }
-        }, 2000);
+        h.postDelayed(() -> runOnUiThread(() -> startActivity(new Intent(getApplicationContext(), BootActivity.class))), 2000);
     }
 
 }

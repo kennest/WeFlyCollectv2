@@ -7,6 +7,12 @@
   <ListView
       android:id="@+id/emailListView"
       android:layout_width="330dp"
-      android:layout_height="521dp" />
+      android:layout_height="521dp"
+      android:dividerHeight="1px"
+      android:clipToPadding="false"
+      android:scrollbarStyle="outsideInset"
+      android:overScrollFooter="@android:color/transparent"
+      android:footerDividersEnabled="false"
+      android:headerDividersEnabled="false"/>
 
 </LinearLayout>

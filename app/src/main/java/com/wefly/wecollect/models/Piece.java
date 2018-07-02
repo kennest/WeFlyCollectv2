@@ -12,10 +12,19 @@ import com.weflyagri.wecollect.R;
 import java.io.File;
 
 public class Piece implements ChipInterface{
+    private int index=0;
     private String url;
     private Uri contentUrl;
     private Integer email;
     private Integer alert;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public Uri getContentUrl() {
         return contentUrl;

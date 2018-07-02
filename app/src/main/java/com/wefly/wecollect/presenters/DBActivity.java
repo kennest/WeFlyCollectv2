@@ -66,6 +66,7 @@ public class DBActivity extends BaseActivity implements SmsPostItemTask.OnSmsSen
         } catch (Exception e) {
             e.printStackTrace();
         }
+        appController.setRecipientsList(list);
         return list;
     }
 

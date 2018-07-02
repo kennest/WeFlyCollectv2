@@ -166,7 +166,11 @@ public class CreateEmailActivity extends FormActivity implements View.OnClickLis
             btn.setOnClickListener(this);
         }
         //Lance l'activite de camera Pix
-        vImages.findViewById(R.id.liSelectImage).setOnClickListener(view -> new AnimeView(view, view1 -> Pix.start(CreateEmailActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT)).startAnimation());
+        vImages.findViewById(R.id.liSelectImage).setOnClickListener((View view) -> {
+            new AnimeView(view, (View view1) -> {
+                Pix.start(CreateEmailActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT);
+            }).startAnimation();
+        });
     }
 
     @SuppressLint("RestrictedApi")

@@ -101,4 +101,5 @@ dependencies {
     //    implementation files('libs/ormlite-jdbc-5.1.jar')
     //implementation 'com.github.satyan:sugar:1.5'
     implementation files('libs/activeandroid-3.1-beta.jar')
+    implementation 'com.wonderkiln:camerakit:0.13.1'
 }
