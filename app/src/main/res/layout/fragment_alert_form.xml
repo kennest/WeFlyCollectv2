@@ -13,26 +13,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.pchmn.materialchips.ChipsInput
-                android:id="@+id/recipientsChips"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/linear_item_recipients_margin"
-                android:layout_gravity="center_horizontal"
-                app:hasAvatarIcon="true"
-                app:maxRows="2"
-                app:maxHeight="@dimen/linear_item_recipients_margin"
-                app:chip_deletable="true"
-                app:showChipDetailed="false"
-                android:background="@color/white"
-                android:textColor="@color/gray_two"
-                app:hint="@string/recipient_name_hint"
-                app:hintColor="@color/gray_two" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <com.pchmn.materialchips.ChipsInput
+                    android:id="@+id/recipientsChips"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/linear_item_recipients_margin"
+                    android:layout_gravity="center_horizontal"
+                    app:hasAvatarIcon="true"
+                    app:maxRows="2"
+                    app:maxHeight="@dimen/linear_item_recipients_margin"
+                    app:chip_deletable="true"
+                    app:showChipDetailed="false"
+                    android:background="@color/white"
+                    android:textColor="@color/gray_two"
+                    app:hint="@string/recipient_name_hint"
+                    app:hintColor="@color/gray_two" />
             </LinearLayout>
 
             <LinearLayout

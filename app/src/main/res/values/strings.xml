@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeCollect</string>
+    <string name="app_name">WeFlyCollect</string>
     <!--App label-->
     <string name="title_left">WeFly </string>
     <string name="title_right">WeConnect </string>

@@ -29,6 +29,7 @@ import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
 import com.wefly.wecollect.presenters.BaseActivity;
 import com.wefly.wecollect.presenters.FormActivity;
+import com.wefly.wecollect.tasks.AlertPostItemTask;
 import com.wefly.wecollect.tasks.CategoryGetTask;
 import com.wefly.wecollect.tasks.RecipientGetTask;
 import com.wefly.wecollect.utils.AppController;
@@ -113,8 +114,9 @@ public class SendDialogFrament extends DialogFragment {
                             ShowOrHideForm();
                         }
                     }
+                    appController.setPieceList(pList);
 
-                    Log.v("piecelist size dialog 2", String.valueOf(pList.size()));
+                    Log.v("appCtrl plist size", String.valueOf(appController.getPieceList().size()));
                     pieceLayout.removeView(v);
                 }
             });
@@ -129,8 +131,12 @@ public class SendDialogFrament extends DialogFragment {
             startActivityForResult(recorder, 352);
         });
 
-        sendBtn.setOnClickListener(v -> {
-
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveInput();
+                new AlertPostItemTask(alert).execute();
+            }
         });
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -189,9 +195,10 @@ public class SendDialogFrament extends DialogFragment {
                                     recordBtn.setClickable(true);
                                     recordBtn.setEnabled(true);
                                 }
+                                appController.setPieceList(pList);
                                 ShowOrHideForm();
 
-                                Log.v("piecelist size dialog 3", String.valueOf(pList.size()));
+                                Log.v("appCtrl plist size", String.valueOf(appController.getPieceList().size()));
                                 pieceLayout.removeView(v);
                             }
                         });
@@ -227,21 +234,21 @@ public class SendDialogFrament extends DialogFragment {
         // get Recipients
         Log.d("INIT CHIP RECIPIENT", "OK");
         ciRecipients = alertform.findViewById(R.id.recipientsChips);
-            recipientsList = (List<Recipient>) getArguments().getSerializable("recipients_list"); // Auto download if empty
-        List<Recipient> list2=new ArrayList<>();
+        recipientsList = (List<Recipient>) getArguments().getSerializable("recipients_list"); // Auto download if empty
+        List<Recipient> list2 = new ArrayList<>();
         list2.addAll(appController.getRecipients());
-            if (list2.size() > 0) {
-                if (ciRecipients != null) {
-                    Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients NOT NULL Run");
-                    ciRecipients.setFilterableList(recipientsList);
-                    Log.v("Dialog time", String.valueOf(recipientsList.size()));
-                } else {
-                    Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS NULL Run");
-                }
-
+        if (list2.size() > 0) {
+            if (ciRecipients != null) {
+                Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients NOT NULL Run");
+                ciRecipients.setFilterableList(recipientsList);
+                Log.v("Dialog time", String.valueOf(recipientsList.size()));
             } else {
-                Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS EMPTY Run");
+                Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS NULL Run");
             }
+
+        } else {
+            Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS EMPTY Run");
+        }
     }
 
     private void saveInput() throws NullPointerException {
