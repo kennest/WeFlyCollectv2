@@ -13,19 +13,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.wefly.wecollect.utils.design.RobotoTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.pchmn.materialchips.ChipsInput
+                android:id="@+id/recipientsChips"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/linear_item_recipients_margin"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="@string/title_alert"
-                android:textSize="@dimen/title_text_small_size"
-                app:typeface="robotoBoldCondensed"
-                android:textStyle="bold"
-                android:textColor="@color/colorTitleGreen"
-                android:padding="5dp"/>
-
-            <include layout="@layout/recipients_layout"/>
+                app:hasAvatarIcon="true"
+                app:maxRows="2"
+                app:maxHeight="@dimen/linear_item_recipients_margin"
+                app:chip_deletable="true"
+                app:showChipDetailed="false"
+                android:background="@color/white"
+                android:textColor="@color/gray_two"
+                app:hint="@string/recipient_name_hint"
+                app:hintColor="@color/gray_two" />
 
             <LinearLayout
                 android:layout_width="match_parent"

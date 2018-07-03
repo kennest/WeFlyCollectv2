@@ -27,6 +27,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
+import com.wefly.wecollect.tasks.RecipientGetTask;
 import com.weflyagri.wecollect.R;
 
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -55,8 +57,17 @@ public class AppController extends Application {
     private static String audioPath;
     public Map<String, Integer> alert_categories = new HashMap();
     private CopyOnWriteArrayList<Recipient> recipientsList = new CopyOnWriteArrayList<>();
+    List<Recipient> recipients= new ArrayList<>();
     public Double latitude;
     public Double longitude;
+
+    public List<Recipient> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(List<Recipient> recipients) {
+        this.recipients = recipients;
+    }
 
     public CopyOnWriteArrayList<Recipient> getRecipientsList() {
         return recipientsList;
@@ -91,7 +102,11 @@ public class AppController extends Application {
         super.onCreate();
         ActiveAndroid.initialize(this);
         mInstance = this;
-
+        try {
+            recipients=new RecipientGetTask().execute().get();
+        } catch (ExecutionException|InterruptedException e) {
+            e.printStackTrace();
+        }
         // Support vector
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 

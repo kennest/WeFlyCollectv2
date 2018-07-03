@@ -96,8 +96,6 @@ public class RecipientsGetTask extends TaskPresenter {
             Log.v(Constants.APP_NAME, TAG + " onPostExecute RUN");
             notifyOnRecipientsDownloadCompleteListener(isOk, appController.recipiencesJSONArrToList(array), hasPrev, hasNext, prev, next, size);
         }
-
-
     }
 
     public void setOnRecipientsDownloadCompleteListener(@NonNull OnRecipientsDownloadCompleteListener listener) {

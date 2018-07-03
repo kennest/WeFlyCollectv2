@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,15 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.fxn.pix.Pix;
 import com.pchmn.materialchips.ChipsInput;
 import com.wefly.wecollect.activities.RecorderActivity;
 import com.wefly.wecollect.models.Alert;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
-import com.wefly.wecollect.presenters.RecipientPresenter;
+import com.wefly.wecollect.presenters.BaseActivity;
+import com.wefly.wecollect.presenters.FormActivity;
 import com.wefly.wecollect.tasks.CategoryGetTask;
+import com.wefly.wecollect.tasks.RecipientGetTask;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.Constants;
 import com.weflyagri.wecollect.R;
@@ -46,14 +49,20 @@ public class SendDialogFrament extends DialogFragment {
     LinearLayout pieceLayout;
     LinearLayout alertform;
     protected ChipsInput ciRecipients;
-    protected CopyOnWriteArrayList<Recipient> recipientsList;
+    protected List<Recipient> recipientsList;
     static Map<String, Integer> response_category = new HashMap<>();
     private Spinner category;
     ViewGroup vg;
     protected Alert alert = new Alert();
     private EditText edObject, edContent;
-    protected NumberProgressBar bnp;
     protected CopyOnWriteArrayList<Recipient> recipientsSelected = new CopyOnWriteArrayList<>();
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        initChipInput();
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -66,11 +75,8 @@ public class SendDialogFrament extends DialogFragment {
 
         vg = (ViewGroup) inflater.inflate(R.layout.dialog_send, null);
         alertform = vg.findViewById(R.id.alertForm);
-        ciRecipients = vg.findViewById(R.id.recipientsCi);
 
-        iniChipInput();
-        ShowOrHideForm();
-        initCategorySpinner();
+        initChipInput();
 
         pieceLayout = vg.findViewById(R.id.pieceToSend);
         recordBtn = vg.findViewById(R.id.recordBtn);
@@ -86,7 +92,7 @@ public class SendDialogFrament extends DialogFragment {
             Log.v("dialog image path", p.getUrl());
             image.setImageURI(p.getContentUrl());
             image.setTag(p.getIndex());
-            image.setLayoutParams(new LinearLayout.LayoutParams(150, 100));
+            image.setLayoutParams(new LinearLayout.LayoutParams(250, 100));
 
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -115,13 +121,16 @@ public class SendDialogFrament extends DialogFragment {
             pieceLayout.addView(image);
         }
 
-        recordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.v("Audio recordbtn", "clicked");
-                Intent recorder = new Intent(getActivity(), RecorderActivity.class);
-                startActivityForResult(recorder, 352);
-            }
+
+        //Button clicked listener
+        recordBtn.setOnClickListener(v -> {
+            Log.v("Audio recordbtn", "clicked");
+            Intent recorder = new Intent(getActivity(), RecorderActivity.class);
+            startActivityForResult(recorder, 352);
+        });
+
+        sendBtn.setOnClickListener(v -> {
+
         });
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -138,6 +147,8 @@ public class SendDialogFrament extends DialogFragment {
 //                        LoginDialogFragment.this.getDialog().cancel();
 //                    }
 //                });
+        ShowOrHideForm();
+        initCategorySpinner();
         return builder.create();
     }
 
@@ -145,7 +156,7 @@ public class SendDialogFrament extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         List<Piece> pList = appController.getPieceList();
-        iniChipInput();
+        initChipInput();
         switch (requestCode) {
             case (352): {
                 if (resultCode == 200) {
@@ -156,7 +167,7 @@ public class SendDialogFrament extends DialogFragment {
                         audioimage.setImageResource(R.drawable.microphone);
                         audio.setUrl(data.getExtras().getString("audioPath"));
                         audioimage.setTag(audio.getIndex());
-                        audioimage.setLayoutParams(new LinearLayout.LayoutParams(150, 100));
+                        audioimage.setLayoutParams(new LinearLayout.LayoutParams(250, 100));
                         recordBtn.setClickable(false);
                         recordBtn.setEnabled(false);
 
@@ -200,6 +211,7 @@ public class SendDialogFrament extends DialogFragment {
     }
 
     public void ShowOrHideForm() {
+        initChipInput();
         if (appController.getPieceList().size() <= 0) {
             alertform.setVisibility(View.INVISIBLE);
             sendBtn.setClickable(false);
@@ -211,33 +223,25 @@ public class SendDialogFrament extends DialogFragment {
         }
     }
 
-    protected void iniChipInput() {
+    protected void initChipInput() {
         // get Recipients
-        Log.d("INIT CHIP INPUT", "OK");
-        RecipientPresenter p = new RecipientPresenter(getActivity());
-        recipientsList = p.getRecipients(); // Auto download if empty
-        // FIX: UnsupportedOperationException
-        try {
-            ArrayList<Recipient> rList = new ArrayList<>();
-            rList.addAll(recipientsList);
-            Log.d("INIT CHIP INPUT", "LIST addAll Run");
-
-            if (rList.size() > 0) {
+        Log.d("INIT CHIP RECIPIENT", "OK");
+        ciRecipients = alertform.findViewById(R.id.recipientsChips);
+            recipientsList = (List<Recipient>) getArguments().getSerializable("recipients_list"); // Auto download if empty
+        List<Recipient> list2=new ArrayList<>();
+        list2.addAll(appController.getRecipients());
+            if (list2.size() > 0) {
                 if (ciRecipients != null) {
-                    Log.d("INIT CHIP INPUT", "LIST ciRecipients NOT NULL Run");
-                    ciRecipients.setFilterableList(rList);
+                    Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients NOT NULL Run");
+                    ciRecipients.setFilterableList(recipientsList);
+                    Log.v("Dialog time", String.valueOf(recipientsList.size()));
                 } else {
-                    Log.d("INIT CHIP INPUT", "LIST ciRecipients IS NULL Run");
+                    Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS NULL Run");
                 }
 
-
             } else {
-                Log.d("INIT CHIP INPUT", "LIST ciRecipients IS EMPTY Run");
+                Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS EMPTY Run");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("INIT CHIP INPUT", "CHIP UnsupportedOperationException");
-        }
     }
 
     private void saveInput() throws NullPointerException {

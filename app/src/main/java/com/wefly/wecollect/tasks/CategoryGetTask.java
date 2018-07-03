@@ -22,9 +22,9 @@ import okhttp3.Response;
 
 public class CategoryGetTask extends AsyncTask<Map<String, Integer>, Integer, Map<String, Integer>> {
     private Map<String, Integer> categories = new HashMap<>();
-    private String response;
-    private String next;
-    Integer count;
+    private String response="";
+    private String next="";
+    Integer count=0;
     private AppController appController;
 
 

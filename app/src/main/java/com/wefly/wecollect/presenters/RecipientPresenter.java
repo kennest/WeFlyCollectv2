@@ -44,7 +44,7 @@ public class RecipientPresenter implements RecipientsGetTask.OnRecipientsDownloa
     public RecipientPresenter(@NonNull final Activity act) {
         this.activity = act;
         this.appController = AppController.getInstance();
-        this.pCounter=new NumberProgressBar(appController.getApplicationContext());
+        this.pCounter = new NumberProgressBar(appController.getApplicationContext());
     }
 
     public void downloadAllRecipients(boolean goToNext) {
