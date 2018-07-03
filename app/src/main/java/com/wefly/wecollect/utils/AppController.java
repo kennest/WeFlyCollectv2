@@ -81,8 +81,8 @@ public class AppController extends Application {
         return pieceList;
     }
 
-    public void setPieceList(List<Piece> pieceList) {
-        AppController.getInstance().getPieceList().addAll(pieceList);
+    public void setPieceList(List<Piece> pList) {
+        this.pieceList=pList;
     }
 
     public static String getAudioPath() {

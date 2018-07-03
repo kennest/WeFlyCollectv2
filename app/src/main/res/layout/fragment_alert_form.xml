@@ -16,7 +16,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/lblTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/infos_suppl"
+                    android:gravity="center_horizontal|center"
+                    android:background="#9af765"
+                    android:textColor="#FFFF"
+                    android:layout_marginTop="5dp"/>
+
                 <com.pchmn.materialchips.ChipsInput
                     android:id="@+id/recipientsChips"
                     android:layout_width="match_parent"

@@ -93,32 +93,29 @@ public class SendDialogFrament extends DialogFragment {
             Log.v("dialog image path", p.getUrl());
             image.setImageURI(p.getContentUrl());
             image.setTag(p.getIndex());
-            image.setLayoutParams(new LinearLayout.LayoutParams(250, 100));
+            image.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
+            image.setScaleType(ImageView.ScaleType.FIT_XY);
 
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(appController.getApplicationContext(), "Piece removed!", Toast.LENGTH_SHORT).show();
-                    int index = Integer.parseInt(v.getTag().toString());
-                    Log.v("image clicked index", String.valueOf(index));
-                    Piece p = new Piece();
-                    p.setIndex(index);
+            image.setOnClickListener(view -> {
+                Toast.makeText(appController.getApplicationContext(), "Piece removed!", Toast.LENGTH_SHORT).show();
+                int index = Integer.parseInt(view.getTag().toString());
+                Log.v("image clicked index", String.valueOf(index));
+                Piece p1 = new Piece();
+                p1.setIndex(index);
 
-                    List<Piece> pList = appController.getPieceList();
-
-                    for (int i = 0; i < pList.size(); i++) {
-                        Log.v("image clicked index", String.valueOf(p.getIndex()));
-                        Log.v("image stored index", String.valueOf(pList.get(i).getIndex()));
-                        if (pList.get(i).getIndex() == p.getIndex()) {
-                            pList.remove(pList.get(i));
-                            ShowOrHideForm();
-                        }
+              List<Piece> pList = appController.getPieceList();
+                for (int i = 0; i < pList.size(); i++) {
+                    Log.v("image clicked index", String.valueOf(p1.getIndex()));
+                    Log.v("image stored index", String.valueOf(pList.get(i).getIndex()));
+                    if (pList.get(i).getIndex() == p1.getIndex()) {
+                        pList.remove(pList.get(i));
+                        ShowOrHideForm();
                     }
-                    appController.setPieceList(pList);
-
-                    Log.v("appCtrl plist size", String.valueOf(appController.getPieceList().size()));
-                    pieceLayout.removeView(v);
                 }
+                appController.setPieceList(pList);
+
+                Log.v("appCtrl plist size", String.valueOf(pList.size()));
+                pieceLayout.removeView(view);
             });
             pieceLayout.addView(image);
         }
@@ -131,12 +128,9 @@ public class SendDialogFrament extends DialogFragment {
             startActivityForResult(recorder, 352);
         });
 
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveInput();
-                new AlertPostItemTask(alert).execute();
-            }
+        sendBtn.setOnClickListener(v -> {
+            saveInput();
+            new AlertPostItemTask(alert).execute();
         });
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -173,7 +167,8 @@ public class SendDialogFrament extends DialogFragment {
                         audioimage.setImageResource(R.drawable.microphone);
                         audio.setUrl(data.getExtras().getString("audioPath"));
                         audioimage.setTag(audio.getIndex());
-                        audioimage.setLayoutParams(new LinearLayout.LayoutParams(250, 100));
+                        audioimage.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
+                        audioimage.setScaleType(ImageView.ScaleType.FIT_XY);
                         recordBtn.setClickable(false);
                         recordBtn.setEnabled(false);
 
@@ -198,7 +193,7 @@ public class SendDialogFrament extends DialogFragment {
                                 appController.setPieceList(pList);
                                 ShowOrHideForm();
 
-                                Log.v("appCtrl plist size", String.valueOf(appController.getPieceList().size()));
+                                Log.v("appCtrl plist size", String.valueOf(pList.size()));
                                 pieceLayout.removeView(v);
                             }
                         });

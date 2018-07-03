@@ -91,4 +91,5 @@
     <string name="enregistrement_en_cours">Recording</string>
     <string name="perimeter">perimeter</string>
     <string name="area">area</string>
+    <string name="infos_suppl">INFOS SUPPL.</string>
 </resources>
