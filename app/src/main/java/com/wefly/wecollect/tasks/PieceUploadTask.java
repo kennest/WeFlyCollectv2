@@ -34,6 +34,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     private List<Piece> pieces;
     private AppController appController;
     private String prefresponse;
+    private OnPieceSendListener listener;
 
     public PieceUploadTask(@NonNull List<Piece> pieces, @Nullable Email email, @Nullable Alert alert) {
         this.email = email;
@@ -47,10 +48,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
         super.onPreExecute();
         SharedPreferences sp = appController.getSharedPreferences("sent_data", 0);
         prefresponse = sp.getString("sent_response", "NO DATA IN PREFS");
-
         Log.v("PREFS SENT DATA", prefresponse);
-
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi des pieces jointes...", FancyToast.LENGTH_LONG, FancyToast.INFO, false).show();
     }
 
     @Override
@@ -71,7 +69,7 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Upload terminé!", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+        notifyOnPieceSendListener(true);
     }
 
     private final class PieceUploadNetworkUtilities {
@@ -126,5 +124,30 @@ public class PieceUploadTask extends AsyncTask<String, Integer, String> {
             return result;
         }
 
+    }
+
+
+//DECLARE LISTENER
+    public interface OnPieceSendListener {
+        void onUploadError();
+
+        void onUploadSucces();
+    }
+
+    public void setOnPieceSendListener(@NonNull OnPieceSendListener listener) {
+        this.listener = listener;
+    }
+
+    private void notifyOnPieceSendListener(boolean isDone) {
+        if (listener != null) {
+            try {
+                if (isDone)
+                    listener.onUploadSucces();
+                else
+                    listener.onUploadError();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

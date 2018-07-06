@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,23 +25,25 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.fxn.pix.Pix;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.ChipInterface;
 import com.wefly.wecollect.activities.RecorderActivity;
 import com.wefly.wecollect.models.Alert;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
-import com.wefly.wecollect.presenters.BaseActivity;
-import com.wefly.wecollect.presenters.FormActivity;
 import com.wefly.wecollect.tasks.AlertPostItemTask;
 import com.wefly.wecollect.tasks.CategoryGetTask;
-import com.wefly.wecollect.tasks.RecipientGetTask;
+import com.wefly.wecollect.tasks.PieceUploadTask;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.Constants;
 import com.weflyagri.wecollect.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -46,30 +51,37 @@ import java.util.concurrent.ExecutionException;
 public class SendDialogFrament extends DialogFragment {
     AppController appController = AppController.getInstance();
     ImageButton recordBtn = new ImageButton(appController.getApplicationContext());
-    Button sendBtn = new Button(appController.getApplicationContext());
+    Button nextBtn = new Button(appController.getApplicationContext());
     LinearLayout pieceLayout;
     LinearLayout alertform;
-    protected ChipsInput ciRecipients;
     protected List<Recipient> recipientsList;
     static Map<String, Integer> response_category = new HashMap<>();
     private Spinner category;
     ViewGroup vg;
     protected Alert alert = new Alert();
     private EditText edObject, edContent;
-    protected CopyOnWriteArrayList<Recipient> recipientsSelected = new CopyOnWriteArrayList<>();
+    ChooseRecipientDialogFragment recipientDialogFragment=new ChooseRecipientDialogFragment();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initChipInput();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        //We retrieve the recipients from in the bundle
+        recipientsList = (List<Recipient>) getArguments().getSerializable("recipients_list");
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("recipients_list",(Serializable)recipientsList);
+        bundle.putSerializable("alert",(Serializable)alert);
+        recipientDialogFragment.setArguments(bundle);
+        recipientDialogFragment.setCancelable(false);
 
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -77,11 +89,9 @@ public class SendDialogFrament extends DialogFragment {
         vg = (ViewGroup) inflater.inflate(R.layout.dialog_send, null);
         alertform = vg.findViewById(R.id.alertForm);
 
-        initChipInput();
-
         pieceLayout = vg.findViewById(R.id.pieceToSend);
         recordBtn = vg.findViewById(R.id.recordBtn);
-        sendBtn = vg.findViewById(R.id.sendBtn);
+        nextBtn = vg.findViewById(R.id.nextBtn);
         edObject = vg.findViewById(R.id.objectEdText);
         edContent = vg.findViewById(R.id.contentEdText);
 
@@ -103,13 +113,12 @@ public class SendDialogFrament extends DialogFragment {
                 Piece p1 = new Piece();
                 p1.setIndex(index);
 
-              List<Piece> pList = appController.getPieceList();
+                List<Piece> pList = appController.getPieceList();
                 for (int i = 0; i < pList.size(); i++) {
                     Log.v("image clicked index", String.valueOf(p1.getIndex()));
                     Log.v("image stored index", String.valueOf(pList.get(i).getIndex()));
                     if (pList.get(i).getIndex() == p1.getIndex()) {
                         pList.remove(pList.get(i));
-                        ShowOrHideForm();
                     }
                 }
                 appController.setPieceList(pList);
@@ -128,13 +137,14 @@ public class SendDialogFrament extends DialogFragment {
             startActivityForResult(recorder, 352);
         });
 
-        sendBtn.setOnClickListener(v -> {
+        nextBtn.setOnClickListener((View v) -> {
             saveInput();
-            new AlertPostItemTask(alert).execute();
+            recipientDialogFragment.show(getFragmentManager(),"RECIPIENT DIALOG");
         });
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(vg);
+
         // Add action buttons
 //                .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
 //                    @Override
@@ -147,16 +157,15 @@ public class SendDialogFrament extends DialogFragment {
 //                        LoginDialogFragment.this.getDialog().cancel();
 //                    }
 //                });
-        ShowOrHideForm();
         initCategorySpinner();
         return builder.create();
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         List<Piece> pList = appController.getPieceList();
-        initChipInput();
         switch (requestCode) {
             case (352): {
                 if (resultCode == 200) {
@@ -166,36 +175,35 @@ public class SendDialogFrament extends DialogFragment {
                         ImageView audioimage = new ImageView(appController.getApplicationContext());
                         audioimage.setImageResource(R.drawable.microphone);
                         audio.setUrl(data.getExtras().getString("audioPath"));
+
+                        pList.add(audio);
+
                         audioimage.setTag(audio.getIndex());
                         audioimage.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
                         audioimage.setScaleType(ImageView.ScaleType.FIT_XY);
                         recordBtn.setClickable(false);
                         recordBtn.setEnabled(false);
 
-                        audioimage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(appController.getApplicationContext(), "Piece removed!", Toast.LENGTH_SHORT).show();
-                                int index = Integer.parseInt(v.getTag().toString());
-                                Log.v("image clicked index", String.valueOf(index));
-                                Piece p = new Piece();
-                                p.setIndex(index);
+                        audioimage.setOnClickListener(v -> {
+                            Toast.makeText(appController.getApplicationContext(), "Piece removed!", Toast.LENGTH_SHORT).show();
+                            int index = Integer.parseInt(v.getTag().toString());
+                            Log.v("image clicked index", String.valueOf(index));
+                            Piece p = new Piece();
+                            p.setIndex(index);
 
-                                for (int i = 0; i < pList.size(); i++) {
-                                    Log.v("image clicked index", String.valueOf(p.getIndex()));
-                                    Log.v("image stored index", String.valueOf(pList.get(i).getIndex()));
-                                    if (pList.get(i).getIndex() == p.getIndex()) {
-                                        pList.remove(pList.get(i));
-                                    }
-                                    recordBtn.setClickable(true);
-                                    recordBtn.setEnabled(true);
+                            for (int i = 0; i < pList.size(); i++) {
+                                Log.v("image clicked index", String.valueOf(p.getIndex()));
+                                Log.v("image stored index", String.valueOf(pList.get(i).getIndex()));
+                                if (pList.get(i).getIndex() == p.getIndex()) {
+                                    pList.remove(pList.get(i));
                                 }
-                                appController.setPieceList(pList);
-                                ShowOrHideForm();
-
-                                Log.v("appCtrl plist size", String.valueOf(pList.size()));
-                                pieceLayout.removeView(v);
+                                recordBtn.setClickable(true);
+                                recordBtn.setEnabled(true);
                             }
+                            appController.setPieceList(pList);
+
+                            Log.v("appCtrl plist size", String.valueOf(pList.size()));
+                            pieceLayout.removeView(v);
                         });
 
                         pieceLayout.addView(audioimage);
@@ -209,56 +217,35 @@ public class SendDialogFrament extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
+        appController.setPieceList(new ArrayList<>());
+        pieceLayout.removeAllViews();
         Pix.start(getActivity(), Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT);
     }
 
     public void ShowOrHideForm() {
-        initChipInput();
         if (appController.getPieceList().size() <= 0) {
             alertform.setVisibility(View.INVISIBLE);
-            sendBtn.setClickable(false);
-            sendBtn.setEnabled(false);
+            nextBtn.setClickable(false);
+            nextBtn.setEnabled(false);
         } else {
             alertform.setVisibility(View.VISIBLE);
-            sendBtn.setClickable(true);
-            sendBtn.setEnabled(true);
+            nextBtn.setClickable(true);
+            nextBtn.setEnabled(true);
         }
     }
 
-    protected void initChipInput() {
-        // get Recipients
-        Log.d("INIT CHIP RECIPIENT", "OK");
-        ciRecipients = alertform.findViewById(R.id.recipientsChips);
-        recipientsList = (List<Recipient>) getArguments().getSerializable("recipients_list"); // Auto download if empty
-        List<Recipient> list2 = new ArrayList<>();
-        list2.addAll(appController.getRecipients());
-        if (list2.size() > 0) {
-            if (ciRecipients != null) {
-                Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients NOT NULL Run");
-                ciRecipients.setFilterableList(recipientsList);
-                Log.v("Dialog time", String.valueOf(recipientsList.size()));
-            } else {
-                Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS NULL Run");
-            }
 
-        } else {
-            Log.d("INIT CHIP RECIPIENT", "LIST ciRecipients IS EMPTY Run");
-        }
-    }
-
+    //FILL ALERT DATA WITH INPUT
     private void saveInput() throws NullPointerException {
         if (alert != null) {
             alert.setObject(edObject.getText().toString().trim());
             alert.setContent(edContent.getText().toString().trim());
             alert.setCategory(category.getSelectedItem().toString());
-            recipientsSelected.clear();
-            List<Recipient> list = (List<Recipient>) ciRecipients.getSelectedChipList();
-            recipientsSelected.addAll(list);
-            if (recipientsSelected.size() > 0)
-                alert.setRecipients(recipientsSelected);
         }
     }
 
+
+    //INIT SPINNER DATA
     protected void initCategorySpinner() {
         //Execute category task in order to get the list
         CategoryGetTask task = new CategoryGetTask(appController);
@@ -274,12 +261,13 @@ public class SendDialogFrament extends DialogFragment {
         List<String> category_list = new ArrayList<>();
         if (response_category != null) {
             for (Map.Entry entry : response_category.entrySet()) {
-                category_list.add((String) entry.getKey());
+                category_list.add((String) entry.getKey().toString().toUpperCase());
             }
         }
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(appController.getApplicationContext(), android.R.layout.simple_spinner_item, category_list);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         category.setAdapter(spinnerAdapter);
 
     }

@@ -21,23 +21,23 @@ public class onboardActivity extends AhoyOnboarderActivity {
         welcomeCard.setTitleColor(R.color.white);
         welcomeCard.setDescriptionColor(R.color.grey_200);
         welcomeCard.setTitleTextSize(dpToPixels(10, this));
-        welcomeCard.setDescriptionTextSize(dpToPixels(8, this));
+        welcomeCard.setDescriptionTextSize(dpToPixels(12, this));
         welcomeCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
 
-        AhoyOnboarderCard databaseCard = new AhoyOnboarderCard("RealTime Technology Database", "Partager des informations en temps reel", R.drawable.database);
-        databaseCard.setBackgroundColor(R.color.black_transparent);
-        databaseCard.setTitleColor(R.color.white);
-        databaseCard.setDescriptionColor(R.color.grey_200);
-        databaseCard.setTitleTextSize(dpToPixels(10, this));
-        databaseCard.setDescriptionTextSize(dpToPixels(8, this));
-        databaseCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
+//        AhoyOnboarderCard databaseCard = new AhoyOnboarderCard("RealTime Technology Database", "Partager des informations en temps reel", R.drawable.database);
+//        databaseCard.setBackgroundColor(R.color.black_transparent);
+//        databaseCard.setTitleColor(R.color.white);
+//        databaseCard.setDescriptionColor(R.color.grey_200);
+//        databaseCard.setTitleTextSize(dpToPixels(10, this));
+//        databaseCard.setDescriptionTextSize(dpToPixels(8, this));
+//        databaseCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
 
-        AhoyOnboarderCard emailCard = new AhoyOnboarderCard("Communication entre acteurs", "Gardez tout vos collaborateurs informer à l'aide de la messagerie intégré", R.drawable.email);
+        AhoyOnboarderCard emailCard = new AhoyOnboarderCard("Communication entre acteurs", "Gardez tout vos collaborateurs informer à l'aide des alertes photos", R.drawable.photo_camera);
         emailCard.setBackgroundColor(R.color.black_transparent);
         emailCard.setTitleColor(R.color.white);
         emailCard.setDescriptionColor(R.color.grey_200);
         emailCard.setTitleTextSize(dpToPixels(10, this));
-        emailCard.setDescriptionTextSize(dpToPixels(8, this));
+        emailCard.setDescriptionTextSize(dpToPixels(12, this));
         emailCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
 
         AhoyOnboarderCard lastCard = new AhoyOnboarderCard("C'est parti !", "Vous Pouvez commencer", R.drawable.success);
@@ -45,13 +45,13 @@ public class onboardActivity extends AhoyOnboarderActivity {
         lastCard.setTitleColor(R.color.white);
         lastCard.setDescriptionColor(R.color.grey_200);
         lastCard.setTitleTextSize(dpToPixels(10, this));
-        lastCard.setDescriptionTextSize(dpToPixels(8, this));
+        lastCard.setDescriptionTextSize(dpToPixels(12, this));
         lastCard.setIconLayoutParams(250, 250, 50, 50, 50, 50);
 
         //add cards to List
         List<AhoyOnboarderCard> pages = new ArrayList<>();
         pages.add(welcomeCard);
-        pages.add(databaseCard);
+       //pages.add(databaseCard);
         pages.add(emailCard);
         pages.add(lastCard);
         setOnboardPages(pages);

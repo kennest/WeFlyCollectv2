@@ -42,7 +42,9 @@
 
         <service
             android:name="com.wefly.wecollect.services.LocationProviderService"
+            android:enabled="true"
             android:launchMode="singleTask" />
+        <service android:name="com.wefly.wecollect.presenters.BaseService" />
 
         <activity
             android:name="com.wefly.wecollect.activities.onboardActivity"

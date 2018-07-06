@@ -3,6 +3,7 @@ package com.wefly.wecollect.utils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,6 +28,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
+import com.wefly.wecollect.services.LocationProviderService;
 import com.wefly.wecollect.tasks.RecipientGetTask;
 import com.weflyagri.wecollect.R;
 
@@ -57,7 +59,7 @@ public class AppController extends Application {
     private static String audioPath;
     public Map<String, Integer> alert_categories = new HashMap();
     private CopyOnWriteArrayList<Recipient> recipientsList = new CopyOnWriteArrayList<>();
-    List<Recipient> recipients= new ArrayList<>();
+    List<Recipient> recipients = new ArrayList<>();
     public Double latitude;
     public Double longitude;
 
@@ -66,7 +68,7 @@ public class AppController extends Application {
     }
 
     public void setRecipients(List<Recipient> recipients) {
-        this.recipients = recipients;
+        this.recipients=recipients;
     }
 
     public CopyOnWriteArrayList<Recipient> getRecipientsList() {
@@ -82,7 +84,7 @@ public class AppController extends Application {
     }
 
     public void setPieceList(List<Piece> pList) {
-        this.pieceList=pList;
+        this.pieceList = pList;
     }
 
     public static String getAudioPath() {
@@ -103,8 +105,8 @@ public class AppController extends Application {
         ActiveAndroid.initialize(this);
         mInstance = this;
         try {
-            recipients=new RecipientGetTask().execute().get();
-        } catch (ExecutionException|InterruptedException e) {
+            recipients = new RecipientGetTask().execute().get();
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         // Support vector
@@ -113,6 +115,10 @@ public class AppController extends Application {
         //FIXE CAMERA Bug on Api 24+
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+
+        Intent i = new Intent(getApplicationContext(), LocationProviderService.class);
+        // potentially add data to the intent
+        getApplicationContext().startService(i);
     }
 
     public static void addToDestroyList(final Activity activity) {
@@ -191,7 +197,7 @@ public class AppController extends Application {
     public String getToken() {
         try {
             token = Save.defaultLoadString(Constants.PREF_TOKEN, getApplicationContext());
-            Log.v("JWT TOKEN",token);
+            Log.v("JWT TOKEN", token);
         } catch (Exception e) {
             e.printStackTrace();
         }

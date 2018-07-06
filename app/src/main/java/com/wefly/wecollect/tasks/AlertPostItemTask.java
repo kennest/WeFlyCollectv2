@@ -1,6 +1,5 @@
 package com.wefly.wecollect.tasks;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -29,7 +28,7 @@ import okhttp3.Response;
  * Created by admin on 02/04/2018.
  */
 
-public class AlertPostItemTask extends TaskPresenter {
+public class AlertPostItemTask extends TaskPresenter implements PieceUploadTask.OnPieceSendListener {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     final Alert alert;
     private String response;
@@ -37,7 +36,8 @@ public class AlertPostItemTask extends TaskPresenter {
     private OnAlertSendListener listener;
     private String TAG = getClass().getSimpleName();
     private AppController appController;
-    protected ProgressDialog mProgressDialog;
+    PieceUploadTask.OnPieceSendListener uploadlistener;
+
 
     public AlertPostItemTask(@NonNull Alert alert) {
         this.alert = alert;
@@ -48,16 +48,14 @@ public class AlertPostItemTask extends TaskPresenter {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi de l'alert...", FancyToast.LENGTH_LONG, FancyToast.INFO, false).show();
+        //FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi de l'alert...", FancyToast.LENGTH_LONG, FancyToast.INFO, false).show();
     }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
         AlertPostItemNetworkUtilities util = new AlertPostItemNetworkUtilities();
         try {
-
             response = util.getResponseFromHttpUrl(Constants.SEND_ALERT_URL);
-
             Log.v("Alert Sent Response ", response.trim());
 
             //Store the response in the sharedPref
@@ -69,40 +67,19 @@ public class AlertPostItemTask extends TaskPresenter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            response = util.getResponseFromHttpUrl(alert.parcelleToJSONObjAsPostItem(), Constants.PARCELLE_SENT_URL );
-//            Log.v(Constants.APP_NAME, TAG + " response " + response);
-//
-//            if (!response.trim().equals("") && !response.trim().equals(Constants.SERVER_ERROR) && !response.trim().equals(Constants.RESPONSE_EMPTY)){
-//                JSONObject jOb = new JSONObject(response)
-//                        .getJSONArray("reponse")
-//                        .getJSONArray(0)
-//                        .getJSONObject(0);
-//                parcelle.setParcelleId(jOb.getInt("id_android"));
-//                parcelle.setIdOnServer(jOb.getInt("id"));
-//                parcelle.setDateSoumission(jOb.getString("date_soumission"));
-//                parcelle.setDelete(Boolean.valueOf(jOb.getString("isDelete")));
-//                parcelle.setNew(false);
-//
-//                return true;
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Log.v(Constants.APP_NAME, TAG +"doInBackground Error ");
-//        }
         return true;
     }
 
     @Override
     protected void onPostExecute(Boolean isOk) {
         super.onPostExecute(isOk);
-        FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi terminé", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
-
+        //FancyToast.makeText(AppController.getInstance().getApplicationContext(), "Envoi terminé", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
         //Envoi des pieces jointes
         if (appController.getPieceList().size() > 0) {
             Log.v("Alert Post Execute", "RUN");
-            new PieceUploadTask(appController.getPieceList(), null, alert).execute();
+            PieceUploadTask pieceUploadTask=new PieceUploadTask(appController.getPieceList(), null, alert);
+            pieceUploadTask.execute();
+            pieceUploadTask.setOnPieceSendListener(uploadlistener);
         }
         notifyOnAlertSendListener(isOk,alert);
     }
@@ -124,6 +101,33 @@ public class AlertPostItemTask extends TaskPresenter {
         }
     }
 
+    public void setOnPieceSendListener(@NonNull PieceUploadTask.OnPieceSendListener listener) {
+        this.uploadlistener = listener;
+    }
+
+    private void notifyOnPieceSendListener(boolean isDone) {
+        if (uploadlistener != null) {
+            try {
+                if (isDone)
+                    uploadlistener.onUploadSucces();
+                else
+                    uploadlistener.onUploadError();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onUploadError() {
+
+    }
+
+    @Override
+    public void onUploadSucces() {
+
+    }
+
     public interface OnAlertSendListener {
         void onSendError(@NonNull Alert e);
 
@@ -132,39 +136,6 @@ public class AlertPostItemTask extends TaskPresenter {
 
     public final class AlertPostItemNetworkUtilities {
         public String getResponseFromHttpUrl(@NonNull String url) throws IOException {
-
-//            HttpClient httpclient ;
-//            HttpPost httppost = new HttpPost(url);
-//            HttpResponse response;
-//            HttpParams httpParameters = new BasicHttpParams();
-//            HttpConnectionParams.setConnectionTimeout(httpParameters, Constants.VOLLEY_TIME_OUT);
-//            HttpConnectionParams.setSoTimeout(httpParameters, Constants.VOLLEY_TIME_OUT);
-//            httpclient = new DefaultHttpClient(httpParameters);
-//            Log.v(Constants.APP_NAME, TAG + "  doInBackGround url " +url  + " Obj " + jsonParam.toString());
-//
-//            try {
-//                httppost.setEntity(new StringEntity(jsonParam.toString(), "UTF-8"));
-//                httppost.setHeader("Content-type", "application/json;charset=UTF-8");
-//                httppost.setHeader("Accept-Type","application/json");
-//                if (appController != null)
-//                    httppost.setHeader("Authorization",Constants.TOKEN_HEADER_NAME + appController.getToken());
-//                response = httpclient.execute(httppost);
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-//                StringBuilder builder = new StringBuilder();
-//                for (String line = null; (line = reader.readLine()) != null;) {
-//                    builder.append(line).append("\n");
-//                }
-//                Log.v(Constants.APP_NAME, TAG + "  doInBackGround parcelJson.toString response ");
-//                return builder.toString();
-//            }catch (UnsupportedEncodingException e) {
-//                Log.v(Constants.APP_NAME, TAG + "   doInBackGround UnsupportedEncodingException" );
-//                e.printStackTrace();
-//            }catch (IOException e) {
-//                Log.v(Constants.APP_NAME, TAG + "   doInBackGround IOException" );
-//                e.printStackTrace();
-//            }
-//            return Constants.SERVER_ERROR;
-//        }
             OkHttpClient client = new OkHttpClient();
             JSONObject json = new JSONObject();
                         //Populate the json parameters
@@ -172,10 +143,12 @@ public class AlertPostItemTask extends TaskPresenter {
                 json.put("titre", alert.getObject());
                 json.put("contenu", alert.getContent());
                 json.put("destinataires", alert.getRecipientsIds());
-                json.put("longitude", appController.longitude.toString());
-                json.put("latitude", appController.latitude.toString());
-                json.put("date_alerte", "2018-06-15T16:59:49.352849Z");
+                json.put("longitude", Double.valueOf(appController.longitude));
+                json.put("latitude", Double.valueOf(appController.latitude));
+                json.put("date_alerte", new org.joda.time.DateTime( org.joda.time.DateTimeZone.UTC ));
 
+
+                //on revoie l'Id de la categorie correspondant au texte contenu dans la categorie
                 for (Map.Entry entry : appController.alert_categories.entrySet()) {
                     if (entry.getKey().equals(alert.getCategory()))
                         json.put("categorie", entry.getValue());
@@ -184,7 +157,6 @@ public class AlertPostItemTask extends TaskPresenter {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
             //Create the request
             RequestBody body = RequestBody.create(JSON, json.toString());

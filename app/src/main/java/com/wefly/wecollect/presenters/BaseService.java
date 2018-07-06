@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.wefly.wecollect.services.LocationProviderService;
 import com.wefly.wecollect.utils.Constants;
 import com.wefly.wecollect.utils.PermissionUtil;
 

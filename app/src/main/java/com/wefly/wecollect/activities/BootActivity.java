@@ -13,6 +13,7 @@ import com.fxn.pix.Pix;
 import com.wefly.wecollect.fragments.SendDialogFrament;
 import com.wefly.wecollect.models.Piece;
 import com.wefly.wecollect.models.Recipient;
+import com.wefly.wecollect.services.LocationProviderService;
 import com.wefly.wecollect.tasks.RecipientGetTask;
 import com.wefly.wecollect.utils.AppController;
 import com.wefly.wecollect.utils.Constants;
@@ -30,8 +31,12 @@ public class BootActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //We start Location service
+        startLocationService();
         //setContentView(R.layout.boot_activity);
             Pix.start(BootActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT);
+        //We pass the recipients list to the dialog
         try {
             recipients=new RecipientGetTask().execute().get();
             Bundle bundle=new Bundle();
@@ -44,16 +49,6 @@ public class BootActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -63,9 +58,6 @@ public class BootActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                     List<Piece> pieces = new ArrayList<>();
-//                    myAdapter.AddImage(returnValue);
-//                    if (recyclerView.getVisibility() != View.VISIBLE)
-//                        recyclerView.setVisibility(View.VISIBLE);
 
                     int i=0;
                     //On recupere la liste des URL des images
@@ -89,7 +81,15 @@ public class BootActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        dialog.dismiss();
+        appController.setPieceList(new ArrayList<>());
         Pix.start(BootActivity.this, Constants.REQUEST_CODE_SELECT_IMAGES, Constants.MAX_SELECT_COUNT);
+    }
+
+    protected void startLocationService() {
+        Intent intent = new Intent(this, LocationProviderService.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startService(intent);
     }
 
 }

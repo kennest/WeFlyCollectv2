@@ -60,7 +60,9 @@ public class EmailAdapter extends BaseAdapter {
         date.setText(e.getDateCreated());
         image.setImageResource(R.drawable.email);
 
-        convertView.setOnClickListener(v -> Toast.makeText(context,expediteur.getText()+" clicked!",Toast.LENGTH_SHORT).show());
+        convertView.setOnClickListener(v -> {
+            Toast.makeText(context, expediteur.getText() + " clicked!", Toast.LENGTH_SHORT).show();
+        });
 
         return convertView;
     }

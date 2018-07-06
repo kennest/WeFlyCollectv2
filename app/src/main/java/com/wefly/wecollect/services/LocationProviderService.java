@@ -54,12 +54,10 @@ public class LocationProviderService extends BaseService implements LocationList
         scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate
-                (new Runnable() {
-                    public void run() {
-                        // send time change Request
-                        // next time
-                        refreshPosition();
-                    }
+                (() -> {
+                    // send time change Request
+                    // next time
+                    refreshPosition();
                 }, 0, 1, TimeUnit.SECONDS);
         //first Time
         refreshPosition();
@@ -73,12 +71,16 @@ public class LocationProviderService extends BaseService implements LocationList
 
 
     private void notifyUpdate(Location location){
-        intent.putExtra("latitude",location.getLatitude()+"");
-        intent.putExtra("longitude",location.getLongitude()+"");
-       
+        intent.putExtra("latitude",String.valueOf(location.getLatitude()));
+        intent.putExtra("longitude",String.valueOf(location.getLongitude()));
+
      // update All activity
         appController.latitude=location.getLatitude();
         appController.longitude=location.getLongitude();
+
+        Log.v("LAT",String.valueOf(appController.latitude));
+        Log.v("LONG",String.valueOf(appController.longitude));
+
         BaseActivity.setuLatitude(location.getLatitude());
         BaseActivity.setuLongitude(location.getLongitude());
         sendBroadcast(intent);
