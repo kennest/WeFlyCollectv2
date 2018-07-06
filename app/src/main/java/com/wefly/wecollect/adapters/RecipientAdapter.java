@@ -92,10 +92,9 @@ public class RecipientAdapter extends BaseAdapter {
             }
             sp.edit().putStringSet("recipients_id", recipient_ids).commit();
 
+            //DEBUG
             recipient_ids = sp.getStringSet("recipients_id", new HashSet<String>());
-
             Snackbar.make(v, "LIST SIZE 0" +recipient_ids.size()+ " recipient(s)!", Snackbar.LENGTH_SHORT).show();
-
         });
         return convertView;
     }

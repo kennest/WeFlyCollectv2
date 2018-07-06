@@ -15,8 +15,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -77,11 +80,11 @@ public class AlertPostItemTask extends TaskPresenter implements PieceUploadTask.
         //Envoi des pieces jointes
         if (appController.getPieceList().size() > 0) {
             Log.v("Alert Post Execute", "RUN");
-            PieceUploadTask pieceUploadTask=new PieceUploadTask(appController.getPieceList(), null, alert);
+            PieceUploadTask pieceUploadTask = new PieceUploadTask(appController.getPieceList(), null, alert);
             pieceUploadTask.execute();
             pieceUploadTask.setOnPieceSendListener(uploadlistener);
         }
-        notifyOnAlertSendListener(isOk,alert);
+        notifyOnAlertSendListener(isOk, alert);
     }
 
     public void setOnAlertSendListener(@NonNull OnAlertSendListener listener) {
@@ -138,14 +141,16 @@ public class AlertPostItemTask extends TaskPresenter implements PieceUploadTask.
         public String getResponseFromHttpUrl(@NonNull String url) throws IOException {
             OkHttpClient client = new OkHttpClient();
             JSONObject json = new JSONObject();
-                        //Populate the json parameters
+
+
+            //Populate the json parameters
             try {
                 json.put("titre", alert.getObject());
                 json.put("contenu", alert.getContent());
-                json.put("destinataires", alert.getRecipientsIds());
+                json.put("destinataires", recipientsIDFromPrefs());
                 json.put("longitude", Double.valueOf(appController.longitude));
                 json.put("latitude", Double.valueOf(appController.latitude));
-                json.put("date_alerte", new org.joda.time.DateTime( org.joda.time.DateTimeZone.UTC ));
+                json.put("date_alerte", new org.joda.time.DateTime(org.joda.time.DateTimeZone.UTC));
 
 
                 //on revoie l'Id de la categorie correspondant au texte contenu dans la categorie
@@ -168,7 +173,22 @@ public class AlertPostItemTask extends TaskPresenter implements PieceUploadTask.
             Response response = client.newCall(request).execute();
             return response.body().string();
         }
+
+
+        public String recipientsIDFromPrefs() {
+            //We retrieve the recipients ID store in RecipientAdapter an attach them to alert object
+            SharedPreferences sp = appController.getApplicationContext().getSharedPreferences("recipients", 0);
+            Set recipient_ids = sp.getStringSet("recipients_id", new HashSet<String>());
+            String recipient_id_str = "";
+            for (Object item : recipient_ids) {
+                if (recipient_id_str == "") {
+                    recipient_id_str = item.toString();
+                }
+                recipient_id_str = recipient_id_str + "," + item.toString();
+            }
+
+            Log.v("RECIPIENTS ID STR", "[" + recipient_id_str + "]");
+            return "[" + recipient_id_str + "]";
+        }
     }
-
-
 }

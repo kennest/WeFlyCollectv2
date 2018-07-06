@@ -29,11 +29,13 @@ import com.weflyagri.wecollect.R;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ChooseRecipientDialogFragment extends DialogFragment {
     private List<Recipient> recipientList = new ArrayList<>();
     private Alert alert = new Alert();
     AppController appController=AppController.getInstance();
+    Set<String> recipient_ids=new HashSet<>();
 
     @NonNull
     @Override
@@ -59,6 +61,7 @@ public class ChooseRecipientDialogFragment extends DialogFragment {
                 .setPositiveButton("SEND NOW",new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
+
                                 AlertPostItemTask task = new AlertPostItemTask(alert);
                                 task.execute();
 
@@ -136,14 +139,13 @@ public class ChooseRecipientDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckBox selected = (CheckBox) view;
-                if(selected.isChecked())
-                    Toast.makeText(getContext(), "Item Clicked Again!", Toast.LENGTH_LONG).show();
             }
         });
         listView.setDivider(null);
         listView.setDividerHeight(-1);
         listView.setBackgroundColor(Color.parseColor("#599E47"));
 
+        //We prepared a String set to store the id of the recipients
         SharedPreferences sp=getContext().getSharedPreferences("recipients",0);
         SharedPreferences.Editor editor=sp.edit();
         editor.putStringSet("recipient_id",new HashSet<String>());
