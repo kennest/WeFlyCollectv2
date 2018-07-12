@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/liMain"
     android:orientation="vertical"
-    tools:context="com.wefly.wecollect.activities.EmailDetailActivity">
+    tools:context="com.wefly.wealert.activities.EmailDetailActivity">
 
     <include layout="@layout/loading_progress"/>
 
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.wefly.wecollect.utils.design.RobotoTextView
+            <com.wefly.wealert.utils.design.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -70,7 +70,7 @@
                     android:text="@string/from"
                     android:textSize="@dimen/item_caption_size" />
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:id="@+id/fromTView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -106,10 +106,10 @@
                     android:paddingRight="@dimen/activity_detail_horizontal_margin"
                     android:paddingTop="20dp"
                     app:typeface="robotoThin"
-                    android:text="@string/objet"
+                    android:text="@string/object"
                     android:textSize="@dimen/item_caption_size" />
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:id="@+id/objectTView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                     android:paddingRight="@dimen/activity_detail_horizontal_margin"
                     app:typeface="robotoRegular"
                     style="@style/ObjectStyle"
-                    android:text="@string/objet"
+                    android:text="@string/object"
                     android:textSize="@dimen/item_title_size" />
 
                 <View
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -147,7 +147,7 @@
                     android:text="@string/content"
                     android:textSize="@dimen/item_caption_size" />
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:id="@+id/contentTView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

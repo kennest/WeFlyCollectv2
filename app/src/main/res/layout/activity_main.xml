@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_background"
-    tools:context="com.wefly.wecollect.MainActivity">
+    tools:context="com.wefly.wealert.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -63,7 +63,8 @@
             app:bmb_autoHide="false"
             app:bmb_buttonEnum="ham"
             app:bmb_buttonPlaceEnum="buttonPlace_ham_5"
-            app:bmb_piecePlaceEnum="piecePlace_ham_5" />
+            app:bmb_piecePlaceEnum="piecePlace_ham_5"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

@@ -35,7 +35,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
 
-      <com.wefly.wecollect.utils.design.RobotoTextView
+      <com.wefly.wealert.utils.design.RobotoTextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
@@ -69,7 +69,7 @@
             android:id="@+id/objectEdText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/objet"
+            android:hint="@string/object"
             style="@style/ObjectStyle"
             />
       </android.support.design.widget.TextInputLayout>

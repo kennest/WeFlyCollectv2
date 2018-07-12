@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/liMain"
     android:orientation="vertical"
-    tools:context="com.wefly.wecollect.activities.SmsDetailActivity">
+    tools:context="com.wefly.wealert.activities.SmsDetailActivity">
 
     <include layout="@layout/loading_progress"/>
 
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.wefly.wecollect.utils.design.RobotoTextView
+            <com.wefly.wealert.utils.design.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -70,7 +70,7 @@
                     android:text="@string/send_by"
                     android:textSize="@dimen/item_caption_size" />
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:id="@+id/sendByTView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -108,7 +108,7 @@
                     android:text="@string/content"
                     android:textSize="@dimen/item_caption_size" />
 
-                <com.wefly.wecollect.utils.design.RobotoTextView
+                <com.wefly.wealert.utils.design.RobotoTextView
                     android:id="@+id/contentTView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

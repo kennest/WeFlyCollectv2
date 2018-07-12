@@ -23,7 +23,7 @@
                     android:id="@+id/lblTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/infos_suppl"
+                    android:text="@string/more_details"
                     android:gravity="center_horizontal|center"
                     android:background="#386b1b"
                     android:textColor="#FFFF"
@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/ObjectStyle"
-                        android:hint="@string/titre"
+                        android:hint="@string/title"
                         app:hintColor="@color/gray_two"/>
 
                 </android.support.design.widget.TextInputLayout>

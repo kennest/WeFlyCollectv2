@@ -24,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.wefly.wecollect.utils.design.RobotoTextView
+                    <com.wefly.wealert.utils.design.RobotoTextView
                         android:id="@+id/label"
                         android:layout_width="263dp"
                         android:layout_height="wrap_content"

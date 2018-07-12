@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/lblSendDialog"
         android:layout_width="match_parent"
@@ -14,7 +17,7 @@
         android:background="#386b1b"
         android:gravity="center_horizontal|top"
         android:padding="5dp"
-        android:text="YOUR ATTACHMENTS:"
+        android:text="@string/your_attachments_list"
         android:textColor="#FFFF"
         android:textSize="18sp" />
 
@@ -58,17 +61,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="2dp">
 
             <ImageButton
                 android:id="@+id/recordBtn"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:backgroundTint="#FFFF"
-                android:contentDescription="message vocal"
+                android:contentDescription="@string/voice_record_desc"
                 android:src="@drawable/microphone" />
 
             <Button
@@ -77,11 +80,33 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="#386b1b"
-                android:text="NEXT"
+                android:text="@string/next"
                 android:textColor="#FFFF"
                 android:textSize="20sp" />
+
         </LinearLayout>
     </ScrollView>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/transparent">
+        <FrameLayout
+            android:id="@+id/fab_menu"
+            android:layout_width="match_parent"
+            android:layout_height="66dp">
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/menu"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:backgroundTint="#386b1b"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/fab_menu" />
+        </FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>

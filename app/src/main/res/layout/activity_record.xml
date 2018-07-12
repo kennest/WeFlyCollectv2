@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wefly.wecollect.activities.RecorderActivity">
+    tools:context="com.wefly.wealert.activities.RecorderActivity">
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
@@ -28,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="81dp"
         android:backgroundTint="#30b619"
-        android:text="@string/stopper_et_sauvegarder"
+        android:text="@string/stop_and_save"
         android:textColor="#FFFF" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="148dp"
-        android:text="@string/enregistrement_en_cours"
+        android:text="@string/recording..."
         android:textColor="#35ae31"
         android:textSize="20sp"
         android:textStyle="bold" />

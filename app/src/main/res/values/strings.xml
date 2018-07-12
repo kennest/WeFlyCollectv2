@@ -1,95 +1,109 @@
 <resources>
-    <string name="app_name">WeFlyCollect</string>
+    <string name="app_name">WeAlert</string>
     <!--App label-->
     <string name="title_left">WeFly </string>
     <string name="title_right">WeConnect </string>
     <!--Profil-->
-    <string name="user_name">Nom d\'utilisateur </string>
-    <string name="password">Mot de passe</string>
-    <string name="sending">Envoi en cours</string>
+    <string name="user_name">Username </string>
+    <string name="password">Password</string>
+    <string name="sending">Sending...</string>
 
     <!--SMS-->
-    <string name="send_sms">Envoyer un SMS</string>
+    <string name="send_sms">send a SMS</string>
     <string name="title_sms">SMS</string>
-    <string name="sms_sent">SMS envoyé</string>
-    <string name="sms_send_error">Erreur SMS non envoyé</string>
+    <string name="sms_sent">SMS sent</string>
+    <string name="sms_send_error">Error SMS not sent</string>
     <!--EMAIL-->
     <string name="title_email">EMAIL</string>
-    <string name="send_email">Envoyer un email</string>
-    <string name="email_sent">Email envoyé</string>
-    <string name="email_send_error">Erreur Email non envoyé</string>
+    <string name="send_email">Send an email</string>
+    <string name="email_sent">Email sent</string>
+    <string name="email_send_error">Error Email not sent</string>
     <!--ALERT-->
     <string name="title_alert">ALERT</string>
-    <string name="send_alert">Envoyer une alerte</string>
-    <string name="alert_sent">Alert envoyée</string>
-    <string name="alert_send_error">Alert Email non envoyée</string>
-    <string name="profil">Mon profil</string>
-    <string name="exit">Quitter</string>
-    <string name="empty_string">Sed ut perspiciatis unde omnis </string>
-    <string name="recipients">Destinataire(s)</string>
+    <string name="send_alert">sent an alert</string>
+    <string name="alert_sent">Alert sent</string>
+    <string name="alert_send_error">Alert not sent</string>
+    <string name="exit">Exit</string>
+    <string name="empty_string">Empty string</string>
+    <string name="recipients">Recipient(s)</string>
     <string name="content">Content</string>
     <string name="email">Email</string>
-    <string name="objet">Objet</string>
-    <string name="titre">Title</string>
+    <string name="object">Object</string>
+    <string name="title">Title</string>
     <string name="attachement">Attachments</string>
-    <string name="send">Envoyer</string>
-    <string name="sender">Expéditeur</string>
-    <string name="cancel">Annuler</string>
-    <string name="category">Catégorie</string>
-    <string name="send_by">Envoyé par</string>
-    <string name="from">De</string>
-    <string name="empty_object">Le champ objet ne peut etre vide</string>
+    <string name="send">Send</string>
+    <string name="sender">Sender</string>
+    <string name="cancel">cancel</string>
+    <string name="category">Categories</string>
+    <string name="send_by">Send By</string>
+    <string name="from">From</string>
+    <string name="empty_object">The Object field cannot be empty</string>
 
     <!--Dialog-->
-    <string name="request_title">Sauvegarder</string>
-    <string name="request_msg">Votre Message sera conservé pour une utilisation ultérieure ? </string>
-    <string name="save">SAUVEGARDER</string>
-    <string name="save_ok">Sauvegarde effectuée</string>
-    <string name="save_error">Erreur: Sauvegarde non effectuée</string>
+    <string name="request_title">save</string>
+    <string name="request_msg">your message will be kept for future use?</string>
+    <string name="save">SAVE</string>
+    <string name="save_ok">Successfully saved</string>
+    <string name="save_error">Error,not saved</string>
 
-    <string name="loading_gps">Initialisation, veuillez patienter</string>
-    <string name="loading_recipients">Chargement des destinataires, veuillez patienter</string>
+    <string name="loading_gps">Initialize,be patient...</string>
+    <string name="loading_recipients">Loading recipients,be patient..</string>
 
     <!--PERMISSION-->
-    <string name="error_permission_all_right">dans vos Paramètres</string>
-    <string name="error_permission_all_left">Veuillez accorder l\'autorisation </string>
-    <string name="error_permission_all_title">Rappel </string>
+    <string name="error_permission_all_right">in your settings</string>
+    <string name="error_permission_all_left">please grant permissions</string>
+    <string name="error_permission_all_title">recall</string>
     <string name="permission_preference">PERMISSION_PREFERENCE</string>
 
     <!--INTERNET-->
-    <string name="error_no_internet">Pas de connexion internet </string>
-    <string name="error_no_connection">Aucune connexion </string>
-    <string name="off_line">Hors ligne </string>
-    <string name="retry">Réessayer</string>
-    <string name="password_empty">"Veuiller remplir le champ mot de passe"</string>
-    <string name="name_empty">Veuiller remplir le champ nom d\'utilisateur</string>
-    <string name="empty_content">Veuiller remplir le champ contenu</string>
-    <string name="empty_recipient">Veuillez ajouter au moins un destinataire</string>
-    <string name="error_login">Erreur: Nom d\'utilisateur ou mot de passe invalide</string>
-    <string name="error_api">Une erreur s\'est produite</string>
-    <string name="connecting">Connexion</string>
-    <string name="saving">Sauvegarde</string>
-    <string name="sending_short">Envoi</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_no_connection">No internet connection</string>
+    <string name="off_line">offline</string>
+    <string name="retry">Retry</string>
+    <string name="password_empty">password empty</string>
+    <string name="name_empty">username empty</string>
+    <string name="empty_content">please fill the content field</string>
+    <string name="empty_recipient">please add at least one recipient</string>
+    <string name="error_login">Error:username or password not valid</string>
+    <string name="connecting">connecting</string>
+    <string name="saving">saving</string>
+    <string name="sending_short">send</string>
 
     <!--Location-->
-    <string name="mlocation_permission_dialog_title">Localisation Désactivée</string>
-    <string name="mlocation_permission_dialog_message">Pour continuer, autorisez WeflyHelper à accéder à votre position</string>
-    <string name="location_service_disable">Pour continuer autorisez votre appareil à activer la localisation.</string>
-    <string name="not_now">Pas maintenant</string>
+    <string name="mlocation_permission_dialog_title">Location service disabled</string>
+    <string name="mlocation_permission_dialog_message">In order to continue,authorize WeAlert to acces your location</string>
+    <string name="location_service_disable">In order to continue,authorize your device to enable your location</string>
+    <string name="not_now">not now</string>
     <string name="yes">Oui</string>
 
     <!--Fontello Icon-->
     <string name="icon_select_image">&#xe816;</string>
     <string name="icon_select_audio">&#xf130;</string>
-
     <string name="ic_fonte_error_api">&#xe89e;</string>
     <string name="title_activity_loading">LoadingActivity</string>
     <string name="Pix_hint">Take a Picture</string>
     <string name="Rec_hint">Record a sound</string>
     <string name="recipient_name_hint">Enter a recipient name</string>
-    <string name="stopper_et_sauvegarder">Stop Recording and save</string>
-    <string name="enregistrement_en_cours">Recording</string>
+    <string name="stop_and_save">Stop Recording and save</string>
+    <string name="recording...">Recording</string>
     <string name="perimeter">perimeter</string>
     <string name="area">area</string>
-    <string name="infos_suppl">INFOS SUPPL.</string>
+    <string name="more_details">More Details</string>
+    <string name="next">NEXT</string>
+    <string name="your_attachments_list">YOUR ATTACHMENTS:</string>
+    <string name="task_completed">Task Completed!</string>
+    <string name="show_sent_alert_list">Show sent alerts list...</string>
+    <string name="account">Account</string>
+    <string name="error_api">An error has occurred</string>
+    <string name="recording">recording...</string>
+    <string name="dialog_return">Home</string>
+    <string name="voice_record_desc">message vocal</string>
+    <string name="processing">Processing...</string>
+    <string name="choose_recipients">Choose recipients:</string>
+    <string name="send_nom">SEND NOW</string>
+    <string name="disagree_dialog">Please Restart the application and Agree the Terms and conditions usages</string>
+    <string name="disagree_closer_title">TERMS AND CONDITIONS DISAGREE</string>
+    <string name="disagree_close_btn">RESTART</string>
+    <string name="options_agree">AGREE</string>
+    <string name="options_disagree">DISAGREE</string>
 </resources>

@@ -3,6 +3,7 @@ package com.fxn.pix;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -125,6 +128,7 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
     };
     private TextView selection_count;
     private OnSelectionListner onSelectionListner = new OnSelectionListner() {
+        @SuppressLint("StringFormatInvalid")
         @Override
         public void OnClick(Img img, View view, int position) {
             //Log.e("OnClick", "OnClick");

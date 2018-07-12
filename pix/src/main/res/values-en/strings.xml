@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PixSample</string>
+    <string name="selection_limiter_pix">You can not select more than three p.</string>
+    <string name="pix_hint_gallery">Drag the images to the top for the gallery</string>
+</resources>

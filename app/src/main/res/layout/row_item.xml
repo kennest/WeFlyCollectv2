@@ -32,7 +32,7 @@
                 android:layout_alignParentTop="true"
                 android:scaleType="centerCrop" />
 
-            <com.wefly.wecollect.utils.design.RobotoTextView
+            <com.wefly.wealert.utils.design.RobotoTextView
                 android:id="@+id/labelTView"
                 style="@style/listTitleStyle"
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 android:textSize="18sp"
                 app:typeface="robotoThin" />
 
-            <com.wefly.wecollect.utils.design.RobotoTextView
+            <com.wefly.wealert.utils.design.RobotoTextView
                 android:id="@+id/expeditorTView"
                 style="@style/listTitleStyle"
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:textSize="@dimen/item_text_size"
                 app:typeface="robotoBold" />
 
-            <com.wefly.wecollect.utils.design.RobotoTextView
+            <com.wefly.wealert.utils.design.RobotoTextView
                 android:id="@+id/dateTView"
                 style="@style/listTitleStyle"
                 android:layout_width="match_parent"

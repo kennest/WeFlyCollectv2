@@ -7,7 +7,7 @@
     android:layout_centerInParent="true"
     android:orientation="vertical">
 
-    <com.wefly.wecollect.utils.design.IconsEditTextView
+    <com.wefly.wealert.utils.design.IconsEditTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"

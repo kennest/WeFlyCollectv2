@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#000">
 
-
     <com.wonderkiln.camerakit.CameraView
         android:id="@+id/camera"
         android:layout_width="match_parent"
@@ -240,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="5dp"
-                android:text="Faites glisser les images vers le haut pour la galerie"
+                android:text="@string/pix_hint_gallery"
                 android:textColor="#fff"
                 android:textSize="12dp" />
         </FrameLayout>
